@@ -2,7 +2,7 @@
 name: Lecture
 about: Track team details for lectures.
 title: 'Lecture - Date'
-labels: 'meeting'
+labels: 'lect'
 assignees: ''
 
 ---
@@ -16,7 +16,8 @@ assignees: ''
 - [ ] Adam Podolak
 - [ ] Austin Bennett 
 - [ ] Christian Petricca 
-- [ ] Evan Sturmey 
+- [ ] Evan Sturmey
+- [ ] Jacob Kish
 
 **Questions to Ask**
 

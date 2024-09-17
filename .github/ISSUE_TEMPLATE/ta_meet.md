@@ -13,11 +13,10 @@ assignees: ''
 
 **Attendance**
 
-- [ ] team member1
-- [ ] team member2
-- [ ] team member3
-- [ ] team member4
-- [ ] team member5
+- [ ] Adam Podolak
+- [ ] Austin Bennett 
+- [ ] Christian Petricca 
+- [ ] Evan Sturmey 
 
 **Questions to Ask**
 

@@ -1,8 +1,10 @@
 # McMaster Engineering Society Custom Finance Platform
 
+[![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#) 
 [![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](#) 
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-darkgreen?logo=mongodb)
+[![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white)](#) 
+
 
 Developer Names:
 - Adam Podolak

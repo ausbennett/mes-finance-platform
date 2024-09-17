@@ -16,7 +16,8 @@ assignees: ''
 - [ ] Adam Podolak
 - [ ] Austin Bennett 
 - [ ] Christian Petricca 
-- [ ] Evan Sturmey 
+- [ ] Evan Sturmey
+- [ ] Jacob Kish
 
 **Questions to Ask**
 

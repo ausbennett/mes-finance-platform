@@ -1,0 +1,27 @@
+name: Compile LaTeX Documents
+
+on:
+  push:
+    paths:
+      - '**.tex'  # Trigger on any .tex file changes in any folder.
+  pull_request:
+    paths:
+      - '**.tex'  # Also trigger on .tex file changes in pull requests.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up TeX Live
+      uses: xu-cheng/latex-action@v3
+
+    - name: Compile LaTeX files
+      run: |
+        for file in $(git diff --name-only HEAD^ HEAD | grep '.tex$'); do
+          latexmk -pdf -interaction=nonstopmode -file-line-error -output-directory=$(dirname "$file") "$file";
+        done
+

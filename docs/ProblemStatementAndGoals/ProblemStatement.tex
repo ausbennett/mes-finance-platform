@@ -22,9 +22,7 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+September 23rd, 2024 & Adam Podolak & Initial revision, including all sections (1-4) and reflection\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -38,18 +36,50 @@ Date2 & Name(s) & Description of changes\\
 \wss{You can change the section headings, as long as you include the required
 information.}
 
+The McMaster Engineering Society (MES) supports approximately 60 student groups and numerous individuals through academics, athletics, and recreational and professional activities. The MES is facing a significant challenge with managing financial expense reporting and reimbursements, with the current system relying on a combination of Google Forms, PDFs, and spreadsheets. This approach has lead to an inefficient and disjointed workflow resulting in delays, errors and increased manual administrative burden that has made it difficult to accurately track expenses, maintain compliance, and provide reimbursements. 
+
 \subsection{Problem}
+
+The problem to be solved is addressing the inefficient system that is currently being used for financial expense reporting within the MES. The root problem is an absence of a centralized platform that streamlines reimbursement requests, payment requests, intramural application funding, automated ledger tracking, audit compliance tracking, etc. A lack of such a platform is hindering the MES's ability to financially support its student groups and individuals effectively. This problem is important because efficient financial management is crucial for the MES to accomplish its role of supporting students and their activities. The current system is cumbersome and consumes valuable time and resources. It is also prone to financial inaccuracies and non-compliance with audit requirements. Improving this system is important for reducing administrative overhead, minimizing errors, and improving student satisfaction.
 
 \subsection{Inputs and Outputs}
 
 \wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
 Use abstraction so that you can avoid details.}
 
+\subsubsection{Inputs}
+
+\begin{enumerate}
+    \item Payment, funding, or reimbursement requests: submitted by student groups or individuals
+    \item Admin decisions: actions taken by the MES finance team (approvals, rejections, requests for more information)
+    \item Repetitive user information: void cheques, e-transfer email, etc.
+    \item Compliance requirements: guidelines, regulatory standards, and policies that must be followed
+    \item Communication triggers: events that will initiate automated emails or mobile text messages
+\end{enumerate}
+
+\subsubsection{Outputs}
+
+\begin{enumerate}
+    \item Completed transactions: completed reimbursements, payments delivered to correct student groups or individuals (\emph{Inputs: 1, 2})
+    \item Status notifications: automated updates regarding progress of requests or required actions (\emph{Inputs: 2, 5})
+    \item Financial document organization: storing and displaying void cheques, e-transfer emails, etc. (\emph{Input 3})
+    \item Audit records: comprehensive, traceable records of all financial activities to ensure compliance (\emph{Input 4})
+    \item Automated ledger entries (\emph{Inputs 1, 2})
+\end{enumerate}
+
 \subsection{Stakeholders}
+
+\begin{itemize}
+    \item \emph{Student Groups and Individuals}: Approximately 60 students groups and numerous individuals who submit reimbursement/funding requests and rely on timely and efficient reimbursements/funding.
+    \item \emph{Vice President, Finance}: Luke Schuurman, responsible for overseeing the financial operations, managing budgets, processing reimbursements, and ensuring compliance.
+    \item \emph{MES Financial Operations Team}: The financial staff of the MES that help the VP Finance with daily operations such as processing reimbursements or funding requests. 
+\end{itemize}
 
 \subsection{Environment}
 
 \wss{Hardware and software environment}
+
+The current software environment is utilizing different tools such as Google Forms, PDFs, and spreadsheets to complete reimbursements requests. These tools are not integrated and do not have automation capabilities.
 
 \section{Goals}
 

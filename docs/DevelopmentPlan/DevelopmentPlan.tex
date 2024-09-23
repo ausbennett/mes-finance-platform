@@ -204,43 +204,134 @@ By addressing these areas in the POC demonstration, we aim to reassure ourselves
 
 \section{Expected Technology}
 
-\wss{What programming language or languages do you expect to use?  What external
-libraries?  What frameworks?  What technologies.  Are there major components of
-the implementation that you expect you will implement, despite the existence of
-libraries that provide the required functionality.  For projects with machine
-learning, will you use pre-trained models, or be training your own model?  }
-
-\wss{The implementation decisions can, and likely will, change over the course
-of the project.  The initial documentation should be written in an abstract way;
-it should be agnostic of the implementation choices, unless the implementation
-choices are project constraints.  However, recording our initial thoughts on
-implementation helps understand the challenge level and feasibility of a
-project.  It may also help with early identification of areas where project
-members will need to augment their training.}
-
-Topics to discuss include the following:
+Technologies that are confirmed for the project are as follows
 
 \begin{itemize}
-\item Specific programming language
-\item Specific libraries
-\item Pre-trained models
-\item Specific linter tool (if appropriate)
-\item Specific unit testing framework
-\item Investigation of code coverage measuring tools
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate
-\item Tools you will likely be using?
+  \item Git, GitHub and Github Projects for code management
+  \item Frontend: HTML/CSS, TypeScript + React
+  \item Backend: Next.js
+  \item Database: MongoDB
 \end{itemize}
 
-\wss{git, GitHub and GitHub projects should be part of your technology.}
+This is a potential list of technologies categorized by use case. None of these are confirmed but serve as a starting point for our considerations.
+
+\subsection{Programming Languages}
+\begin{itemize}
+  \item \textbf{TypeScript}: To be used for both frontend (React/Next.js) and backend (Node.js) development for type safety and a better development experience.
+\end{itemize}
+
+\subsection{Frameworks and Libraries}
+\begin{itemize}
+  \item \textbf{Next.js}: The main framework for the frontend, allowing for server-side rendering, API routes, and static site generation.
+  \item \textbf{React}: Used for building the dynamic user interface.
+  \item \textbf{Node.js}: The backend runtime environment for executing JavaScript/TypeScript server-side.
+  \item \textbf{Express} (optional): A lightweight web framework to handle backend routing and middleware, though Next.js API routes may suffice.
+  \item \textbf{MongoDB}: A NoSQL database for storing financial data and user information.
+  \begin{itemize}
+    \item \textbf{Mongoose}: An ODM (Object Data Modeling) library for MongoDB to handle schema definitions and interactions more easily.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Additional Libraries/Technologies}
+\textbf{Authentication}:
+\begin{itemize}
+  \item \textbf{NextAuth.js} or \textbf{Auth0}: For handling user authentication and session management.
+\end{itemize}
+
+\textbf{Payment Processing} (if needed):
+\begin{itemize}
+  \item \textbf{Stripe API}: For managing financial transactions within the platform.
+\end{itemize}
+
+\textbf{Form Validation}:
+\begin{itemize}
+  \item \textbf{Formik} or \textbf{React Hook Form}: To ensure smooth validation for user inputs in financial forms.
+\end{itemize}
+
+\textbf{State Management}:
+\begin{itemize}
+  \item \textbf{Redux} or \textbf{Context API}: To manage global state across the application.
+\end{itemize}
+
+\textbf{Styling}:
+\begin{itemize}
+  \item \textbf{Tailwind CSS} or \textbf{Styled-Components}: To provide consistent and responsive UI styling.
+\end{itemize}
+
+\textbf{Data Visualization}:
+\begin{itemize}
+  \item \textbf{Chart.js} or \textbf{Recharts}: For generating financial graphs, charts, and reports.
+\end{itemize}
+
+\subsection{Unit Testing \& Linting}
+\begin{itemize}
+  \item \textbf{Jest}: For writing unit and integration tests for both the frontend and backend components.
+  \item \textbf{React Testing Library}: To test React components in isolation and ensure proper behavior.
+  \item \textbf{ESLint}: To maintain code quality and adhere to coding standards. TypeScript plugins will be added to enforce types.
+\end{itemize}
+
+\subsection{Code Coverage}
+\begin{itemize}
+  \item \textbf{Istanbul/nyc}: To measure code coverage and help identify untested parts of the code.
+\end{itemize}
+
+\subsection{Continuous Integration (CI)}
+\begin{itemize}
+  \item \textbf{GitHub Actions}: For automating CI/CD pipelines. This will include running tests, checking linting errors, and deploying the application.
+  \begin{itemize}
+    \item \textbf{Prettier}: Used alongside ESLint to enforce consistent code formatting before merging pull requests.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Performance Measuring Tools}
+\begin{itemize}
+  \item \textbf{Lighthouse}: For checking performance, accessibility, and best practices of the frontend.
+  \item \textbf{Postman}: For testing API endpoints manually before they are integrated.
+  \item \textbf{Valgrind} (optional): If memory profiling and performance are needed in specific areas of the backend.
+\end{itemize}
+
+\subsection{Security and Compliance}
+\begin{itemize}
+  \item \textbf{Helmet.js}: To help secure the Node.js app by setting various HTTP headers.
+  \item \textbf{OWASP Guidelines}: Follow web security best practices to ensure the platform is resistant to vulnerabilities like XSS, CSRF, and SQL Injection.
+\end{itemize}
+
+\subsection{Version Control and Project Management}
+\begin{itemize}
+  \item \textbf{Git}: Version control for tracking changes and collaborating with team members.
+  \item \textbf{GitHub}: For hosting repositories, managing issues, and code reviews.
+  \item \textbf{GitHub Projects}: To manage project tasks, milestones, and progress.
+\end{itemize}
+
+\subsection{DevOps \& Deployment}
+\begin{itemize}
+  \item \textbf{Vercel} or \textbf{Netlify}: For deploying the Next.js application (frontend and backend API routes).
+  \item \textbf{MongoDB Atlas}: To host the MongoDB database in the cloud.
+  \item \textbf{Docker} (optional): For containerizing the application and ensuring a consistent environment across different stages.
+\end{itemize}
+
+\subsection{Tools Likely to be Used}
+\begin{itemize}
+  \item \textbf{VSCode}: For coding, with plugins for ESLint, Prettier, and TypeScript.
+  \item \textbf{Postman}: For testing REST APIs during development.
+  \item \textbf{Figma} (optional): For designing the user interface and planning the visual components of the platform.
+\end{itemize}
+
+\subsection{Future Considerations}
+\begin{itemize}
+  \item \textbf{Scaling}: Use cloud services like AWS or Google Cloud for scalability if the application grows in usage.
+  \item \textbf{Microservices} (optional): Consider splitting the backend into microservices if the platform requires higher modularity or has different domains such as financial reporting, user management, and payment processing.
+\end{itemize}
+
+\subsection{Initial Thoughts on Complexity}
+The platform involves a complex integration of different technologies, especially handling user data and financial transactions securely. The frontend should be intuitive for club members, while the backend should ensure the safety and scalability of financial data. As we progress, we will revisit the implementation decisions based on project challenges and feasibility.
+
 
 \section{Coding Standard}
 
-\wss{What coding standard will you adopt?}
+This project will primarily use JavaScript, so we will leverage existing linters such as ESLint to ensure code quality and consistency. To follow industry best practices, we plan to adopt the widely used AirBnB JavaScript coding standard. This will help maintain readability and uniformity throughout the codebase.
 
-\newpage{}
+For more details on the AirBnB coding standard, you can refer to the following resource: \url{https://github.com/airbnb/javascript}.
 
 \section*{Appendix --- Reflection}
 

@@ -1,0 +1,420 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+\title{Development Plan\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+9/24/2024 & Adam, Evan, Christian, Austin, Jacob & Initial revision, including all sections, appendix, and reflections\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Link to GitHub Project:} \url{https://github.com/ausbennett/mes-finance-platform/}
+
+\newpage{}
+
+
+This document outlines the development plan for the MES finance platform capstone project, providing a structured approach that will help guide us throughout this project. Starting with legal details and privacy agreements, the document also outlines a comprehensive plan for team communication and member roles. Additionally, we detail expected technologies and the programming languages, frameworks and tools that we anticipate using throughout the year. Finally, we reflect on team dynamics and draft a team charter that will help us maintain a professional and productive environment.
+
+\section{Confidential Information?}
+
+The project contains confidential information that we need to be mindful of. Some information we would need to protect include an individual's bank statement or account details. We are in the process of preparing a confidentiality agreement to protect this sensitive information.
+
+\section{IP to Protect}
+
+This project does not have any IP to protect. 
+
+\section{Copyright License}
+
+Our team is adopting the MIT license for our project. We feel that this license suits us best with its simplicity and relatively loose restrictions. For more information, see the LICENSE document in the repository or visit \url{https://opensource.org/license/mit}
+
+\section{Team Meeting Plan}
+
+Our team plans to meet at least once a week, either in-person or virtually, depending on the preferences and circumstances of team members. Additional meetings will be scheduled on weeks when deliverables are due or at any time we believe we would benefit from more planning time.\\
+
+In addition to our regular team meetings, we also plan to meet with our capstone supervisor once a week. These meetings are subject to their availability and may also take place either in-person or online.\\
+
+To ensure that our meetings are efficient and productive, we have established rotating roles for all team members during meetings. One person will serve as the team liaison, one person will serve as the meeting chair and the rest will take on the role of notetakers. The responsibility of the team liaison is to set the time and place of the meeting. Their task is to ensure that all group members are available to attend and they are to deal with any scheduling conflicts. The responsibility of the meeting chair is to lead the discussion. They will prepare a list of important topics that must be covered and ensure that we stay on topic. The notetakers are then responsible for documenting key information and keeping track of topics that should be revisited in future meetings. By the end of the meeting, roles will be redistributed and the next meeting will be tentatively scheduled.
+
+\section{Team Communication Plan}
+
+Team communication plan includes regular availability for communication via Discord chat and calls. This is ideal for quickly sharing ideas and questions and checking statuses of documentation, commits, pull requests, etc. GitHub Issues will be used to keep track of work items and provide traceability by linking PRs to Issues. That said, commit messages will still be used to provide clarity when updates are made. GitHub Projects, especially the Kanban boards, will also help keep track of assignments and progress in a convenient visual way. Finally, as discussed in section 4, in-person and/or virtual (Teams or Discord) meetings will be used to actively discuss major issues, progress, and blockers with the whole team.
+
+\section{Team Member Roles}
+Roles are not currently assigned but several will be used by the team. If the team notices more regular tasks that are needed to keep the project running smoothly, additional roles can be discussed and added. \\
+The first role is notetaker, which would involve taking meeting notes at least during meetings with project heads or stakeholders and possibly during internal team meetings as well. The objective is to record key points discussed and feedback from valuable resources as a reference, without relying on memory to implement the knowledge gained. Notetaker should also record the time and place of meetings to provide a timeline of progress.\\
+Another role is the meeting chair, who would lead discussions with stakeholders, product owners, etc. The chair would have an agenda of items and help keep meetings focused and on track. Major points of discussion should be brought up by the chair, rather than by picking team members arbitrarily.\\
+The next role is the administrator, who would review and submit milestones on Avenue assignments and perform final pull requests and merges on GitHub. This provides a single resource for major changes to the project, preventing confusion regarding that responsibility and making a single person clearly accountable for one of the most important project tasks.\\
+The last role is team liaison, who would be responsible for messaging and setting up meetings with external individuals including stakeholders and product owners. The team liaison role would create a single point of contact for outside parties that would streamline the communications process and provide accountability.\\
+We anticipate that roles can be assigned by several factors, including mainly personal preferences and skill sets (e.g., attention to detail would be an important skill for an administrator). Roles could also change if team members feel they are not suited for the role; in the case of team liaisons or meeting chairs this update should also be communicated with external stakeholders. Any role assignment or reassignment would hopefully be done on a voluntary basis, but if necessary a vote could be held. The whole team should be in agreement when roles are handed out.
+
+\section{Workflow Plan}
+
+\begin{itemize}
+	\item Git will be an important tool to facilitate collaboration and improve efficiency of the project. Major features, bugs, and code improvements will be kept track of via Issues assigned to team members, and in turn Issues should be assigned to one of these categories. This provides accountability for who has done what and is a reference for what each member needs to do. Pull requests will be assigned to Issues to track progress.
+	\item Similarly, GitHub Projects will help keep track of assigned tasks and current progress. The Kanban board especially will help facilitate this, providing a visually clear method of doing so. The board also allows tasks to be displayed with their statuses (open, in-progress, etc) and so provide that valuable information.
+    \item Pull requests should be reviewed by at least one, but preferably two reviewers, and preferably reviewers who have worked on similar or connected issues. After a pull request automatic checks and tests will be done to ensure nothing is broken by the new change.
+    \item It is also the expectation that all commits have clear messages detailing what has been changed and what Issue is being addressed.
+    \item Major feature updates will be handled by creating new branches to work on the features, so in case of major issues the main branch can be used to fall back on a viable product.
+    \item Version tags would be used to identify what milestone is being worked towards, or possibly each major feature would entail its own version. 
+\end{itemize}
+
+\section{Project Decomposition and Scheduling}
+
+\subsection*{Scheduling}
+The project will be broken down into high-level phases or milestones, grouped by each deliverable. (This schedule is subject to change as we understand more about the project scope.)
+
+\subsection*{Phases \& Deliverables:}
+\subsubsection*{Phase 1: Team Formation and Planning}
+\begin{itemize}
+    \item \textbf{Team Formed, Project Selected} \\
+    \textbf{Date:} September 18
+    \item \textbf{Problem Statement, POC Plan, Development Plan} \\
+    \textbf{Date:} September 25
+\end{itemize}
+
+\subsubsection*{Phase 2: Requirements and Analysis}
+\begin{itemize}
+    \item \textbf{Requirements Document Revision 0} \\
+    \textbf{Date:} October 4
+    \item \textbf{Hazard Analysis} \\
+    \textbf{Date:} October 20
+\end{itemize}
+
+\subsubsection*{Phase 3: Verification and Validation Planning}
+\begin{itemize}
+    \item \textbf{V\&V Plan Revision 0} \\
+    \textbf{Date:} November 3
+    \item \textbf{Proof of Concept Demonstration} \\
+    \textbf{Date:} November 13–24
+\end{itemize}
+
+\subsubsection*{Phase 4: Design and Development}
+\begin{itemize}
+    \item \textbf{Design Document Revision 0} \\
+    \textbf{Date:} January 17
+\end{itemize}
+
+\subsubsection*{Phase 5: Demonstration and Review}
+\begin{itemize}
+    \item \textbf{Revision 0 emonstration} \\
+    \textbf{Date:} February 5–February 16
+    \item \textbf{V\&V Report Revision 0} \\
+    \textbf{Date:} March 6
+\end{itemize}
+
+\subsubsection*{Phase 6: Final Preparation}
+\begin{itemize}
+    \item \textbf{Final Demonstration (Revision 1)} \\
+    \textbf{Date:} March 18–March 29
+    \item \textbf{EXPO Demonstration} \\
+    \textbf{Date:} April TBD
+\end{itemize}
+
+\subsubsection*{Phase 7: Final Documentation \& Complete Deliverables}
+\textbf{Final Documentation (Revision 1)} \\
+\textbf{Deliverables:}
+\begin{itemize}
+    \item Problem Statement
+    \item Development Plan
+    \item Proof of Concept (POC) Plan
+    \item Requirements Document
+    \item Hazard Analysis
+    \item Design Document
+    \item V\&V Plan
+    \item V\&V Report
+    \item User’s Guide
+    \item Source Code
+\end{itemize}
+
+\section{Proof of Concept Demonstration Plan}
+
+What is the main risk, or risks, for the success of your project?  What will you
+demonstrate during your proof of concept demonstration to convince yourself that
+you will be able to overcome this risk?
+
+\subsection*{Identified Risks}
+
+As a group, we have identified some potential risks that may prove difficult in establishing a POC, that the group is confident in. They are as follows:
+\begin{itemize}
+    \item \textbf{Technical Complexity:} As this project is a full-stack project, can we ensure that the various technology APIs are able to succesffuly communicate with eachother, if not we could potentially face integration issues.
+    \item \textbf{Data Security and Compliance:} As this project handles confidential financial information, will we adhere to McMaster's data protection regulations, as well as consider any security vulnerabilites. 
+    \item \textbf{User Adoption:} The platform will be used by both MES internal administrative members, as well as external club members and students, the platform my not be user friendly enough, and the club may resist using it.
+    \item \textbf{Scope Creep:} In the initial project proposal, there was an extensive list of potential features, there is a risk that the team takes on too many features leading to a project that may not be finished in time. 
+\end{itemize}
+
+\subsection*{Mitigating Risks}
+To address these risks during the proof of concept (POC) demonstration, we will focus on the following key areas:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Technical Feasibility}
+    \begin{itemize}
+        \item \textbf{Functionality Showcase}: Demonstrate core features like user registration, financial transaction management, and reporting to show integration between frontend and backend.
+        \item \textbf{Prototype Performance}: Highlight how the application performs under typical usage scenarios to validate the chosen technologies.
+    \end{itemize}
+
+    \item \textbf{Security Measures}
+    \begin{itemize}
+        \item \textbf{Basic Security Protocols}: Showcase implemented security measures such as user authentication, data encryption, and secure API communication to illustrate our commitment to data protection.
+    \end{itemize}
+
+    \item \textbf{User Experience Testing}
+    \begin{itemize}
+        \item \textbf{Usability Feedback}: Conduct a live usability test with a small group of potential users to gather feedback on the interface and ease of navigation. This will help us identify areas for improvement before the full launch.
+    \end{itemize}
+
+    \item \textbf{Scope Management}
+    \begin{itemize}
+        \item \textbf{Clear Feature Definition}: Present a prioritized list of features that will be included in the initial release, demonstrating our focus on essential functionality and our plan to manage future feature requests.
+    \end{itemize}
+\end{enumerate}
+
+By addressing these areas in the POC demonstration, we aim to reassure ourselves and stakeholders that we are prepared to mitigate risks and deliver a successful project.
+
+
+\section{Expected Technology}
+
+Technologies that are confirmed for the project are as follows
+
+\begin{itemize}
+  \item Git, GitHub and Github Projects for code management
+  \item Frontend: HTML/CSS, TypeScript + React
+  \item Backend: Next.js
+  \item Database: MongoDB
+\end{itemize}
+
+This is a potential list of technologies categorized by use case. None of these are confirmed but serve as a starting point for our considerations.
+
+\subsection{Programming Languages}
+\begin{itemize}
+  \item \textbf{TypeScript}: To be used for both frontend (React/Next.js) and backend (Node.js) development for type safety and a better development experience.
+\end{itemize}
+
+\subsection{Frameworks and Libraries}
+\begin{itemize}
+  \item \textbf{Next.js}: The main framework for the frontend, allowing for server-side rendering, API routes, and static site generation.
+  \item \textbf{React}: Used for building the dynamic user interface.
+  \item \textbf{Node.js}: The backend runtime environment for executing JavaScript/TypeScript server-side.
+  \item \textbf{Express} (optional): A lightweight web framework to handle backend routing and middleware, though Next.js API routes may suffice.
+  \item \textbf{MongoDB}: A NoSQL database for storing financial data and user information.
+  \begin{itemize}
+    \item \textbf{Mongoose}: An ODM (Object Data Modeling) library for MongoDB to handle schema definitions and interactions more easily.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Additional Libraries/Technologies}
+\textbf{Authentication}:
+\begin{itemize}
+  \item \textbf{NextAuth.js} or \textbf{Auth0}: For handling user authentication and session management.
+\end{itemize}
+
+\textbf{Payment Processing} (if needed):
+\begin{itemize}
+  \item \textbf{Stripe API}: For managing financial transactions within the platform.
+\end{itemize}
+
+\textbf{Form Validation}:
+\begin{itemize}
+  \item \textbf{Formik} or \textbf{React Hook Form}: To ensure smooth validation for user inputs in financial forms.
+\end{itemize}
+
+\textbf{State Management}:
+\begin{itemize}
+  \item \textbf{Redux} or \textbf{Context API}: To manage global state across the application.
+\end{itemize}
+
+\textbf{Styling}:
+\begin{itemize}
+  \item \textbf{Tailwind CSS} or \textbf{Styled-Components}: To provide consistent and responsive UI styling.
+\end{itemize}
+
+\textbf{Data Visualization}:
+\begin{itemize}
+  \item \textbf{Chart.js} or \textbf{Recharts}: For generating financial graphs, charts, and reports.
+\end{itemize}
+
+\subsection{Unit Testing \& Linting}
+\begin{itemize}
+  \item \textbf{Jest}: For writing unit and integration tests for both the frontend and backend components.
+  \item \textbf{React Testing Library}: To test React components in isolation and ensure proper behavior.
+  \item \textbf{ESLint}: To maintain code quality and adhere to coding standards. TypeScript plugins will be added to enforce types.
+\end{itemize}
+
+\subsection{Code Coverage}
+\begin{itemize}
+  \item \textbf{Istanbul/nyc}: To measure code coverage and help identify untested parts of the code.
+\end{itemize}
+
+\subsection{Continuous Integration (CI)}
+\begin{itemize}
+  \item \textbf{GitHub Actions}: For automating CI/CD pipelines. This will include running tests, checking linting errors, and deploying the application.
+  \begin{itemize}
+    \item \textbf{Prettier}: Used alongside ESLint to enforce consistent code formatting before merging pull requests.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Performance Measuring Tools}
+\begin{itemize}
+  \item \textbf{Lighthouse}: For checking performance, accessibility, and best practices of the frontend.
+  \item \textbf{Postman}: For testing API endpoints manually before they are integrated.
+  \item \textbf{Valgrind} (optional): If memory profiling and performance are needed in specific areas of the backend.
+\end{itemize}
+
+\subsection{Security and Compliance}
+\begin{itemize}
+  \item \textbf{Helmet.js}: To help secure the Node.js app by setting various HTTP headers.
+  \item \textbf{OWASP Guidelines}: Follow web security best practices to ensure the platform is resistant to vulnerabilities like XSS, CSRF, and SQL Injection.
+\end{itemize}
+
+\subsection{Version Control and Project Management}
+\begin{itemize}
+  \item \textbf{Git}: Version control for tracking changes and collaborating with team members.
+  \item \textbf{GitHub}: For hosting repositories, managing issues, and code reviews.
+  \item \textbf{GitHub Projects}: To manage project tasks, milestones, and progress.
+\end{itemize}
+
+\subsection{DevOps \& Deployment}
+\begin{itemize}
+  \item \textbf{Vercel} or \textbf{Netlify}: For deploying the Next.js application (frontend and backend API routes).
+  \item \textbf{MongoDB Atlas}: To host the MongoDB database in the cloud.
+  \item \textbf{Docker} (optional): For containerizing the application and ensuring a consistent environment across different stages.
+\end{itemize}
+
+\subsection{Tools Likely to be Used}
+\begin{itemize}
+  \item \textbf{VSCode}: For coding, with plugins for ESLint, Prettier, and TypeScript.
+  \item \textbf{Postman}: For testing REST APIs during development.
+  \item \textbf{Figma} (optional): For designing the user interface and planning the visual components of the platform.
+\end{itemize}
+
+\subsection{Future Considerations}
+\begin{itemize}
+  \item \textbf{Scaling}: Use cloud services like AWS or Google Cloud for scalability if the application grows in usage.
+  \item \textbf{Microservices} (optional): Consider splitting the backend into microservices if the platform requires higher modularity or has different domains such as financial reporting, user management, and payment processing.
+\end{itemize}
+
+\subsection{Initial Thoughts on Complexity}
+The platform involves a complex integration of different technologies, especially handling user data and financial transactions securely. The frontend should be intuitive for club members, while the backend should ensure the safety and scalability of financial data. As we progress, we will revisit the implementation decisions based on project challenges and feasibility.
+
+
+\section{Coding Standard}
+
+This project will primarily use JavaScript, so we will leverage existing linters such as ESLint to ensure code quality and consistency. To follow industry best practices, we plan to adopt the widely used AirBnB JavaScript coding standard. This will help maintain readability and uniformity throughout the codebase.
+
+For more details on the AirBnB coding standard, you can refer to the following resource: \url{https://github.com/airbnb/javascript}.
+
+\section*{Appendix --- Reflection}
+
+\wss{Not required for CAS 741}
+
+\input{../Reflection.tex}
+
+\begin{enumerate}
+    \item \textbf{Why is it important to create a development plan prior to starting the
+    project?}\\
+  
+  \textbf{Christian:} I believe the saying "If you fail to plan, you plan to fail" has a lot of truth to it. Not that everything can be anticipated, but even just the act of getting your mind in the habit of attempting to foresee potential problems, and methods of completing certain tasks will positively affect the trajectory of the project the earlier it is completed. Creating an initial plan is the first chance you get at realizing the project fully, and even through multiple iterations, the main objectives should remain invariant and the true form of the final product should start to take shape. Without a plan, things can still go right, but it then becomes a question of how confident can you be that the final product is truly what was needed and not what was simply completed? Plans act as a beacon for a project.\\
+
+  \textbf{Jacob:} It is important to create a development plan because the plan will provide a roadmap that can be loosely or strictly followed depending on the needs of the project. It also gives clear markers of success and progress to evaluate the actual results against. Simply, it can be used a reference for when there is doubt on how to proceed and also can be presented to outside stakeholders to let them know what they can expect is happening behind the scenes.\\
+
+  \textbf{Austin:} A concrete development plan and especially help to avoid scope creep, in a software project its easy for the stakeholder to ask for additional "small" features that may cut into existing allocating resources. Ultimately, this can cause delays in the project or result in unintended bugs as last second features were not originally accounted for. \\
+
+  \textbf{Evan:} Just like all other projects in life, planning is a crucial step in making sure everything runs smoothly. Thorough preparation allows us to set timelines, allocate resources effectively and outline goals and responsibilities. With a group of five members, it is especially important to create a development plan document so that we are all on the same page and can work productively. \\
+
+  \textbf{Adam:} Creating a development plan can help with defining a clear objective in all aspects of the project. This project has many layers, and ironing out all the details early on will help us further down the road when we actually sit down to code this platform. It also helps with identifying any risks that we may face later on down the road. Identifying the risks early can help us isolate them and establish way to mitigate them so that we aren't scrambling when they do show up. Lastly, it helps with team coordination and team management. Now that we have a plan, it is easier to delegate tasks, making our development process more efficient. \\
+
+  \item \textbf{In your opinion, what are the advantages and disadvantages of using CI/CD?}\\
+
+  \textbf{Christian:} One big advantage of CI/CD is the "granularity" of the approach, allowing for problems to be noticed right away and optimally in a context that is easy to rectify makes debugging for the project overall much less tedious. Problems have a harder time of piling on top of each other and becoming tangled, and you always have a deep understanding of how the different components of your system interact with each other. A disadvantage could be the other side of it's advantage, or "granularity", in the sense that it can make having a big-picture view hard to maintain. With constant focus on the new development, one also has to consider the context of the whole project. Being able to consider the big-picture perspective of a project is important throughout development to make sure that development progress is in line with project goals.\\
+
+  \textbf{Jacob:}  CI/CD is advantageous because it provides automatic checks and packages that prevent spending efforts on running the same tests or downloading the same packages many times when changes are made. It also increases reliability by preventing these pitfalls. However, the main issue with CI/CD is the overhead required to setup all of these automated efforts\\
+
+  \textbf{Austin:}Very very good because it allows frequent builds, deploys and testing, catching bugs early! Additionally, it allows a project to be easily deployed to numerous development / testing / production environments. This can ease the development process on large teams, as well facilitate adoption through easy deployment. The very very bad, is it can add a layer of unnecessary complexity to a project or even a team. Management can often throw CI/CD at every software project when it may not be necessary, on a small team or project, the CI/CD pipeline could become larger or more complex than the project itself!\\
+
+  \textbf{Evan:} An advantage of using CI/CD is the quality assurance aspect. Frequent testing and integration help to catch bugs early in the development cycle which helps save time and improves the quality of code. A disadvantage of using CI/CD is the resources it requires. Setting up CI/CD pipelines can be complex and time-consuming which can require too many resources depending on the scale of the project. \\
+
+  \textbf{Adam:} One of the advantages of  CI/CD is the ability to merge code changes and have it automatically build and run tests. This makes pushing updates to the running application much easier, and developers can make edits to the code and have the updates reflected on the user side automatically. This makes development more efficient, allowing us developers to focus on the code itself and not managing releases. One disadvantage of using CI/CD is its initial setup can be quite complex. There may be a steep learning curve for myself considering I've never set up a CI/CD environment. However, putting in the work now will prove to be beneficial in the long run.\\
+  
+  \item \textbf{What disagreements did your group have in this deliverable, if any, and how did you resolve them?}\\
+
+  \textbf{Christian:} We did not have any disagreements for this deliverable. We don't doubt that disagreements could come up in the future, however with respect to this deliverable, we wanted to keep an open mind and avoid making the development plan unnecessarily specific or restrictive. By doing this, we are all aware of multiple pathways different parts of the project could take, but are also willing to pivot to whatever is necessary without getting attached to anything too early. If we were to have any disagreements, we would solve them as we did in the project selection phase, which was with a democratic vote.\\
+
+  \textbf{Jacob:}  There weren’t any disagreements but in case of disagreement, the best way to resolve them would probably be to discuss on Discord or in person, if necessary. If the whole team needs to get involved, then it may be necessary to put the decision up to a vote. Fortunately since there are 5 members on the team, a tie vote and deadlock is impossible.\\
+
+  \textbf{Austin:} No disagreements, however just respectful communication and sharing of ideas to arrive at decisions that everyone is happy about. Moving forward approaching development conflicts this way is the most productive, hopefully this sets the routine for the group moving forward.\\
+
+  \textbf{Evan:} We did not have any disagreements during this deliverable. Early on, we established channels for clear and open communication which allowed us to get through this deliverable while facing minimal challenges. We plan to continue to communicate effectively going forward to minimize future issues. \\
+
+  \textbf{Adam}: There were no disagreements when writing this deliverable. The group brainstormed, communicated, and finalized ideas well. The group has communicated well within and outside of this deliverable and if conflicts or disagreements were to arise in the future, friendly discussions would be held to resolve them.
+  
+\end{enumerate}
+
+\newpage{}
+
+\section*{Appendix --- Team Charter}
+
+\wss{borrows from
+\href{https://engineering.up.edu/industry_partnerships/files/team-charter.pdf}
+{University of Portland Team Charter}}
+
+\subsection*{External Goals}
+
+We viewed our external goals as our foundation to the project, as a misalignment of these goals could make cooperation unnecessarily tough later on. We agreed that a general level project that we could flesh out and polish was the best fit. Working on the MES Finance platform not only allows us to work towards those goals, but also allows us to get more experienced with start-to-finish full stack development, 
+that more closely resembles an industry workflow, than any other course projects thus far. We are not opposed to striving for a 12 or even an award, however these would be achieved as a byproduct of our original goals and not the main priority. Given what is expected of our final product in terms of usability for the MES members, we would ultimately want to have our names on something that is simple but works as expected and mitigates pre-existing problems. 
+
+\subsection*{Attendance}
+
+\subsubsection*{Expectations}
+
+The expectation is that members attend all meetings, however we understand that life is unpredictable so communication is a top priority in this regard. We expect open communication in terms of weekly availability so that meetings can best fit all group members schedules, however if the situation arises we are prepared to conduct meetings with members missing in the interest of moving the project forward, assuming the missing member has communicated why they cannot attend and acknowledges they will catch themselves up as best as possible in the near future.
+
+\subsubsection*{Acceptable Excuse}
+
+Excuses relating to extraneous circumstances will virtually always be permitted, assuming the group believes it to be in good faith. We are a relatively small group, so trust and confidence in each other is very important, especially given the scope of the project and relevance with respect to our current programming background. We want all members to feel confident being open and honest. If a group member is faced with a circumstance they couldn't reasonably predict, such as family emergencies or sickness, this is acceptable. If a group member randomly cancels their attendance with no explanation and refuses to elaborate, this is not fine and will be discussed. For example, if a group member says they woke up with a bad cough, this is clearly unpredictable so it would be okay. If a group member says that they were awake late last night hanging out with friends and as a result they are too tired to attend a meeting, this is not acceptable. 
+
+\subsubsection*{In Case of Emergency}
+
+Assuming it really is an emergency or unworkable circumstance for a given group member, the rest of the group would work to fill in any gaps and make sure that the overall project progress is not significantly compromised. As soon as we are notified, we would delegate the remaining work, set a time frame, and communicate with the missing group member what their responsibilities will be upon being able to work again. If the amount of work missing is small, there will likely be no further action, however if someone is unable to complete a significant portion of what is expected of them, the group member may be asked to complete other tasks in the future to compensate. As for missing meetings, the group members that are able to attend would gather relevant information for the missing member and relay it to them as soon as possible. 
+
+\subsection*{Accountability and Teamwork}
+
+\subsubsection*{Quality} 
+
+We expect all group members come to meetings with either ideas for the project and inquiries related to those ideas, or questions about how to proceed in general. Meetings are times for the group to get organized, plan our future steps, and prepare for the immediate next step. If a member is confused, we ask that they ask questions during meetings to clarify. If a member has an idea, we ask that it is shared and they are open to having the idea construtively criticized. There will be no concrete expectation of what should be brought to each meeting in terms of potentially workable items. As for deliverable work, all work will be reviewed prior to submission, and we expect that all members complete their work assuming that required work from other members will be completed by the time they need it. If a member does not stay on task or develops something different than was expected, regardless of functionality, this will need to be discussed. Over the course of a year-long project, the predictabilty of group members' output is extremely valuable for planning and organization, arguably as valuable as the quality itself. Any interruptions or deviations from what is expected must be communicated immediately.
+
+\subsubsection*{Attitude}
+
+We expect everyone to have a positive attitude and be willing to cooperate on any given day. Given that we have a level of familiarity with each other going in to the course, establishing a concrete code of conduct or conflict resolution plan is not our top priority, however if consistent problems arise in the future as a result of this, we would be willing to implement solutions. As it stands, the goals we outlined in the External Goals section act as a common ground for us all to stay on track, and through effective communication we hope to maintain this, and should any issues arise we would communicate them much the same way we arrived at our common goals initially, in a civil group discussion.
+
+\subsubsection*{Stay on Track}
+
+As of now we do not have any reward system or penalty system in place for the greatest/lowest performers. We believe that this approach would ruin the mutual respect amongst the group and give an illusion of hierarchy which can only have negative implications for the team's productivity, especially given the small size. We are all in similar academic situations and expect it is in everyone's best interest to perform well on this project. Between deliverables there will be an assumption that group members are working as expected, however this will be checked on during meetings to ensure progress is maintained. With consistently timed meetings and encouraged open discussion, we hope to mitigate significant discrepancies in performance by making sure everyone is on the same page and knows they are supported by the rest of the group rather than competing with them. Given that this is the first time we are experiencing software development in this breadth and depth, we're approaching our targets with cautious optimism and carefully managing the precedents we set, as we are all fairly new to this.
+
+\subsubsection*{Team Building}
+
+We have discussed team building activities such as sports watch parties, and celebratory pub nights for bigger milestones along the way. We have been attending more lectures together as a group, as well as shared all our social media contact information so we can communicate on platforms less formal than Discord or MS Teams. This will help make the group feel less foreign to each other by repeated exposure and occasional outings.
+
+\subsubsection*{Decision Making} 
+
+As of now, all decisions have been put to a vote. Consensus has not been necessary yet for any of our considerations, however if a situation arises that presents us with a particularly impactful team decision, we may choose to seek consensus. Along with the voting process we state why we vote how we do such that we can come to a compromise that best suits even those who voted for a less popular option, due to why they voted for it.
+
+\end{document}

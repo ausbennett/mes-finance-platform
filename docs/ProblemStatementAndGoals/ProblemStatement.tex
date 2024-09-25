@@ -1,0 +1,183 @@
+\documentclass{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\title{Problem Statement and Goals\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+September 23rd, 2024 & Adam Podolak & Initial revision, including all sections (1-4)\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Problem Statement}
+
+\wss{You should check your problem statement with the
+\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
+{problem statement checklist}.} 
+
+\wss{You can change the section headings, as long as you include the required
+information.}
+
+The McMaster Engineering Society (MES) supports approximately 60 student groups and numerous individuals through academics, athletics, and recreational and professional activities. The MES is facing a significant challenge with managing financial expense reporting and reimbursements, with the current system relying on a combination of Google Forms, PDFs, and spreadsheets. This approach has lead to an inefficient and disjointed workflow resulting in delays, errors and increased manual administrative burden that has made it difficult to accurately track expenses, maintain compliance, and provide reimbursements. 
+
+\subsection{Problem}
+
+The problem to be solved is addressing the inefficient system that is currently being used for financial expense reporting within the MES. The root problem is an absence of a centralized platform that streamlines reimbursement requests, payment requests, intramural application funding, automated ledger tracking, audit compliance tracking, etc. A lack of such a platform is hindering the MES's ability to financially support its student groups and individuals effectively. This problem is important because efficient financial management is crucial for the MES to accomplish its role of supporting students and their activities. The current system is cumbersome and consumes valuable time and resources. It is also prone to financial inaccuracies and non-compliance with audit requirements. Improving this system is important for reducing administrative overhead, minimizing errors, and improving student satisfaction.
+
+\subsection{Inputs and Outputs}
+
+\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
+Use abstraction so that you can avoid details.}
+
+\subsubsection{Inputs}
+
+\begin{enumerate}
+    \item Payment, funding, or reimbursement requests: submitted by student groups or individuals
+    \item Admin decisions: actions taken by the MES finance team (approvals, rejections, requests for more information)
+    \item Repetitive user information: void cheques, e-transfer email, etc.
+    \item Compliance requirements: guidelines, regulatory standards, and policies that must be followed
+    \item Communication triggers: events that will initiate automated emails or mobile text messages
+\end{enumerate}
+
+\subsubsection{Outputs}
+
+\begin{enumerate}
+    \item Completed transactions: completed reimbursements, payments delivered to correct student groups or individuals (\emph{Inputs: 1, 2})
+    \item Status notifications: automated updates regarding progress of requests or required actions (\emph{Inputs: 2, 5})
+    \item Financial document organization: storing and displaying void cheques, e-transfer emails, etc. (\emph{Input 3})
+    \item Audit records: comprehensive, traceable records of all financial activities to ensure compliance (\emph{Input 4})
+    \item Automated ledger entries (\emph{Inputs 1, 2})
+\end{enumerate}
+
+\subsection{Stakeholders}
+
+\begin{itemize}
+    \item \emph{Student Groups and Individuals}: Approximately 60 students groups and numerous individuals who submit reimbursement/funding requests and rely on timely and efficient reimbursements/funding.
+    \item \emph{Vice President, Finance (Supervisor)}: Luke Schuurman, responsible for overseeing the financial operations, managing budgets, processing reimbursements, and ensuring compliance.
+    \item \emph{MES Financial Operations Team}: The financial staff of the MES that support the VP Finance with daily operations such as processing reimbursements or funding requests. 
+\end{itemize}
+
+\subsection{Environment}
+
+\wss{Hardware and software environment}
+
+\subsubsection{Software}
+The current software environment is utilizing different tools such as Google Forms, PDFs, and spreadsheets to complete reimbursements requests. These tools are not integrated and do not have automation capabilities. The software constraints for the improved solution include Typescript and Next.js. 
+
+\subsubsection{Hardware}
+There is no physical hardware environment that we will be working with (other than personal computers for development), the MES currently uses DigitalOcean (cloud service) for website hosting and database needs.
+
+\section{Goals}
+
+\begin{itemize}
+    \item Streamlined reimbursement request, payment request, and intramural funding application processes
+    \begin{itemize}
+        \item \emph{Description}: create a centralized platform for students to submit requests, and MES finance staff to approve and process requests
+        \item \emph{Measurable target}: reduce the number of tools or platforms a user needs to access from multiple (Google Forms, PDFs, spreadsheets, etc.) to just one (1) unified platform
+    \end{itemize}
+    \item Secure storage of user information
+    \begin{itemize}
+        \item \emph{Description}: create a secure user profile and security access system to store and access repetitive information such as banking details and contact information
+        \item \emph{Measurable target}: ensure users can store and access only their information, upholding confidentiality, integrity, and availability of data
+    \end{itemize}
+    \item Custom approval workflows
+    \begin{itemize}
+        \item \emph{Description}: provide a feature to create custom approval workflows tailored to non-standard types of requests
+        \item \emph{Measurable target}: allow administrators to modify workflows with $<$3 clicks or actions
+    \end{itemize}
+    \item Automated approval status emails/notifications
+    \begin{itemize}
+        \item \emph{Measurable target}: ensure notifications are sent within 5 minutes of a status change
+    \end{itemize}
+    \item Intuitive user interface
+    \begin{itemize}
+        \item \emph{Measurable target}: ensure 90\% of users can submit a request on the first attempt without external aids or user manuals
+    \end{itemize}
+\end{itemize}
+
+\section{Stretch Goals}
+
+\begin{itemize}
+    \item Automated ledger tracking for audit compliance
+    \begin{itemize}
+        \item automated ledger tracking and audit trails to ensure accuracy of all financial records and compliance with regulations
+    \end{itemize}
+    \item Advanced analytics and reporting
+    \begin{itemize}
+        \item provide a data analytics dashboard within the platform for visualizing MES financial data, allowing for the finance team to make informed, data-driven decisions 
+    \end{itemize}
+    \end{itemize}
+
+\section{Challenge Level and Extras}
+
+\wss{State your expected challenge level (advanced, general or basic).  The
+challenge can come through the required domain knowledge, the implementation or
+something else.  Usually the greater the novelty of a project the greater its
+challenge level.  You should include your rationale for the selected level.
+Approval of the level will be part of the discussion with the instructor for
+approving the project.  The challenge level, with the approval (or request) of
+the instructor, can be modified over the course of the term.}
+
+\wss{Teams may wish to include extras as either potential bonus grades, or to
+make up for a less advanced challenge level.  Potential extras include usability
+testing, code walkthroughs, user documentation, formal proof, GenderMag
+personas, Design Thinking, etc.  Normally the maximum number of extras will be
+two.  Approval of the extras will be part of the discussion with the instructor
+for approving the project.  The extras, with the approval (or request) of the
+instructor, can be modified over the course of the term.}
+
+\subsection{Challenge Level}
+
+The challenge level for this project will be general. The project lacks the novelty that an advanced level project would involve. The team will be working with known tools and frameworks, each with a substantial amount of documentation. Therefore, there is not much required domain knowledge, however, the implementation may prove to be complicated considering the number of frontend, backend and database technologies required. Similarly, elements of access control and security add complexity to the development, which is why the project is not basic challenge level either.
+
+\subsection{Extras}
+
+The extras chosen for this project will be usability testing and user documentation. Usability testing will be conducted with both students, and the administrative staff of the MES finance team.
+
+\newpage{}
+
+\section*{Appendix --- Reflection}
+
+\wss{Not required for CAS 741}
+
+\input{../Reflection.tex}\\
+
+\textbf{Note:} All questions were answered on a team level since one individual wrote this deliverable, however, all group members collaborated and contributed towards the brainstorming of the deliverable's content.
+
+\begin{enumerate}
+    \item What went well while writing this deliverable? 
+    \begin{enumerate}
+        \item One thing that went well was formulating the problem statement and putting it into context in terms of inputs and outputs and describing stakeholders and the environment. Although the project may prove to be slightly complex, the problem and scope are well defined and clear, which made it straight forward to formulate a problem statement. Another thing that went well was deciding on the challenge level and extras. It is a given that most projects are general difficulty level, and it is no different for this project. The extras were also easy to decide on, given that the platform will be used directly by users (students) and admins (MES staff) usability testing was an obvious choice to ensure the application is functioning as intended.
+    \end{enumerate}
+    \item What pain points did you experience during this deliverable, and how
+    did you resolve them?
+    \begin{enumerate}
+        \item One pain point experienced during this deliverable was formulating the goals and stretch goals. It was challenging creating goals that were selling points, but also measurable and doable. This pain point was mainly resolved by brainstorming goals, discussing amongst the team and ensuring that they were indeed selling points for the product. We imagined a scenario where we were pitching these goals as features of the product to a client wanting to but the software, which helped with ensuring their validity as selling points.
+    \end{enumerate}
+    \item How did you and your team adjust the scope of your goals to ensure
+    they are suitable for a Capstone project (not overly ambitious but also of
+    appropriate complexity for a senior design project)?
+    \begin{enumerate}
+        \item We adjusted our goals by considering features of the platform that could be implemented with the knowledge that we currently possess. Any goals that seemed too ambitious were categorized as stretch goals. We also adjusted our goals by establishing measurable targets for each of the goals. If the measurable target seemed to be too difficult to achieve, we considered discarding or adjusting that specific goal. We balanced complexity with practicality by limiting primary goals to an appropriate number (around 5), and adding stretch goals that would challenge us.
+    \end{enumerate}
+\end{enumerate}  
+
+\end{document}

@@ -154,38 +154,97 @@ involved in the Project}
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
+\begin{itemize}
+    \item Payment requests would be processed by the system within 5 seconds
+    \item Invoices would be generated within 3 seconds
+    \item Reimbursement requests shall be processed within 5 seconds
+\end{itemize}
 \lips
 \subsection{Safety-Critical Requirements}
+\begin{itemize}
+    \item Sensitive information such as credit card numbers shall be masked
+    \item Access controls shall restrict access to confidential information
+    \item Strong encryption would provide secure data transfer between steps
+\end{itemize}
 \lips
 \subsection{Precision or Accuracy Requirements}
+\begin{itemize}
+    \item Monetary values would be rounded off to the nearest cent (i.e., x.yz)
+\end{itemize}
 \lips
 \subsection{Robustness or Fault-Tolerance Requirements}
+\begin{itemize}
+    \item Backup servers shall store critical information in case of failure, including daily backups
+    \item Graceful error handling would preserve sensitive information in case of improper use
+\end{itemize}
 \lips
 \subsection{Capacity Requirements}
+\begin{itemize}
+    \item The system shall be able to handle 1000 reimbursement requests, 1000 invoices, and 500 payment requests daily
+    \item The system would be able to handle up to 10 requests simultaneously
+    \item The system shall be able to store up to 10 years’ worth of backed-up data
+\end{itemize}
 \lips
 \subsection{Scalability or Extensibility Requirements}
+\begin{itemize}
+    \item API integration would support future third-party connectivity
+    \item The system would be sufficiently scalable so as to be able to accommodate double its current maximum usage within one year
+\end{itemize}
 \lips
 \subsection{Longevity Requirements}
+\begin{itemize}
+    \item The system shall be serviceable, at its current usage rate, for at least the next 10 years without needing considerable updates or overhauls made to it
+\end{itemize}
 \lips
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
+\begin{itemize}
+    \item The system shall run on Windows 10 and 11 operating systems 
+    \item The system shall require similar minimum specs to Intuit Quickbooks to run
+\end{itemize}
 \lips
 \subsection{Wider Environment Requirements}
+\begin{itemize}
+    \item Financial institutions integrated with the payment/reimbursement features shall make use of industry-standard systems and processes for Canadian banks
+\end{itemize}
 \lips
 \subsection{Requirements for Interfacing with Adjacent Systems}
+\begin{itemize}
+    \item The system shall be adaptable enough to gracefully handle interactions with different financial institutions
+    \item The API shall be adaptable for use with other (Future) third-party connections
+\end{itemize}
 \lips
 \subsection{Productization Requirements}
+\begin{itemize}
+    \item ***
+    \item “Productization” is not a word in the English language, so there’s nothing to write here. Dr Spencer, please rewrite this documentation with the correct word so that I may add the requirement(s) in a revised version.
+    \item ***
+\end{itemize}
 \lips
 \subsection{Release Requirements}
+\begin{itemize}
+    \item Stable releases shall be released twice a year
+\end{itemize}
 \lips
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
+\begin{itemize}
+    \item Data backups shall be performed daily to protect sensitive information
+    \item The system shall experience scheduled maintenance downtime for 10 percent of each year (specifics to be determined)
+    \item Security updates and patches shall be released as needed (separate from the twice-yearly stable releases)
+\end{itemize}
 \lips
 \subsection{Supportability Requirements}
+\begin{itemize}
+    \item Documentation for users and the team shall be kept up to date as new releases are made
+\end{itemize}
 \lips
 \subsection{Adaptability Requirements}
+\begin{itemize}
+    \item The system shall be robust enough to adapt to changes from external and connected sources such as McMaster University or Canadian financial institutions without losing core functionalities
+\end{itemize}
 \lips
 
 \section{Security Requirements}

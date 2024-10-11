@@ -211,54 +211,164 @@ involved in the Project}
 \lips
 
 \section{Open Issues}
-\lips
+The key open issues currently revolve around undecided functionality, particularly regarding the integration of automated reporting features and the appropriate level of customization for the needs of various student groups. Other considerations include:
+\begin{itemize}
+    \item How granular the platform should be in tracking compliance for audit purposes.
+    \item Whether the system will support all financial workflows such as reimbursement requests, intramural funding, and payment tracking.
+    \item Ensuring that the user experience is intuitive for both administrators and students.
+\end{itemize}
+These decisions will significantly influence the overall architecture of the solution and the development timeline.
+
 
 \section{Off-the-Shelf Solutions}
+
+Accounting and invoicing software is readily available, however MES refrains from implementing these existing solutions due to a variety of factors. Commonly cited concerns include:
+\begin{itemize}
+    \item Lack of control over platform customization to meet the specific needs of MES.
+    \item High subscription fees that are unsustainable for a non-profit organization.
+    \item Data privacy concerns, especially in handling sensitive financial information.
+    \item Limited support for integration with existing MES infrastructure.
+\end{itemize}
+
+
+
 \subsection{Ready-Made Products}
-\lips
+
+Examples of existing financial management tools that were considered but not implemented include:
+\begin{itemize}
+    \item \textbf{Wave Accounting} (\href{https://www.waveapps.com/}{https://www.waveapps.com/}) - A free accounting platform suited for small businesses but lacks customization for non-profit needs.
+    \item \textbf{FreshBooks} (\href{https://www.freshbooks.com/}{https://www.freshbooks.com/}) - A paid tool offering invoicing and expense tracking, but deemed too expensive and restrictive for MES.
+    \item \textbf{Xero} (\href{https://www.xero.com}{https://www.xero.com}) - Cloud based accounting platform, for invoicing, inventory and bank reconcillation
+    \item \textbf{QuickBooks Online} (\href{https://quickbooks.intuit.com/}{https://quickbooks.intuit.com/}) - Widely-used platform for small to mid sized businesses
+
+\end{itemize}
 \subsection{Reusable Components}
-\lips
+There are numerous reusable components that could be adapted to suit the needs of the MES. These include:
+\begin{itemize}
+    \item \textbf{LedgerSMB} (\href{https://ledgersmb.org/}{https://ledgersmb.org/}) - An open-source accounting tool that could be modified for more specific MES needs.
+    \item \textbf{Plaid API} (\href{https://plaid.com/docs/api/}{https://plaid.com/docs/api/}) - For integrating bank data and managing student group transactions.
+    \item \textbf{Stripe API} (\href{https://docs.stripe.com/api}{https://docs.stripe.com/api}) - For handling payments and reimbursements.
+\end{itemize}
+
 \subsection{Products That Can Be Copied}
-\lips
+While no single product fully meets MES requirements, certain features from established platforms could inspire the design of the financial management system:
+\begin{itemize}
+    \item \textbf{QuickBooks} - Budgeting tools and expense tracking can provide a model for managing student group funds.
+    \item \textbf{Expensify} - Reimbursement workflows and receipt tracking features.
+\end{itemize}
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
-\lips
+The implementation of a new centralized platform for financial management may affect MES's current environment in the following ways:
+\begin{itemize}
+    \item Increased demand on server resources, especially as more financial processes move from local and manual to online and automated.
+    \item Potential need for server upgrades if the platform requires more CPU, RAM, or storage than the existing DigitalOcean infrastructure provides.
+\end{itemize}
+
 \subsection{Effects on the Installed Systems}
-\lips
+MES currently uses DigitalOcean for its infrastructure. Introducing a financial management platform could result in:
+\begin{itemize}
+    \item Increased usage limits, potentially necessitating the purchase of higher-tier virtual machines.
+    \item A larger database capacity for tracking all transactions and handling potentially higher loads during peak reporting periods.
+\end{itemize}
+
 \subsection{Potential User Problems}
-\lips
-\subsection{Limitations in the Anticipated Implementation Environment That May
-Inhibit the New Product}
-\lips
+User challenges may arise from:
+\begin{itemize}
+    \item The steep learning curve for administrators and student groups transitioning from the current system of Google Forms, PDFs, and spreadsheets to a new, fully automated platform.
+    \item Potential resistance from users who are accustomed to the manual processes and may find it difficult to adapt to a new system.
+\end{itemize}
+
+\subsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
+Potential limitations include:
+\begin{itemize}
+    \item Resource constraints on the DigitalOcean infrastructure, which could limit the performance and scalability of the platform.
+    \item Increased operating costs due to the need for more powerful virtual machines or cloud services.
+\end{itemize}
+
 \subsection{Follow-Up Problems}
-\lips
+After implementation, follow-up issues could arise, such as:
+\begin{itemize}
+    \item Reconciling the codebase of the new platform with existing MES systems and ensuring seamless integration.
+    \item Ensuring that the new platform adheres to financial compliance and audit standards, particularly in the first few months of operation.
+\end{itemize}
 
 \section{Tasks}
 \subsection{Project Planning}
-\lips
+Key tasks in project planning include:
+\begin{itemize}
+    \item Defining the scope of the system and establishing clear, achievable goals for each phase of development.
+    \item Setting a timeline for system rollout, including key milestones like system design, development, testing, and deployment.
+\end{itemize}
+
 \subsection{Planning of the Development Phases}
-\lips
+Development should proceed in phases:
+\begin{itemize}
+    \item \textbf{Phase 1:} Initial research and requirements gathering from MES staff and student groups.
+    \item \textbf{Phase 2:} Core system design, focusing on the backend ledger management and reimbursement workflows. This phase would be the most intensive.
+    \item \textbf{Phase 3:} UI/UX design to ensure the platform is user-friendly and accessible to all MES members.
+    \item \textbf{Phase 4:} System testing and debugging, including user feedback to refine functionality.
+    \item \textbf{Phase 5:} Final deployment and training for users.
+\end{itemize}
 
 \section{Migration to the New Product}
 \subsection{Requirements for Migration to the New Product}
-\lips
+To successfully migrate to the new financial platform, MES will need to:
+\begin{itemize}
+    \item Train existing staff and student group representatives on how to use the new system.
+    \item Ensure all historical financial data is correctly transferred to the new system and remains accessible for auditing purposes.
+\end{itemize}
+
 \subsection{Data That Has to be Modified or Translated for the New System}
-\lips
+The data to be migrated includes:
+\begin{itemize}
+    \item Historical financial data such as past reimbursements, transactions, and budget allocations.
+    \item Any audit-related data to ensure compliance with financial reporting requirements.
+\end{itemize}
 
 \section{Costs}
-\lips
+While MES already has existing infrastructure on DigitalOcean, additional costs may arise from:
+\begin{itemize}
+    \item Server upgrades to accommodate increased resource demands from the new platform.
+    \item Potential third-party services for payment processing or APIs (e.g., Plaid, Stripe).
+\end{itemize}
+
+
 \section{User Documentation and Training}
+
 \subsection{User Documentation Requirements}
-\lips
+User documentation must:
+\begin{itemize}
+    \item Be clear, concise, and accessible to both administrators and student group representatives.
+    \item Include examples for common tasks, such as submitting reimbursements and tracking group budgets.
+    \item Be easy to navigate, with a search feature and organized sections for quick reference.
+\end{itemize}
+
 \subsection{Training Requirements}
-\lips
+Training will involve:
+\begin{itemize}
+    \item "Getting Started" guides for both administrators and general users.
+    \item Video tutorials or live training sessions to walk users through the system’s core functions.
+    \item Ongoing support through help desks, FAQs, and troubleshooting documentation.
+\end{itemize}
 
 \section{Waiting Room}
-\lips
+The following features are under consideration for future development but are not part of the immediate project scope:
+\begin{itemize}
+    \item SMS notifications to update users on the status of reimbursement requests.
+    \item Authentication via McMaster CAS 2FA (Central Authentication Service) for enhanced security.
+    \item Integrated Phone Application
+\end{itemize}
 
 \section{Ideas for Solution}
-\lips
+The proposed solution involves leveraging a form of the traditional web full stack, potentially (MongoDB, Express, NextJs, React) to handle both frontend and backend requirements. This stack allows for:
+\begin{itemize}
+    \item Efficient data integration with existing MES systems.
+    \item A scalable, modular design that can be extended with additional features like payment APIs or compliance tools.
+    \item Maintainability after the capstone is complete
+\end{itemize}
+ 
+
 
 \newpage{}
 \section*{Appendix --- Reflection}
@@ -273,11 +383,17 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
   application, or software engineering knowledge, mechatronics knowledge or
   computer science knowledge.  Skills may be related to technology, or writing,
   or presentation, or team management, etc.  You should look to identify at
-  least one item for each team member.
+  least one item for each team member.\\
+
+  \textbf{Austin: } A mindset: being able to overcome the anxiety that can arise from approaching a problem that you have never seen before especially at this scale. For most team members this is the largest scale project to have be worked on. This can obvioiusly be daunting. A message to those that feel this way, just dive head first, learn and fail. Each failure is a stepping stone to success, do not be afraid to fail. \\
+
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
+
+  \textbf{Austin: } Well to reiterate again, I think this choice of "skill" is widely applicable to many areas of life, the capstone provides a safe mechanism for learning this. An approach to aquiring the skill of facing a challenge is to embrace the mindset of continuous failure towards eventual success. (\textit{A bit unorthodox of a response, but I still think is equally valuable})
+  
 \end{enumerate}
 
 \end{document}

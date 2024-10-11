@@ -163,20 +163,104 @@ Outside of efficiency and availability, the existing platform also does not incl
 
 
 \section{The Scope of the Work}
+
 \subsection{The Current Situation}
-\lips
+The McMaster Engineering Society (MES) currently manages financial reporting, reimbursements, and expense tracking through a disjointed system involving Google Forms, PDFs, and spreadsheets. This fragmented approach leads to inefficiencies, delays in reimbursements, errors, and increased administrative burden. MES requires a streamlined platform to centralize these processes, ensuring compliance with audit standards and reducing the time spent on financial management tasks.
+
 \subsection{The Context of the Work}
-\lips
+The MES supports around 60 student groups and numerous individuals, organizing various academic, professional, and recreational activities. Effective financial management is essential for ensuring that these student groups receive timely funding and reimbursements. Without an efficient system, MES risks delayed payments, financial inaccuracies, and non-compliance with audit requirements. Developing a centralized platform is critical for MES to continue supporting student initiatives and ensuring smooth financial operations.
+
 \subsection{Work Partitioning}
-\lips
+The project will be divided into the following key tasks:
+\begin{itemize}
+    \item \textbf{Research and Requirements Gathering:} Analyze current MES workflows and identify the specific financial management needs of the organization.
+    \item \textbf{Design and Architecture:} Create the architecture for a centralized financial platform, focusing on scalability, security, and integration with existing MES infrastructure.
+    \item \textbf{Development and Implementation:} Develop core features, including reimbursement requests, payment requests, automated ledger tracking, and audit compliance monitoring.
+    \item \textbf{Testing and Quality Assurance:} Conduct unit and integration testing to ensure the platform is robust, error-free, and complies with financial regulations.
+    \item \textbf{Deployment and Training:} Deploy the system within MES and provide training for staff and users to familiarize them with the new platform.
+\end{itemize}
+
 \subsection{Specifying a Business Use Case (BUC)}
-\lips
+
+\subsubsection{\textbf{Business Use Case:} "Submitting a Reimbursement Request"}
+\begin{itemize}
+    \item \textbf{Actors:} MES student group , MES finance administrator.
+    \item \textbf{Goal:} To submit, review, track, and approve a reimbursement request for a student group expense.
+    \item \textbf{Main Success Scenario:} 
+    \begin{enumerate}
+        \item The user logs into the MES financial platform.
+        \item The User selects the "Reimbursement Request" option and fills out the form, attaching relevant receipts.
+        \item The user is automatically notified to await approval fromthe MES finance officer.
+        \item The fiinance admin is notified of the request
+        \item The finance admin reviews the submission and approves the request.
+        \item The reimbursement is processed, and the treasurer is notified of the successful completion.
+    \end{enumerate}
+    \item \textbf{Extensions:} 
+    \begin{itemize}
+        \item If the request lacks sufficient information, the finance officer may request additional details from the treasurer. 
+        \item If the reimbursement exceeds a predefined limit, additional approval may be required from higher-level officers.
+        \item The status of the request is accesible throughout the process, i.e "awaiting confirmation"
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{\textbf{Business Use Case:} "Creating and Sending an Invoice Using a Pre-existing Template"}
+
+\begin{itemize}
+    \item \textbf{Actors:} Student club, MES finance officer, external client (recipient of the invoice).
+    
+    \item \textbf{Goal:} To create and send an invoice using a pre-existing template, simplifying the process for student clubs to bill external clients for services or events.
+    
+    \item \textbf{Main Success Scenario:} 
+    \begin{enumerate}
+        \item The student club logs into the MES financial platform.
+        \item The user navigates to the "Create Invoice" section.
+        \item The platform presents a set of pre-existing invoice templates that conform to MES’s standardized financial format.
+        \item The user selects an appropriate template, fills in the required details (e.g., client name, services rendered, amounts, due date).
+        \item The invoice is automatically formatted and previewed for review.
+        \item The user reviews the invoice and submits it.
+        \item The platform routes the invoice to the MES finance officer for approval and verification.
+        \item Once approved, the invoice is sent to the external client directly through the platform.
+        \item The user and MES finance officer receive a confirmation that the invoice has been successfully sent.
+    \end{enumerate}
+    
+    \item \textbf{Extensions:} 
+    \begin{itemize}
+        \item If any required fields are missing, the system alerts the user to complete them before submission.
+        \item The finance officer may request edits to the invoice if any discrepancies are found during the review process.
+        \item If the client is an internal MES entity, the invoice may be flagged for internal tracking and not require external delivery.
+        \item Automated reminders are sent to the client if payment is not received by the due date.
+    \end{itemize}
+\end{itemize}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
-\lips
+The Business Data Model (BDM) defines the structure and relationships between different types of data involved in the MES financial platform. Due to the early nature of the requirements these data models are subject to change, however this serves as a good starting point.
+
+\begin{itemize}
+    \item \textbf{Student Club:} Represents a student group affiliated with MES.
+    \item \textbf{Reimbursement Request:} A financial record detailing a student's or club's request for reimbursement.
+    \item \textbf{Invoice:} Represents a bill sent to an external client for services or events hosted by the student clubs.
+    \item \textbf{External Client:} An entity or individual external to MES who receives an invoice.
+    \item \textbf{MES Finance Officer:} A staff member responsible for approving reimbursement and payment requests.
+    \item \textbf{Audit Log:} Tracks changes to financial records for compliance purposes.
+    \item \textbf{Payment Request:} A request for funds that needs to be approved by an MES finance officer.
+\end{itemize}
+
 \subsection{Data Dictionary}
-\lips
+The Data Dictionary provides detailed descriptions of the key fields in the MES financial system, ensuring consistent terminology and data handling across the platform. \textbf{Please note, these fields are subject to change.}
+
+\begin{itemize}
+    \item \textbf{Student Club ID (int):} A unique identifier and/or categorizer for each student club.
+    \item \textbf{Reimbursement Request ID (int):} A unique identifier for each reimbursement request.
+    \item \textbf{Invoice ID (int):} A unique identifier for each invoice. 
+    \item \textbf{Client Name (string):} The name of the external client receiving the invoice.
+    \item \textbf{Amount (decimal):} The amount of money involved in the reimbursement request or invoice.
+    \item \textbf{Submission Date (date):} The date a reimbursement or payment request is submitted.
+    \item \textbf{Approval Status (string):} The status of a request, such as "Pending," "Approved," or "Rejected."
+    \item \textbf{Audit Timestamp (datetime):} The exact time any modification is made to a financial record.
+    \item \textbf{Payment Due Date (date):} The date by which payment is expected for an invoice.
+    \item \textbf{Club Treasurer (string):} The name of the user responsible for submitting financial requests on behalf of a student club.
+\end{itemize}
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}

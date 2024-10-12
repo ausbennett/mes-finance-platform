@@ -267,11 +267,79 @@ The Data Dictionary provides detailed descriptions of the key fields in the MES 
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
-\lips
+The finance platform will focus on handling reimbursement requests, invoice generation, and financial tracking for MES-affiliated student groups. It will automate the submission, review, and approval of reimbursement requests while integrating with existing MES infrastructure. The platform will not support unrelated financial operations such as payroll or student tuition payments.
+
 \subsection{Product Use Case Table}
-\lips
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{ID} & \textbf{Use Case} \\
+\midrule
+PUC-1 & Submit a reimbursement request \\
+PUC-2 & Review and approve reimbursement requests \\
+PUC-3 & Generate an invoice for services \\
+PUC-4 & Track the status of a reimbursement \\
+PUC-5 & Access financial documentation for audit purposes \\
+\bottomrule
+\end{tabularx}
+
 \subsection{Individual Product Use Cases (PUC's)}
-\lips
+\textbf{PUC-1: Submit a Reimbursement Request}
+\begin{itemize}
+    \item \textbf{Primary Actor}: Student (Club Member)
+    \item \textbf{Goal}: Submit a reimbursement request for club-related expenses
+    \item \textbf{Preconditions}:
+    \begin{itemize}
+        \item User is logged in and is a member of a registered MES club
+        \item User has relevant documentation, such as receipts
+    \end{itemize}
+    \item \textbf{Main Success Scenario}:
+    \begin{enumerate}
+        \item User accesses the reimbursement submission form
+        \item User fills in required details (club affiliation, amount, etc.)
+        \item User uploads the receipt
+        \item User submits the form
+        \item System validates the submission and confirms receipt
+        \item System forwards the request to the finance team for review
+    \end{enumerate}
+    \item \textbf{Postconditions}:
+    \begin{itemize}
+        \item The reimbursement request status is set to "Submitted"
+        \item User can track the request's progress in the system
+    \end{itemize}
+    \item \textbf{Extensions}:
+    \begin{itemize}
+        \item If validation fails, the system provides feedback on missing or incorrect fields
+        \item If the amount exceeds a certain threshold, additional approval may be required
+    \end{itemize}
+\end{itemize}
+
+\textbf{PUC-2: Review and Approve Reimbursement Requests}
+\begin{itemize}
+    \item \textbf{Primary Actor}: MES Finance Staff
+    \item \textbf{Goal}: Review and approve submitted reimbursement requests
+    \item \textbf{Preconditions}:
+    \begin{itemize}
+        \item Reimbursement request has been submitted by a user
+        \item Finance staff has the necessary access permissions
+    \end{itemize}
+    \item \textbf{Main Success Scenario}:
+    \begin{enumerate}
+        \item Finance staff logs into the platform
+        \item Staff reviews the reimbursement details and attached documentation
+        \item Staff approves or rejects the request
+        \item If approved, the system updates the status to "Approved"
+    \end{enumerate}
+    \item \textbf{Postconditions}:
+    \begin{itemize}
+        \item Request is moved to the appropriate workflow step based on approval status
+    \end{itemize}
+    \item \textbf{Extensions}:
+    \begin{itemize}
+        \item If the request is missing documentation, the staff can request additional information
+        \item If the request is rejected, the system notifies the submitter with the reason for rejection
+    \end{itemize}
+\end{itemize}
+
 
 \section{Functional Requirements}
 \subsection{Functional Requirements}

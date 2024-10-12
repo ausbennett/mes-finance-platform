@@ -25,7 +25,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: (Volere)} 
 \author{\authname}
 \date{\today}
 	
@@ -163,20 +163,104 @@ Outside of efficiency and availability, the existing platform also does not incl
 
 
 \section{The Scope of the Work}
+
 \subsection{The Current Situation}
-\lips
+The McMaster Engineering Society (MES) currently manages financial reporting, reimbursements, and expense tracking through a disjointed system involving Google Forms, PDFs, and spreadsheets. This fragmented approach leads to inefficiencies, delays in reimbursements, errors, and increased administrative burden. MES requires a streamlined platform to centralize these processes, ensuring compliance with audit standards and reducing the time spent on financial management tasks.
+
 \subsection{The Context of the Work}
-\lips
+The MES supports around 60 student groups and numerous individuals, organizing various academic, professional, and recreational activities. Effective financial management is essential for ensuring that these student groups receive timely funding and reimbursements. Without an efficient system, MES risks delayed payments, financial inaccuracies, and non-compliance with audit requirements. Developing a centralized platform is critical for MES to continue supporting student initiatives and ensuring smooth financial operations.
+
 \subsection{Work Partitioning}
-\lips
+The project will be divided into the following key tasks:
+\begin{itemize}
+    \item \textbf{Research and Requirements Gathering:} Analyze current MES workflows and identify the specific financial management needs of the organization.
+    \item \textbf{Design and Architecture:} Create the architecture for a centralized financial platform, focusing on scalability, security, and integration with existing MES infrastructure.
+    \item \textbf{Development and Implementation:} Develop core features, including reimbursement requests, payment requests, automated ledger tracking, and audit compliance monitoring.
+    \item \textbf{Testing and Quality Assurance:} Conduct unit and integration testing to ensure the platform is robust, error-free, and complies with financial regulations.
+    \item \textbf{Deployment and Training:} Deploy the system within MES and provide training for staff and users to familiarize them with the new platform.
+\end{itemize}
+
 \subsection{Specifying a Business Use Case (BUC)}
-\lips
+
+\subsubsection{\textbf{Business Use Case:} "Submitting a Reimbursement Request"}
+\begin{itemize}
+    \item \textbf{Actors:} MES student group , MES finance administrator.
+    \item \textbf{Goal:} To submit, review, track, and approve a reimbursement request for a student group expense.
+    \item \textbf{Main Success Scenario:} 
+    \begin{enumerate}
+        \item The user logs into the MES financial platform.
+        \item The User selects the "Reimbursement Request" option and fills out the form, attaching relevant receipts.
+        \item The user is automatically notified to await approval fromthe MES finance officer.
+        \item The fiinance admin is notified of the request
+        \item The finance admin reviews the submission and approves the request.
+        \item The reimbursement is processed, and the treasurer is notified of the successful completion.
+    \end{enumerate}
+    \item \textbf{Extensions:} 
+    \begin{itemize}
+        \item If the request lacks sufficient information, the finance officer may request additional details from the treasurer. 
+        \item If the reimbursement exceeds a predefined limit, additional approval may be required from higher-level officers.
+        \item The status of the request is accesible throughout the process, i.e "awaiting confirmation"
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{\textbf{Business Use Case:} "Creating and Sending an Invoice Using a Pre-existing Template"}
+
+\begin{itemize}
+    \item \textbf{Actors:} Student club, MES finance officer, external client (recipient of the invoice).
+    
+    \item \textbf{Goal:} To create and send an invoice using a pre-existing template, simplifying the process for student clubs to bill external clients for services or events.
+    
+    \item \textbf{Main Success Scenario:} 
+    \begin{enumerate}
+        \item The student club logs into the MES financial platform.
+        \item The user navigates to the "Create Invoice" section.
+        \item The platform presents a set of pre-existing invoice templates that conform to MES’s standardized financial format.
+        \item The user selects an appropriate template, fills in the required details (e.g., client name, services rendered, amounts, due date).
+        \item The invoice is automatically formatted and previewed for review.
+        \item The user reviews the invoice and submits it.
+        \item The platform routes the invoice to the MES finance officer for approval and verification.
+        \item Once approved, the invoice is sent to the external client directly through the platform.
+        \item The user and MES finance officer receive a confirmation that the invoice has been successfully sent.
+    \end{enumerate}
+    
+    \item \textbf{Extensions:} 
+    \begin{itemize}
+        \item If any required fields are missing, the system alerts the user to complete them before submission.
+        \item The finance officer may request edits to the invoice if any discrepancies are found during the review process.
+        \item If the client is an internal MES entity, the invoice may be flagged for internal tracking and not require external delivery.
+        \item Automated reminders are sent to the client if payment is not received by the due date.
+    \end{itemize}
+\end{itemize}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
-\lips
+The Business Data Model (BDM) defines the structure and relationships between different types of data involved in the MES financial platform. Due to the early nature of the requirements these data models are subject to change, however this serves as a good starting point.
+
+\begin{itemize}
+    \item \textbf{Student Club:} Represents a student group affiliated with MES.
+    \item \textbf{Reimbursement Request:} A financial record detailing a student's or club's request for reimbursement.
+    \item \textbf{Invoice:} Represents a bill sent to an external client for services or events hosted by the student clubs.
+    \item \textbf{External Client:} An entity or individual external to MES who receives an invoice.
+    \item \textbf{MES Finance Officer:} A staff member responsible for approving reimbursement and payment requests.
+    \item \textbf{Audit Log:} Tracks changes to financial records for compliance purposes.
+    \item \textbf{Payment Request:} A request for funds that needs to be approved by an MES finance officer.
+\end{itemize}
+
 \subsection{Data Dictionary}
-\lips
+The Data Dictionary provides detailed descriptions of the key fields in the MES financial system, ensuring consistent terminology and data handling across the platform. \textbf{Please note, these fields are subject to change.}
+
+\begin{itemize}
+    \item \textbf{Student Club ID (int):} A unique identifier and/or categorizer for each student club.
+    \item \textbf{Reimbursement Request ID (int):} A unique identifier for each reimbursement request.
+    \item \textbf{Invoice ID (int):} A unique identifier for each invoice. 
+    \item \textbf{Client Name (string):} The name of the external client receiving the invoice.
+    \item \textbf{Amount (decimal):} The amount of money involved in the reimbursement request or invoice.
+    \item \textbf{Submission Date (date):} The date a reimbursement or payment request is submitted.
+    \item \textbf{Approval Status (string):} The status of a request, such as "Pending," "Approved," or "Rejected."
+    \item \textbf{Audit Timestamp (datetime):} The exact time any modification is made to a financial record.
+    \item \textbf{Payment Due Date (date):} The date by which payment is expected for an invoice.
+    \item \textbf{Club Treasurer (string):} The name of the user responsible for submitting financial requests on behalf of a student club.
+\end{itemize}
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
@@ -243,7 +327,7 @@ Outside of efficiency and availability, the existing platform also does not incl
 
 \subsection{Safety-Critical Requirements}
 \begin{itemize}
-    \item Sensitive information such as credit card numbers shall be masked
+    \item Sensitive information such as credit card numbers shall be masked and encrypted
     \item Access controls shall restrict access to confidential information
     \item Strong encryption would provide secure data transfer between steps
 \end{itemize}
@@ -255,121 +339,121 @@ Outside of efficiency and availability, the existing platform also does not incl
 
 \subsection{Robustness or Fault-Tolerance Requirements}
 \begin{itemize}
-    \item Backup servers shall store critical information in case of failure, including daily backups
+    \item \textbf{RR1. }Backup servers shall store critical information in case of failure, including daily backups
     \item Graceful error handling would preserve sensitive information in case of improper use
 \end{itemize}
 
 \subsection{Capacity Requirements}
 \begin{itemize}
-    \item The system shall be able to handle 1000 reimbursement requests, 1000 invoices, and 500 payment requests daily
-    \item The system would be able to handle up to 10 requests simultaneously
-    \item The system shall be able to store up to 10 years’ worth of backed-up data
+    \item \textbf{CPR1.} The system shall be able to handle 1000 reimbursement requests, 1000 invoices, and 500 payment requests daily
+    \item \textbf{CPR2.} The system would be able to handle up to 10 requests simultaneously
+    \item \textbf{CPR3.} The system shall be able to store up to 10 years’ worth of backed-up data
 \end{itemize}
 
 \subsection{Scalability or Extensibility Requirements}
 \begin{itemize}
-    \item API integration would support future third-party connectivity
-    \item The system would be sufficiently scalable so as to be able to accommodate double its current maximum usage within one year
+    \item \textbf{SER1.} API integration would support future third-party connectivity
+    \item \textbf{SER2.} The system would be sufficiently scalable so as to be able to accommodate double its current maximum usage within one year
 \end{itemize}
 
 \subsection{Longevity Requirements}
 \begin{itemize}
-    \item The system shall be serviceable, at its current usage rate, for at least the next 10 years without needing considerable updates or overhauls made to it
+    \item \textbf{LR1.} The system shall be serviceable, at its current usage rate, for at least the next 10 years without needing considerable updates or overhauls made to it. MES plans to continue working on the platform as needed after the completion of this capstone. As such, maintainability of this platform is an important consideration.
 \end{itemize}
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
 \begin{itemize}
-    \item The system shall run on Windows 10 and 11 operating systems 
-    \item The system shall require similar minimum specs to Intuit Quickbooks to run
+    \item \textbf{OR1.} The system shall run on Windows 10 and 11 operating systems 
+    \item \textbf{OR2.} The system shall require similar minimum specs to Intuit Quickbooks to run
 \end{itemize}
 
 \subsection{Wider Environment Requirements}
 \begin{itemize}
-    \item Financial institutions integrated with the payment/reimbursement features shall make use of industry-standard systems and processes for Canadian banks
+    \item \textbf{WR1.} Financial institutions integrated with the payment/reimbursement features shall make use of industry-standard systems and processes for Canadian banks
 \end{itemize}
 
 \subsection{Requirements for Interfacing with Adjacent Systems}
 \begin{itemize}
-    \item The system shall be adaptable enough to gracefully handle interactions with different financial institutions
-    \item The API shall be adaptable for use with other (Future) third-party connections
+    \item \textbf{IAR1.} The system shall be adaptable enough to gracefully handle interactions with different financial institutions
+    \item \textbf{IAR2.} The API shall be adaptable for use with other (Future) third-party connections
 \end{itemize}
 
 \subsection{Productization Requirements}
 \begin{itemize}
-    \item \textbf{Scalability and Performance:} Ensure server and database can handle increased usage and data with automated scaling capabilities.
-    \item \textbf{Security:} Implement data encryption, secure authentication (e.g., OAuth, 2FA)
-    \item \textbf{User Experience:} Develop an intuitive interface with role-based access control (RBAC) and adhere to WCAG accessibility guidelines.
-    \item \textbf{Integration with Existing Systems:} Ensure compatibility with MES infrastructure (e.g., DigitalOcean) and integrate with external services (e.g., payment processors, audit tools).
-    \item \textbf{Maintainability and Support:} Provide comprehensive documentation, automated testing (CI/CD) via GitHub Actions, and ensure error handling with clear logs and user feedback.
-    \item \textbf{Training and Onboarding:} Create training materials for users and provide help desk support during the transition to the new platform.
-    \item \textbf{Cost and Future-Proofing:} Monitor infrastructure costs, plan for scalable cloud resource usage, and design the platform to be modular and future-proof.
+    \item \textbf{PRD1. } Ensure server and database can handle increased usage and data with automated scaling capabilities.
+    \item \textbf{PRD2. } Implement data encryption, secure authentication (e.g., OAuth, 2FA)
+    \item \textbf{PRD3. }Develop an intuitive interface with role-based access control (RBAC) and adhere to WCAG accessibility guidelines.
+    \item \textbf{PRD4. } Ensure compatibility with MES infrastructure (e.g., DigitalOcean) and integrate with external services (e.g., payment processors, audit tools).
+    \item \textbf{PRD5. } Provide comprehensive documentation, automated testing (CI/CD) via GitHub Actions, and ensure error handling with clear logs and user feedback.
+    \item \textbf{PRD6. } Create training materials for users and provide help desk support during the transition to the new platform.
+    \item \textbf{PRD7. } Monitor infrastructure costs, plan for scalable cloud resource usage, and design the platform to be modular and future-proof.
 \end{itemize}
 
 \subsection{Release Requirements}
 \begin{itemize}
-    \item Stable releases shall be released twice a year
+    \item \item{RLR1. }Stable releases shall be released twice a year
 \end{itemize}
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
 \begin{itemize}
-    \item Data backups shall be performed daily to protect sensitive information
-    \item The system shall experience scheduled maintenance downtime for 10 percent of each year (specifics to be determined)
-    \item Security updates and patches shall be released as needed (separate from the twice-yearly stable releases)
+    \item \textbf{MR1. } Data backups shall be performed daily to protect sensitive information
+    \item \textbf{MR2. } The system shall experience scheduled maintenance downtime for 10 percent of each year (specifics to be determined)
+    \item \textbf{MR3. } Security updates and patches shall be released as needed (separate from the twice-yearly stable releases)
 \end{itemize}
 
 \subsection{Supportability Requirements}
 \begin{itemize}
-    \item Documentation for users and the team shall be kept up to date as new releases are made
+    \item \textbf{SR1. } Documentation for users and the team shall be kept up to date as new releases are made
 \end{itemize}
 
 \subsection{Adaptability Requirements}
 \begin{itemize}
-    \item The system shall be robust enough to adapt to changes from external and connected sources such as McMaster University or Canadian financial institutions without losing core functionalities
+    \item \textbf{AR1. } The system shall be robust enough to adapt to changes from external and connected sources such as McMaster University or Canadian financial institutions without losing core functionalities
 \end{itemize}
 
 \section{Security Requirements}
 \subsection{Access Requirements}
 \begin{itemize}
-    \item The system shall ensure that users only have access to the data they are authorized to
-    \item The system shall have a secure login portal to prevent unauthorized access
+    \item \textbf{SCR1. } The system shall ensure that users only have access to the data they are authorized to
+    \item \textbf{SCR2. } The system shall have a secure login portal to prevent unauthorized access
 \end{itemize}
 
 \subsection{Integrity Requirements}
 \begin{itemize}
-    \item The system shall log 100\% of transactions to ensure financial history is traceable
+    \item \textbf{INR1. } The system shall log 100\% of transactions to ensure financial history is traceable. To ensure complicity with audit requirements
 \end{itemize}
 \subsection{Privacy Requirements}
 \begin{itemize}
-    \item The system shall encrypt sensitive information in transit and at rest
-    \item The system shall return anonymous data when generating reports that do not require personal info
+    \item \textbf{PVR1. } The system shall encrypt sensitive information in transit and at rest
+    \item \textbf{PVR2. } The system shall return anonymous data when generating reports that do not require personal info
 \end{itemize}
 \subsection{Audit Requirements}
 \begin{itemize}
-    \item The system shall maintain a detailed log of 100\% of transactions to ensure financial transparency
-    \item The system shall retain audit logs for a minimum of 10 years
+    \item \textbf{ADR1. } The system shall maintain a detailed log of 100\% of transactions to ensure financial transparency
+    \item \textbf{ADR2. } The system shall retain audit logs for a minimum of 10 years
 \end{itemize}
 \subsection{Immunity Requirements}
 \begin{itemize}
-    \item The system shall be resilient to data corruption, ensuring that data can be recovered within 4 hours of a failure
+    \item \textbf{IMM1. } The system shall be resilient to data corruption, ensuring that data can be recovered within 4 hours of a failure
 \end{itemize}
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
 \begin{itemize}
-    \item The system shall be scaleable to implement future multi-language support to accommodate international students or staff 
+    \item \textbf{CLTR1. } The system shall be scaleable to implement future multi-language support to accommodate international students or staff 
 \end{itemize}
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
 \begin{itemize}
-    \item The system shall follow user data protection laws to ensure proper handling of sensitive information.
-    \item The system shall follow any relevant financial regulations for non-profit organizations.
+    \item \textbf{LR1. } The system shall follow user data protection laws to ensure proper handling of sensitive information.
+    \item \textbf{LR2. } The system shall follow any relevant financial regulations for non-profit organizations.
 \end{itemize}
 \subsection{Standards Compliance Requirements}
 \begin{itemize}
-    \item The system shall follow web security standards
+    \item \textbf{STR1. } The system shall follow web security standards
 \end{itemize}
 
 \section{Open Issues}
@@ -466,11 +550,11 @@ Key tasks in project planning include:
 \subsection{Planning of the Development Phases}
 Development should proceed in phases:
 \begin{itemize}
-    \item \textbf{Phase 1:} Initial research and requirements gathering from MES staff and student groups.
-    \item \textbf{Phase 2:} Core system design, focusing on the backend ledger management and reimbursement workflows. This phase would be the most intensive.
-    \item \textbf{Phase 3:} UI/UX design to ensure the platform is user-friendly and accessible to all MES members.
-    \item \textbf{Phase 4:} System testing and debugging, including user feedback to refine functionality.
-    \item \textbf{Phase 5:} Final deployment and training for users.
+    \item \textbf{Phase 1: (Present - Nov)} Initial research and requirements gathering from MES staff and student groups. 
+    \item \textbf{Phase 2: (Dec - March)} Core system design, focusing on the backend ledger management and reimbursement workflows. This phase would be the most intensive.
+    \item \textbf{Phase 3: (Feb - March) } UI/UX design to ensure the platform is user-friendly and accessible to all MES members.
+    \item \textbf{Phase 4: (Feb - March)} System testing and debugging, including user feedback to refine functionality.
+    \item \textbf{Phase 5: (March - April)} Final deployment and training for users.
 \end{itemize}
 
 \section{Migration to the New Product}

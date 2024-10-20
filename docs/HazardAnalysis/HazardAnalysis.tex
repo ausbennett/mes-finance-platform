@@ -1,8 +1,12 @@
 \documentclass{article}
 
 \usepackage{booktabs}
+\usepackage{pdflscape}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{array}
+
+
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -77,6 +81,7 @@ minimize the number of assumptions that remove potential hazards.  For instance,
 you could assume a part will never fail, but it is generally better to include
 this potential failure mode.}
 
+
 \section{Failure Mode and Effect Analysis}
 
 \wss{Include your FMEA table here. This is the most important part of this document.}
@@ -87,6 +92,197 @@ requirements.}
 \wss{If no safety requirement can be devised, other mitigation strategies can be
 entered in the table, including strategies involving providing additional
 documentation, and/or test cases.}
+
+\begin{landscape}
+
+\begin{table}
+\centering
+\caption{FMEA for User Authentication and Access Control Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright User Authentication and Access Control} & \parbox[t]{3cm}{\raggedright Unauthorized user access} & \parbox[t]{3cm}{\raggedright Unauthorized users gain access to sensitive data} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Weak password policies/restrictions
+      \item[b.] Lack of multi-factor authentication
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Enforce users to create strong passwords
+        \item[b.] Implement and enforce multi-factor authentication
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] SCR2
+        \item[b.] PRD2
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright User accounts are compromised} &
+\parbox[t]{3cm}{\raggedright Data theft, manipulation, or system sabotage} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Weak or reused passwords
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Enforce strong password policies
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] SCR1
+    \end{enumerate}
+} \\ \hline
+
+%Row 3
+&
+\parbox[t]{3cm}{\raggedright Improper privilege escalation by users} &
+\parbox[t]{3cm}{\raggedright Users perform actions beyond their authorization} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Missing or incorrect configuration of access controls
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Use role-based access control
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] AR1
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}
+\centering
+\caption{FMEA for Data Privacy and Compliance Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright Data Privacy and Compliance} & \parbox[t]{3cm}{\raggedright Exposure of confidential personal financial information} & \parbox[t]{3cm}{\raggedright Legal/financial penalties and damage to the organization's reputation} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Poor security practices
+      \item[b.] Lack of encryption of data in transit 
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Encrypt all data containing sensitive financial information at rest and in transit
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] PVR1
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright Not complying with regulations relating to data protection} &
+\parbox[t]{3cm}{\raggedright Repercussions from regulatory bodies, potential shutdown of organization's services} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Lack of compliance measures
+      \item[b.] Not adhering to legal requirements
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Regular reviews and updates for policies regarding data compliance
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] LR1
+        \item[b.] LR2
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}
+\centering
+\caption{FMEA for Data Backup and Recovery Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright Data Backup and Recovery} & \parbox[t]{3cm}{\raggedright Scheduled data backup fails to execute or complete} & \parbox[t]{3cm}{\raggedright Financial data is lost} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Errors in the configuration of backup schedule automation
+      \item[b.] General software errors or bugs
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Regularly monitor backup processes
+        \item[b.] Conduct regular integration testing throughout development
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] RFT1
+        \item[b.] MR1
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright Data that is backed up is corrupted} &
+\parbox[t]{3cm}{\raggedright Inability to retrieve data or restore system functionality promptly} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Remote database failures
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Store backed-up data in multiple, secure locations
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] IMM1
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\end{landscape}
+
+
+
+
 
 \section{Safety and Security Requirements}
 

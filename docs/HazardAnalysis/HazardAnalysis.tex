@@ -68,11 +68,14 @@ hazards.}
 
 \section{System Boundaries and Components}
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\begin{itemize}
+  \item \textbf{User Information Database:} A secured storage location for user data that may need to be repeatedly referenced, such as contact or bank information.
+  \item \textbf{Backup Database:} A separate database, holding similar data to the User Information DB, but backed up regularly via the main database. Used in the event old data is needed or there is a problem with the main db.
+  \item \textbf{User Interface:} An umbrella term for the graphical layout of the software system. All interactions between user and system will be facilitated through the UI, which provides a visual outline of system usage.
+  \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
+  \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
+  \item \textbf{Notification Module: } A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
+\end{itemize}
 
 \section{Critical Assumptions}
 

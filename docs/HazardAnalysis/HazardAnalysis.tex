@@ -309,12 +309,15 @@ Which requirements will be implemented in the future?}
     \item What went well while writing this deliverable? 
 
     \textbf{Adam:} For my section (FMEA tables) brainstorming the actual hazards/risks for the system went relatively well. There aren't any inherent "safety" risks that would endanger anyone's physical well-being, there really are only security risks that we have to worry about. Since we're dealing with financial information, these risks were quite obvious to identify and mitigate. Evidently, we need encryption, user authentication, etc. to ensure that we're upholding data privacy and financial information is stored securely.
-    
+
+    \textbf{Jacob:} For section 3, there were a couple of obvious partitions, specifically the databases. It's logical and commonplace to think of databases as separate from the other software components, so with that there were a couple easy partitions to make right out of the gate.
     \item What pain points did you experience during this deliverable, and how
     did you resolve them?
 
     \textbf{Adam:} One of the biggest pain points I had while writing my section was formatting the tables using latex. I had to import extra packages and spend a lot of time playing around with the spacing of things to ensure it was legible and formatted decently. Unfortunately, This took more time than the actual engineering work of coming up with the hazards. It would be nice if we could make the tables in a Word document and then insert a screenshot into the Latex file, but I can see how this would defeat the purpose of traceability.
-    
+
+    \textbf{Jacob:} For section 3, the difficulty came from how to partition the system. Since it is all software, there are no concrete components to separate. So, it was necessary to reason what logical partitions might be, and decide if a partition was too large or small to make sense.
+
     \item Which of your listed risks had your team thought of before this
     deliverable, and which did you think of while doing this deliverable? For
     the latter ones (ones you thought of while doing the Hazard Analysis), how
@@ -322,6 +325,8 @@ Which requirements will be implemented in the future?}
     \item Other than the risk of physical harm (some projects may not have any
     appreciable risks of this form), list at least 2 other types of risk in
     software products. Why are they important to consider?
+
+    \textbf{Jacob:} One big risk is data security. We will be handling sensitive personal information from users, so it is critical that this data stays well-secured and out of the hands of any unauthorized users to protect people's privacy and banking assets. Secondly, large system downtimes or failures is a huge risk. A long outage has the potential to seriously slow and cripple financial operations that may lead to funding and payment issues, or losing track of debts and payments.
 \end{enumerate}
 
 \end{document}

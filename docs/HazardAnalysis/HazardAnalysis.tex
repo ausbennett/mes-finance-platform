@@ -81,10 +81,24 @@ hazards.}
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+\begin{itemize}
+    \item \textbf{Reliability of Third-Party FinTech Services:} We assume that any external fintech or payment processor used in the system will not fail to meet legal compliance or breach user privacy agreements.
+    
+    \item \textbf{University IT Infrastructure:} We assume that McMaster University’s IT infrastructure, which the platform relies on, will remain stable and secure.
+    
+    \item \textbf{Network Stability:} We assume that users will have consistent internet access when interacting with the system, as the platform relies on an online connection.
+    
+    \item \textbf{Audit Regulations:} We assume that the MES's audit and regulatory requirements will not drastically change during the system's lifecycle, allowing current compliance protocols to remain valid.
+    
+    \item \textbf{Compliance with Financial Institutions:} We assume that Canadian banks or other financial institutions used for reimbursement disbursements will maintain their API and integration standards for processing payments.
+    
+    \item \textbf{Student Information Accuracy:} We assume that student data provided by the university (for login and user verification) is accurate and up-to-date.
+    
+    \item \textbf{Data Hosting Provider Stability:} We assume that DigitalOcean (or another cloud service provider) will continue to offer reliable hosting services and maintain their SLAs for uptime and security.
+    
+    \item \textbf{Third-Party Software Licenses:} We assume that any third-party software (e.g., for PDF generation or data visualization) used in the system will remain licensed and supported during the platform's lifetime.
+\end{itemize}
+
 
 
 \section{Failure Mode and Effect Analysis}

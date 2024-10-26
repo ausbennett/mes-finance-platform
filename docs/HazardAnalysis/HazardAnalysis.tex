@@ -1,0 +1,390 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{array}
+
+
+
+\hypersetup{
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\title{Hazard Analysis\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+~\newpage
+
+\pagenumbering{roman}
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+10/25/2024 & All team members & Revision 0, including all sections and appendix\\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+~\newpage
+
+\tableofcontents
+
+~\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+This document provides an outline and anaylsis of hazards that may arise during the development of the MES finanical platform Hazards do not necessarily cause problems on their own but can lead to failures or errors when they interact with other system components in specific contexts.
+
+\section{Scope and Purpose of Hazard Analysis}
+
+In the scope of this project, a \textbf{hazard} refers to any potential source of failure that could result in undesirable outcomes, particularly concerning data security, system reliability, functionality, and user experience. Specifically, these hazards could impact our project by posing risks to users and the MES system in terms of:
+
+\begin{itemize}
+    \item Compliance with legal and regulatory confidentiality agreements,
+    \item Reliability in processing and tracking payments for audit accuracy,
+    \item Ensuring timely and correct reimbursement to users and partner organizations.
+\end{itemize}
+
+By identifying and managing these hazards, we aim to protect the integrity and dependability of our system, ensuring a secure and seamless experience for all users.
+
+
+\section{System Boundaries and Components}
+
+\begin{itemize}
+  \item \textbf{User Information Database:} A secured storage location for user data that may need to be repeatedly referenced, such as contact or bank information.
+  \item \textbf{Backup Database:} A separate database, holding similar data to the User Information DB, but backed up regularly via the main database. Used in the event old data is needed or there is a problem with the main db.
+  \item \textbf{User Interface:} An umbrella term for the graphical layout of the software system. All interactions between user and system will be facilitated through the UI, which provides a visual outline of system usage.
+  \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
+  \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
+  \item \textbf{Notification Module:} A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
+  \item \textbf{Authentication Module:} A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.
+  \item \textbf{Stripe API:} External API for streamlining future integration with other MES services or even third parties.
+\end{itemize}
+
+\section{Critical Assumptions}
+
+\begin{itemize}
+    \item \textbf{Reliability of Third-Party FinTech Services:} We assume that any external fintech or payment processor used in the system will not fail to meet legal compliance or breach user privacy agreements.
+    
+    \item \textbf{University IT Infrastructure:} We assume that McMaster University’s IT infrastructure, which the platform relies on, will remain stable and secure.
+    
+    \item \textbf{Network Stability:} We assume that users will have consistent internet access when interacting with the system, as the platform relies on an online connection.
+    
+    \item \textbf{Audit Regulations:} We assume that the MES's audit and regulatory requirements will not drastically change during the system's lifecycle, allowing current compliance protocols to remain valid.
+    
+    \item \textbf{Compliance with Financial Institutions:} We assume that Canadian banks or other financial institutions used for reimbursement disbursements will maintain their API and integration standards for processing payments.
+    
+    \item \textbf{Student Information Accuracy:} We assume that student data provided by the university (for login and user verification) is accurate and up-to-date.
+    
+    \item \textbf{Data Hosting Provider Stability:} We assume that DigitalOcean (or another cloud service provider) will continue to offer reliable hosting services and maintain their SLAs for uptime and security.
+    
+    \item \textbf{Third-Party Software Licenses:} We assume that any third-party software (e.g., for PDF generation or data visualization) used in the system will remain licensed and supported during the platform's lifetime.
+\end{itemize}
+
+
+
+\section{Failure Mode and Effect Analysis}
+
+
+\begin{landscape}
+
+\begin{table}
+\centering
+\caption{FMEA for User Authentication and Access Control Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright User Authentication and Access Control} & \parbox[t]{3cm}{\raggedright Unauthorized user access} & \parbox[t]{3cm}{\raggedright Unauthorized users gain access to sensitive data} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Weak password policies/restrictions
+      \item[b.] Lack of multi-factor authentication
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Enforce users to create strong passwords
+        \item[b.] Implement and enforce multi-factor authentication
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] SCR2
+        \item[b.] PRD2
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright User accounts are compromised} &
+\parbox[t]{3cm}{\raggedright Data theft, manipulation, or system sabotage} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Weak or reused passwords
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Enforce strong password policies
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] SCR1
+    \end{enumerate}
+} \\ \hline
+
+%Row 3
+&
+\parbox[t]{3cm}{\raggedright Improper privilege escalation by users} &
+\parbox[t]{3cm}{\raggedright Users perform actions beyond their authorization} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Missing or incorrect configuration of access controls
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Use role-based access control
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] AR1
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}
+\centering
+\caption{FMEA for Data Privacy and Compliance Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright Data Privacy and Compliance} & \parbox[t]{3cm}{\raggedright Exposure of confidential personal financial information} & \parbox[t]{3cm}{\raggedright Legal/financial penalties and damage to the organization's reputation} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Poor security practices
+      \item[b.] Lack of encryption of data in transit 
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Encrypt all data containing sensitive financial information at rest and in transit
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] PVR1
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright Not complying with regulations relating to data protection} &
+\parbox[t]{3cm}{\raggedright Repercussions from regulatory bodies, potential shutdown of organization's services} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Lack of compliance measures
+      \item[b.] Not adhering to legal requirements
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Regular reviews and updates for policies regarding data compliance
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] LR1
+        \item[b.] LR2
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}
+\centering
+\caption{FMEA for Data Backup and Recovery Design Function}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
+\hline
+\textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
+
+%Row 1
+\parbox[t]{2.5cm}{\raggedright Data Backup and Recovery} & \parbox[t]{3cm}{\raggedright Scheduled data backup fails to execute or complete} & \parbox[t]{3cm}{\raggedright Financial data is lost} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Errors in the configuration of backup schedule automation
+      \item[b.] General software errors or bugs
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] Regularly monitor backup processes
+        \item[b.] Conduct regular integration testing throughout development
+    \end{enumerate}
+} &
+
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] RFT1
+        \item[b.] MR1
+    \end{enumerate}
+}
+\\ \hline
+
+%Row 2
+&
+\parbox[t]{3cm}{\raggedright Data that is backed up is corrupted} &
+\parbox[t]{3cm}{\raggedright Inability to retrieve data or restore system functionality promptly} &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Remote database failures
+    \end{enumerate}
+  } &
+\parbox[t]{5cm}{\raggedright
+    \begin{enumerate}
+      \item[a.] Store backed-up data in multiple, secure locations
+    \end{enumerate}
+  } &
+\parbox[t]{2cm}{\raggedright
+    \begin{enumerate}
+        \item[a.] IMM1
+    \end{enumerate}
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\end{landscape}
+
+
+
+
+
+\section{Safety and Security Requirements}
+\begin{itemize}
+    \item \textbf{SCR3.} The system shall implement multi-factor authentication (MHA) to prevent unauthorized access.
+    \item \textbf{SCR4.} The system shall automatically log out users who have been inactive for 5 minutes.
+    \item \textbf{SCR5.} The system shall ensure that users make strong passwords, including requiring a minimum length, use of special characters and a mix of uppercase and lowercase letters.
+    \item \textbf{SCR6.} The system shall prompt users to alter their passwords every 12 months.
+\end{itemize}
+These additional safety and security requirements have been added to the SRS document.
+
+\section{Roadmap}
+
+\subsection{Requirements During Capstone Timeline}
+The following safety and security requirements will be implemented as part of the capstone timeline. These requirements are either required for the core functionality of the system or are small enough in scope to be added in during the project timeline.
+\begin{itemize}
+    \item \textbf{SCR1}
+    \item \textbf{SCR2}
+    \item \textbf{INR1}
+    \item \textbf{PVR1}
+    \item \textbf{PVR2}
+    \item \textbf{ADR1}
+    \item \textbf{ADR2}
+\end{itemize}
+\subsection{Requirements For The Future}
+The following safety and security requirements will be implemented in the future, after the capstone timeline. These requirements are not required for the core functionality of the system and will take many resources to implement.
+\begin{itemize}
+    \item \textbf{SCR3}
+    \item \textbf{SCR4}
+    \item \textbf{SCR5}
+    \item \textbf{SCR6}
+    \item \textbf{IMM1}
+\end{itemize}
+
+\newpage{}
+
+\section*{Appendix --- Reflection}
+
+\input{../Reflection.tex}
+
+\begin{enumerate}
+    \item What went well while writing this deliverable? 
+
+    \textbf{Christian:} The Critical Assumptions were not too much of a challenge once I got clarification from the TA on what should be focused on. It was a good exercise in considering the scope of our work and what falls on what side of the fence when it comes to our responsibilities.
+
+    \textbf{Adam:} For my section (FMEA tables) brainstorming the actual hazards/risks for the system went relatively well. There aren't any inherent "safety" risks that would endanger anyone's physical well-being, there really are only security risks that we have to worry about. Since we're dealing with financial information, these risks were quite obvious to identify and mitigate. Evidently, we need encryption, user authentication, etc. to ensure that we're upholding data privacy and financial information is stored securely.
+
+    \textbf{Austin:} I really enjoyed how straight forwards this deliverable is as compared to the previous one. Adequately defining hazards in the context of our capstone is incredibly valuable as these will be considerations that influence every design detail of our project.
+    
+    \textbf{Jacob:} For section 3, there were a couple of obvious partitions, specifically the databases. It's logical and commonplace to think of databases as separate from the other software components, so with that there were a couple easy partitions to make right out of the gate.
+
+    \textbf{Evan:} For section 6, I found it easy to brainstorm additional safety and security requirements. Going through the hazard analysis was useful in finding areas that we might have missed and potential risks we may have overlooked. It shows how important each step of documentation truly is.
+    
+    \item What pain points did you experience during this deliverable, and how
+    did you resolve them?
+
+    \textbf{Christian:} The main pain point would have been making sure what constitutes a "critical" assumption, which the TA was a huge help with. Many assumptions could be made about the system but deciding which were the ones exclusively outside of our scope of responsibility was the main task of this section and it became easier after coming up with the first couple.
+
+    \textbf{Adam:} One of the biggest pain points I had while writing my section was formatting the tables using latex. I had to import extra packages and spend a lot of time playing around with the spacing of things to ensure it was legible and formatted decently. Unfortunately, This took more time than the actual engineering work of coming up with the hazards. It would be nice if we could make the tables in a Word document and then insert a screenshot into the Latex file, but I can see how this would defeat the purpose of traceability.
+
+    \textbf{Jacob:} For section 3, the difficulty came from how to partition the system. Since it is all software, there are no concrete components to separate. So, it was necessary to reason what logical partitions might be, and decide if a partition was too large or small to make sense.
+
+    \textbf{Evan:} The biggest difficulty during this deliverable was the dependency on the SRS document. We were asked to make use of our requirements from our SRS and to make additional requirements. I found this to be challenging since at the time of making this document, we have not received feedback about our SRS.
+
+    \textbf{Austin:} There are countless kinds of hazards, some of which may or may not be relevant to the scope of our project, its quite easy to list every kind of risk you can think of. Rereading our problem statements and clearly delinating what we're really trying to accomplish helped distiguish the kinds of hazards we need to focus on.
+
+    \item Which of your listed risks had your team thought of before this
+    deliverable, and which did you think of while doing this deliverable? For
+    the latter ones (ones you thought of while doing the Hazard Analysis), how
+    did they come about?
+
+    \textbf{Team:} Before this deliverable, our team mainly though about briefly on potential integration risks like connecting to third party APIs, usability risks through ensuring users are successfuly able to navigate the platform, and security risks ensuring user data is safely stored in databases. However while doing the hazard analysis we developed additional safety and security risks, that will ensure we deliver a robust plaform to MES.
+
+    \item Other than the risk of physical harm (some projects may not have any
+    appreciable risks of this form), list at least 2 other types of risk in
+    software products. Why are they important to consider?
+
+    \textbf{Christian:} The biggest known risk computers pose to computer users is data privacy. Anything a computer is trusted with is something it can pose a risk towards as well. While people don't use computers to do everything, most people trust computers with sensitive personal information that they would not trust people with, and in this respect it poses a threat. The other threat it poses is reliance to conduct tasks that may have previously been undertaken by people. As soon as a technology replaces a person in completing a task rather than becoming another, more convenient, option, it poses a serious threat to the ability of a person to say, handle their finances remotely at a time when they may have not anticipated needing to visit a physical branch, or relevant financial entities.
+
+    \textbf{Jacob:} One big risk is data security. We will be handling sensitive personal information from users, so it is critical that this data stays well-secured and out of the hands of any unauthorized users to protect people's privacy and banking assets. Secondly, large system downtimes or failures is a huge risk. A long outage has the potential to seriously slow and cripple financial operations that may lead to funding and payment issues, or losing track of debts and payments.
+
+    \textbf{Adam:} Another type of risk, and the one we will be mostly dealing with, is a security risk. More specifically, security risks to personal financial information/data. This also includes unauthorized access to user accounts, which could jeopardize data confidentiality and integrity. This is important to consider because this could lead to legal and financial repercussions. Financial data breaches and leaks can also lead to the organization losing its reputation. Another form of risk is operational risk. This relates to the stability and performance of the system. This is important to consider because operational performance can sometimes lead to other failures that lead to other risks, for example, the system fails a data backup, or a bug fails to encrypt data, and data is lost or exposed (security risk).
+
+    \textbf{Evan:} One type of risk for software products is integration risks. This arises when products require interfacing with other systems or applications. Compatibility issues can arise which would affect the performance and customer satisfaction of the product. Another type of risk is compliance risk. It is important to ensure that software products do not violate any laws or regulations. If a product were to violate any standards, it could lead to fines, legal penalties and ruin the reputation of the brand.
+    
+    \textbf{Austin:} Less commonly, ethical risk, there are always some kind of inherent biases that flow into the development of software and a specific example can be gender bias risks. Consequently, this can result in reputational, social or legal implications due to lack of ethical considerations. Antoher risk is cultural risks to software, this largely impacts usability of software as underlying cultural differences can lead to uninteded use of software, for example the meaning beind symbols can be different based on culture.
+
+\end{enumerate}
+
+\end{document}

@@ -414,41 +414,348 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Performance}
 		
-\paragraph{Title for Test}
+\paragraph{Speed and Latency}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T1 - SPLR1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Type: Automatic
 
-Type: Functional, Dynamic, Manual, Static etc.
+Initial state: System is ready to receive a new payment request
+
+Input/Condition: A dummy/QA payment request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+ 
 					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+\item{T2 - SPLR2\\}
+
+Type: Automatic
+
+Initial state: System is not processing and can accept a new invoice generation request
+
+Input/Condition: A dummy invoice generation request
+
+Output: Newly generated invoice or appropriate failure/error message
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+
+\item{T3 - SPLR3\\}
+
+Type: Automatic
+
+Initial state: System is ready to receive a new reimbursement request
+
+Input/Condition: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\Paragraph{Safety-Critical}
 
-...
+\begin{enumerate}
+
+\item{T1 - SFCR 1, PRD2\\}
+
+Type: Automatic
+
+Initial state: system is ready to receive a new reimbursement request
+
+Input: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message
+
+How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits.
+
+\item{T2 - SFCR 2, RFT 2, PRD3\\}
+
+Type: Automatic 
+
+Initial State: System is logged in with an account with access controls for student (non-MES admin)
+
+Input: Request for data from an MES admin account
+
+Output: Failure/Error message
+
+How test will be performed: System should not display information to non-authorized user but instead display an appropriate message explaining why the request was denied.
+\end{enumerate}
+
+\paragraph{Precision and Accuracy}
+
+\begin{enumerate}
+\item{T1 - POAR1\\}
+
+Type: Static/Manual 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: N/A
+
+How test will be performed: Static analysis of code modules to ensure all monetary calculations are rounded to 2 decimal places.
+\end{enumerate}
+
+\paragraph{Robustness or Fault-Tolerance}
+
+\begin{enumerate}
+
+\item{T1 - RFT 1, MR1\\}
+
+Type: Automatic
+
+Initial State: System is about to upload daily backups to backup server
+
+Input: N/A
+
+Output: Backed up data is moved to the other database
+
+How test will be performed: Module will automatically compare the entries added to the backup database with those added to the main database on that day and raise an exception for any mismatch.
+
+\end{enumerate}
+
+\paragraph{Capacity}
+
+\begin{enumerate}
+\item{T1 - CPR1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Large number of reimbursement, invoice, or payment requests (ie, from a load testing software to submit the requests to the API)
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity requirements without failing.
+
+\item{T2 - CPR2\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Large number of simultaneous reimbursement, invoice, or payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity requirements without failing.
+
+\item{T3 - CPR3\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: 10 years’ worth of dummy data
+
+Output: Successful data storage
+
+How test will be performed: 10 years’ worth of dummy data will be added to the backup database to ensure that it can store all data for 10 years.
+
+\end{enumerate}
+
+\paragraph{Scalability or Extensibility}
+
+\begin{enumerate}
+\item{T1 - SER2, PRD1, PRD7\\}
+
+Type: Automatic/Static Review
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Increasingly large numbers of payment requests to stress test (ie, from a load testing application)
+
+Output: Eventual system failure; system metrics provided by testing application or profiling tools
+
+How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability.
+
+\item{T2 - SER1, IAR2\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Dummy API requests (eg, from Postman) that mimic real third party requests
+
+Output: 200 Success and success body with proper format
+
+How test will be performed: Endpoints that will be open to third-party integrations provide success messages for basic requests (GET, POST) and return the message body in JSON format.
+
+\end{enumerate}
+
+\paragraph{Longevity}
+
+\begin{enumerate}
+
+\item{T1 - LOR1\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and adaptability. They will also review documentation to assess if future developers will have the necessary support to maintain the system without difficulties.
+
+\end{enumerate}
+
+\subsection{Operational and Environmental}
+
+\paragraph{Expected Physical Environment}
+
+\begin{enumerate}
+
+\item{T1 - OR1, OR2\\}
+  
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Several payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: This test will be performed on a machine with Windows 10 and matching or similar specs to Intuit Quickbooks’ minimum requirements. The test is successful if no requests fail and are delivered within maximum time requirements (as outlined in 12.1 of our SRS document).
+  
+\end{enumerate}
+
+\paragraph{Wider environment}
+
+\begin{enumerate}
+
+\item{T1 - WR1\\}
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist 
+
+How test will be performed: Static analysis of code, using a checklist, to ensure that the implemented processes conform to the industry standard for Canadian financial institutions
+  
+\end{enumerate}
+
+\paragraph{Interfacing with Adjacent Systems}
+
+\begin{enumerate}
+
+\item{T1 - IAR1, PRD4\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Mock payment request forms for users of all major Canadian banks (BMO, CIBC, RBC, Scotiabank, TD)
+
+Output: Success message
+
+How test will be performed: Valid request forms should be processed with a success message for all major Canadian financial institutions.
+
+\end{enumerate}
+
+\paragraph{Productization}
+
+\begin{enumerate}
+
+\item{T1 - PRD5, PRD6\\}
+  
+Type: Static 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Peer-review checklist
+
+How test will be performed: Users will be given training materials and fill out a checklist review of how easy they and the system are to understand.
+
+\end{enumerate}
+
+\paragraph{Release}
+
+\begin{enumerate}
+
+\item{T1 - RLR1\\}
+  
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 2 releases per year is doable and appropriate.
+
+\end{enumerate}
+
+\subsection{Maintainability and Support}
+
+\paragraph{Maintenance}
+
+\begin{itemize}
+
+\item{T1 - MR2, MR3\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 10% of each year is sufficient downtime to keep the software efficient, working, and scalable.
+
+\end{itemize}
+
+\paragraph{Supportability}
+
+\begin{itemize}
+
+\item{T1 - SR1\\}
+
+Type: Manual
+
+Initial State: System has just undergone functional changes/updates
+
+Input: N/A
+
+Output: Checklist
+
+How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software.
+
+\end{itemize}
+
+\paragraph{Adaptability}
+
+\begin{itemize}
+
+\item{T1 - AR1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Valid dummy payment requests
+
+Output: Success message
+
+How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software.
+
+\end{itemize}
 
 \subsection{Traceability Between Test Cases and Requirements}
 

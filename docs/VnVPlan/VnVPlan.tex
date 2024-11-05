@@ -1525,6 +1525,7 @@ Output: Completed checklist, indicating whether the system meets web security st
 How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines
 \end{enumerate}
 
+\newpage
 \subsection{Traceability Between Test Cases and Requirements}
 
 \wss{Provide a table that shows which test cases are supporting which
@@ -1532,6 +1533,7 @@ How Test Will Be Performed: The user will be given a list of relevant compliance
 
 \subsubsection{Traceability Between Test Cases and Functional Requirements}
 
+\begin{table}[h!]
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf Test Case} & {\bf Functional Requirement}\\
 \midrule 
@@ -1554,9 +1556,13 @@ FR3.2-TC2 & FR3.2\\
 FR3.3-TC1 & FR3.3\\
 \bottomrule
 \end{tabularx}
+\caption{Mapping between test cases and functional requirements}
+\end{table}
 
+\newpage
 \subsubsection{Traceability Between Test Cases and Non-Functional Requirements}
 
+\begin{table}
 \begin{tabularx}{\textwidth}{p{7cm}p{7cm}}
 \toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
 \midrule
@@ -1582,6 +1588,15 @@ FR3.3-TC1 & FR3.3\\
 {NFR12 - Scalability or Extensibility - T1} & {SER2, PRD1, PRD7} \\
 {NFR12 - Scalability or Extensibility - T2} & {SER1, IAR2} \\
 {NFR12 - Longevity - T1} & {LOR1} \\
+
+\bottomrule
+\end{tabularx}
+\caption{Mapping between test cases and non-functional requirements}
+\end{table}
+
+\begin{tabularx}{\textwidth}{p{7cm}p{7cm}}
+\toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
+\midrule
 {NFR13 - Operational and Environmental - Expected Physical Environment - T1} & {OR1, OR2} \\
 {NFR13 - Operational and Environmental - Wider Environment - T1} & {WR1} \\
 {NFR13 - Operational and Environmental - Interfacing with Adjacent Systems - T1 } & {IAR1, PRD4} \\
@@ -1597,10 +1612,11 @@ FR3.3-TC1 & FR3.3\\
 {NFR15 - Immunity - T1} & {IMM1} \\
 {NFR16 - Cultural - T1} & {CLTR1} \\
 {NFR17 - Legal - T1} & {LR1, LR2} \\
-{NFR17 - Standards Compliance} & {STR1}
-\midrule 
+{NFR17 - Standards Compliance} & {STR1}\\
+\bottomrule
 \end{tabularx}
 
+\newpage
 \section{Unit Test Description}
 
 \wss{This section should not be filled in until after the MIS (detailed design
@@ -1628,8 +1644,6 @@ needs to be well-documented, with meaningful names for all of the tests.}
 \subsection{Symbolic Parameters}
 
 \textit{Not applicable for this delierable}
-
-\subsection{Usability Survey Questions?}
 
 \wss{This is a section that would be appropriate for some projects.}
 

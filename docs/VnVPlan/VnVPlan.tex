@@ -1358,6 +1358,46 @@ Output: Completed checklist, indicating whether the login portal meets all requi
 
 How Test Will Be Performed: The user will complete a checklist to determine the security of the login portal. They will be asked to rate the performance of multi-factor authentication, password strengths and how inactive users are handled.
 \end{enumerate}
+\paragraph{Integrity/Audit}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is showing transaction logs
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system has data integrity
+
+How Test Will Be Performed: The user will be given a list of financial transaction that should be logged, and will verify that they are correctly logged
+\end{enumerate}
+\paragraph{Privacy}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is showing financial data that is meant to be anonymous
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the privacy requirements are met
+
+How Test Will Be Performed: The user will complete a checklist determining whether the sensitive information is encrypted and anonymous
+\end{enumerate}
+\subsubsection{NFR16 - Cultural}
+\paragraph{Cultural}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user can understand the system
+
+How Test Will Be Performed: The user will complete a checklist determining whether they can understand the system instructions and how the system performs. This test will be done primarily by international students or students who do not speak English as their first language.
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -1394,6 +1434,8 @@ FR3.3-TC1 & FR3.3\\
 \begin{tabularx}{\textwidth}{p{7cm}p{7cm}}
 \toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
 \midrule
+{NFR10 - Appearance -  T1} & {APR1, APR2} \\
+{NFR10 - Style - T1} & {STYR1, STYR2} \\
 {NFR12 - Speed and Latency - T1} & {SPLR1} \\
 {NFR12 - Speed and Latency - T2} & {SPLR2} \\
 {NFR12 - Speed and Latency - T3} & {SPLR3} \\
@@ -1415,6 +1457,12 @@ FR3.3-TC1 & FR3.3\\
 {NFR14 - Maintainability and Support - Maintenance - T1} & {MR2, MR3} \\
 {NFR14 - Maintainability and Support - Supportability - T1} & {SR1} \\
 {NFR14 - Maintainability and Support - Adaptability - T1} & {AR1} \\
+{NFR15 - Access - T1} & {SCR1} \\
+{NFR15 - Access - T2} & {SCR2, SCR3, SCR4, SCR5, SCR6} \\
+{NFR15 - Integrity/Audit - T1} & {INR1, ADR1, ADR2} \\
+{NFR15 - Privacy - T1} & {PVR1, PVR2} \\
+{NFR16 - Cultural - T1} & {CLTR1} \\
+
 \midrule 
 \end{tabularx}
 

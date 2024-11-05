@@ -962,13 +962,13 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Performance}
+\subsubsection{NFR12 - Performance}
 		
 \paragraph{Speed and Latency}
 
 \begin{enumerate}
 
-\item{T1 - SPLR1\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -981,7 +981,7 @@ Output: Success/Failure/Error message following processing of the request
 How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
  
 					
-\item{T2 - SPLR2\\}
+\item{T2\\}
 
 Type: Automatic
 
@@ -993,7 +993,7 @@ Output: Newly generated invoice or appropriate failure/error message
 
 How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
 
-\item{T3 - SPLR3\\}
+\item{T3\\}
 
 Type: Automatic
 
@@ -1011,7 +1011,7 @@ How test will be performed: Timer module will record time between sending of the
 
 \begin{enumerate}
 
-\item{T1 - SFCR 1, PRD2\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -1023,7 +1023,7 @@ Output: Success/Failure/Error message
 
 How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits.
 
-\item{T2 - SFCR 2, RFT 2, PRD3\\}
+\item{T2\\}
 
 Type: Automatic 
 
@@ -1039,7 +1039,7 @@ How test will be performed: System should not display information to non-authori
 \paragraph{Precision and Accuracy}
 
 \begin{enumerate}
-\item{T1 - POAR1\\}
+\item{T1\\}
 
 Type: Static/Manual 
 
@@ -1056,7 +1056,7 @@ How test will be performed: Static analysis of code modules to ensure all moneta
 
 \begin{enumerate}
 
-\item{T1 - RFT 1, MR1\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -1073,7 +1073,7 @@ How test will be performed: Module will automatically compare the entries added 
 \paragraph{Capacity}
 
 \begin{enumerate}
-\item{T1 - CPR1\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -1085,7 +1085,7 @@ Output: Success messages for all requests
 
 How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity requirements without failing.
 
-\item{T2 - CPR2\\}
+\item{T2\\}
 
 Type: Automatic
 
@@ -1097,7 +1097,7 @@ Output: Success messages for all requests
 
 How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity requirements without failing.
 
-\item{T3 - CPR3\\}
+\item{T3\\}
 
 Type: Automatic
 
@@ -1114,7 +1114,7 @@ How test will be performed: 10 years’ worth of dummy data will be added to the
 \paragraph{Scalability or Extensibility}
 
 \begin{enumerate}
-\item{T1 - SER2, PRD1, PRD7\\}
+\item{T1\\}
 
 Type: Automatic/Static Review
 
@@ -1126,7 +1126,7 @@ Output: Eventual system failure; system metrics provided by testing application 
 
 How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability.
 
-\item{T2 - SER1, IAR2\\}
+\item{T2\\}
 
 Type: Automatic
 
@@ -1144,7 +1144,7 @@ How test will be performed: Endpoints that will be open to third-party integrati
 
 \begin{enumerate}
 
-\item{T1 - LOR1\\}
+\item{T1\\}
 
 Type: Static
 
@@ -1158,13 +1158,13 @@ How test will be performed: Developers and outside reviewers will perform static
 
 \end{enumerate}
 
-\subsection{Operational and Environmental}
+\subsection{NFR13 - Operational and Environmental}
 
 \paragraph{Expected Physical Environment}
 
 \begin{enumerate}
 
-\item{T1 - OR1, OR2\\}
+\item{T1\\}
   
 Type: Automatic
 
@@ -1182,7 +1182,7 @@ How test will be performed: This test will be performed on a machine with Window
 
 \begin{enumerate}
 
-\item{T1 - WR1\\}
+\item{T1\\}
 Type: Static
 
 Initial State: N/A
@@ -1199,7 +1199,7 @@ How test will be performed: Static analysis of code, using a checklist, to ensur
 
 \begin{enumerate}
 
-\item{T1 - IAR1, PRD4\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -1217,7 +1217,7 @@ How test will be performed: Valid request forms should be processed with a succe
 
 \begin{enumerate}
 
-\item{T1 - PRD5, PRD6\\}
+\item{T1\\}
   
 Type: Static 
 
@@ -1235,7 +1235,7 @@ How test will be performed: Users will be given training materials and fill out 
 
 \begin{enumerate}
 
-\item{T1 - RLR1\\}
+\item{T1\\}
   
 Type: Static
 
@@ -1249,13 +1249,13 @@ How test will be performed: Developers and outside reviewers will perform static
 
 \end{enumerate}
 
-\subsection{Maintainability and Support}
+\subsection{NFR14 - Maintainability and Support}
 
 \paragraph{Maintenance}
 
 \begin{itemize}
 
-\item{T1 - MR2, MR3\\}
+\item{T1\\}
 
 Type: Static
 
@@ -1273,7 +1273,7 @@ How test will be performed: Developers and outside reviewers will perform static
 
 \begin{itemize}
 
-\item{T1 - SR1\\}
+\item{T1\\}
 
 Type: Manual
 
@@ -1291,7 +1291,7 @@ How test will be performed: Reviewer will review user and team documentation upo
 
 \begin{itemize}
 
-\item{T1 - AR1\\}
+\item{T1\\}
 
 Type: Automatic
 
@@ -1338,10 +1338,28 @@ FR3.3-TC1 & FR3.3\\
 \subsubsection{Traceability Between Test Cases and Non-Functional Requirements}
 
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
-\toprule {\bf Test Case} & {\bf Functional Requirement}\\
-{} & {} \\
-{} & {} \\
-{} & {} \\
+\toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
+{NFR12 - Speed and Latency - T1} & {SPLR1} \\
+{NFR12 - Speed and Latency - T2} & {SPLR2} \\
+{NFR12 - Speed and Latency - T3} & {SPLR3} \\
+{NFR12 - Safety Critical - T1} & {SFCR 1, PRD2} \\
+{NFR12 - Safety Critical - T2} & {SFCR 2, RFT 2, PRD3} \\
+{NFR12 - Precision and Accuracy - T1} & {POAR1} \\
+{NFR12 - Robustness Or Fault-Tolerance - T1} & {RFT 1, MR1} \\
+{NFR12 - Capacity - T1} & {CPR1} \\
+{NFR12 - Capacity - T2} & {CPR2} \\
+{NFR12 - Capacity - T3} & {CPR3} \\
+{NFR12 - Scalability or Extensibility - T1} & {SER2, PRD1, PRD7} \\
+{NFR12 - Scalability or Extensibility - T2} & {SER1, IAR2} \\
+{NFR12 - Longevity - T1} & {LOR1} \\
+{NFR13 - Operational and Environmental - Expected Physical Environment - T1} & {OR1, OR2} \\
+{NFR13 - Operational and Environmental - Wider Environment - T1} & {WR1} \\
+{NFR13 - Operational and Environmental - Interfacing with Adjacent Systems - T1 } & {IAR1, PRD4} \\
+{NFR13 - Operational and Environmental - Productization - T1} & {PRD5, PRD6} \\
+{NFR13 - Operational and Environmental - Release - T1} & {RLR1} \\
+{NFR14 - Maintainability and Support - Maintenance - T1} & {MR2, MR3} \\
+{NFR14 - Maintainability and Support - Supportability - T1} & {SR1} \\
+{NFR14 - Maintainability and Support - Adaptability - T1} & {AR1} \\
 \midrule 
 {} & {} \\
 {} & {} \\

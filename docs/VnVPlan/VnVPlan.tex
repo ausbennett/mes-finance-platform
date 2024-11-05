@@ -164,7 +164,7 @@ The V\&V team comprises the following members, each with designated roles to fac
 \hline
 Project Supervisor: \textbf{Adam Podolak} & Provides oversight and final approval for all V\&V activities, ensuring that project requirements align with MES standards. \\
 \hline
-Quality Assurance Lead: \textbf{Evan Sturmeye} & Conducts regular reviews and quality checks for documentation and code. Oversees test planning and testing processes. \\
+Quality Assurance Lead: \textbf{Evan Sturmey} & Conducts regular reviews and quality checks for documentation and code. Oversees test planning and testing processes. \\
 \hline
 Test Engineer: \textbf{Austin Bennett} & Responsible for writing and executing test cases, managing test data, and reporting defects during verification. \\
 \hline
@@ -962,6 +962,34 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
+\subsubsection{NFR10 - Look and Feel}
+\paragraph{Appearance}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on two different types of devices (desktop, tablet, mobile)
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the requirement is satisfied
+
+How Test Will Be Performed: The user will complete a checklist that determines whether the interface is responsive across different types of devices
+\end{enumerate}
+\paragraph{Style}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: NA
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user is familiar with the icon that appears in the program
+
+How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means.
+\end{enumerate}
+
 \subsubsection{NFR12 - Performance}
 		
 \paragraph{Speed and Latency}
@@ -1158,7 +1186,7 @@ How test will be performed: Developers and outside reviewers will perform static
 
 \end{enumerate}
 
-\subsection{NFR13 - Operational and Environmental}
+\subsubsection{NFR13 - Operational and Environmental}
 
 \paragraph{Expected Physical Environment}
 
@@ -1249,7 +1277,7 @@ How test will be performed: Developers and outside reviewers will perform static
 
 \end{enumerate}
 
-\subsection{NFR14 - Maintainability and Support}
+\subsubsection{NFR14 - Maintainability and Support}
 
 \paragraph{Maintenance}
 
@@ -1304,6 +1332,32 @@ Output: Success message
 How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software.
 
 \end{itemize}
+
+\subsubsection{NFR15 - Security}
+\paragraph{Access}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user has access to the correct features
+
+How Test Will Be Performed: The user will complete a checklist determining which features they have access to, test will be done across a student level and an admin level.
+
+\item {T2\\}\\
+Type: Static
+
+Initial State: System is loaded at the login portal
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the login portal meets all requirements.
+
+How Test Will Be Performed: The user will complete a checklist to determine the security of the login portal. They will be asked to rate the performance of multi-factor authentication, password strengths and how inactive users are handled.
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 

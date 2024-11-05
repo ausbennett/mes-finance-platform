@@ -989,6 +989,92 @@ Output: Completed checklist, indicating whether the user is familiar with the ic
 
 How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means.
 \end{enumerate}
+\subsubsection{NFR11 - Usability and Humanity}
+\paragraph{Ease of Use}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the ease of use of the system
+
+How Test Will Be Performed: The user will complete a checklist documenting how easy it was to complete a specified task and how long it took them to locate the relevant information.
+\item {T2\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the ease of use of the system
+
+How Test Will Be Performed: The user will be asked to complete a specific task while purposefully giving input errors. They will then fill out a checklist to determine whether the system includes relevant error messages that helps the user correct their mistake.
+\end{enumerate}
+\paragraph{Personalization and Internationalization}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the users account information
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the usability of the personalization features
+
+How Test Will Be Performed: The user will be asked to edit their profile and complete a checklist that documents how many clicks it takes and how long it takes for the changes to be reflected.
+\end{enumerate}
+\paragraph{Learning}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the learnability of the system
+
+How Test Will Be Performed: The user will be asked to complete a task with only the aid of the systems learning materials. They will then fill in a checklist of how accessible the information was and how much it helped them
+\end{enumerate}
+\paragraph{Understandability and Politeness}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: NA
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the understandability of the system
+
+How Test Will Be Performed: The user will be given a list of text and instructions that appear when navigating the system. They will then fill out a checklist ensuring that they believe the instruction is written in plain language and uses no technical jargon.
+\end{enumerate}
+\paragraph{Accessibility}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the accessibility of the system
+
+How Test Will Be Performed: The user will be asked to complete a task only using their keyboard and they will complete a checklist determining how feasible it was
+\item {T2\\}\\
+Type: Automatic
+
+Initial State: System is loaded at the home page
+
+Input/Condition: The URL of the system
+
+Output: Pass Or Fail
+
+How Test Will Be Performed: Run a python script that locates all text elements on a page and determines the displayed font size. Test will pass if all text is at least 12 font size
+\end{enumerate}
 
 \subsubsection{NFR12 - Performance}
 		
@@ -1384,6 +1470,19 @@ Output: Completed checklist, indicating whether the privacy requirements are met
 
 How Test Will Be Performed: The user will complete a checklist determining whether the sensitive information is encrypted and anonymous
 \end{enumerate}
+\paragraph{Immunity}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Manual
+
+Initial State: System is operational with available data stored in the database
+
+Input/Condition: Corrupting a file and initiating recovery procedures
+
+Output: Time it took the successfully recover the data
+
+How Test Will Be Performed: Simulate a data corruption event and time how long it takes to successfully recover the data, ensure that it is under 4 hours
+\end{enumerate}
 \subsubsection{NFR16 - Cultural}
 \paragraph{Cultural}
 \begin{enumerate}
@@ -1397,6 +1496,33 @@ Input/Condition: NA
 Output: Completed checklist, indicating whether the user can understand the system
 
 How Test Will Be Performed: The user will complete a checklist determining whether they can understand the system instructions and how the system performs. This test will be done primarily by international students or students who do not speak English as their first language.
+\end{enumerate}
+\subsubsection{NFR17 - Compliance}
+\paragraph{Legal}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system meets legal requirements
+
+How Test Will Be Performed: The user will be given a list of relevant laws and regulations and will complete a checklist determining whether the system complies
+\end{enumerate}
+\paragraph{Standard Compliance}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system meets web security standards
+
+How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines
 \end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
@@ -1436,6 +1562,13 @@ FR3.3-TC1 & FR3.3\\
 \midrule
 {NFR10 - Appearance -  T1} & {APR1, APR2} \\
 {NFR10 - Style - T1} & {STYR1, STYR2} \\
+{NFR11 - Ease of Use - T1} & {EUR1, EUR3} \\
+{NFR11 - Ease of Use - T2} & {EUR2} \\
+{NFR11 - Personalization and Internationalization - T1} & {PIR1, PIR2} \\
+{NFR11 - Learning - T1} & {LER1, LER2} \\
+{NFR11 - Understandability and Politeness - T1} & {UAPR1} \\
+{NFR11 - Accessibility - T1} & {ACSR1} \\
+{NFR11 - Accessibility - T2} & {ACSR2} \\
 {NFR12 - Speed and Latency - T1} & {SPLR1} \\
 {NFR12 - Speed and Latency - T2} & {SPLR2} \\
 {NFR12 - Speed and Latency - T3} & {SPLR3} \\
@@ -1461,8 +1594,10 @@ FR3.3-TC1 & FR3.3\\
 {NFR15 - Access - T2} & {SCR2, SCR3, SCR4, SCR5, SCR6} \\
 {NFR15 - Integrity/Audit - T1} & {INR1, ADR1, ADR2} \\
 {NFR15 - Privacy - T1} & {PVR1, PVR2} \\
+{NFR15 - Immunity - T1} & {IMM1} \\
 {NFR16 - Cultural - T1} & {CLTR1} \\
-
+{NFR17 - Legal - T1} & {LR1, LR2} \\
+{NFR17 - Standards Compliance} & {STR1}
 \midrule 
 \end{tabularx}
 

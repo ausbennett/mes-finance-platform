@@ -94,63 +94,64 @@ in.}
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document provides a structured Verification and Validation (V\&V) plan for the McMaster Engineering Society (MES) financial platform project. The purpose of this V\&V plan is to outline a systematic approach to evaluate the platform's reliability, usability, and security. This document includes a summary of the software, objectives for testing, identified out-of-scope areas, and relevant references to the project's technical documents. Following this introduction, each section will elaborate on key elements necessary to achieve confidence in the platform's correctness and suitability for MES’s needs.
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+The MES financial platform is primarily a CRUD (Create, Read, Update, Delete) application tailored to streamline accounting and intake responsibilities for MES. At its core, the software is responsible for managing and processing data related to reimbursement requests and integrates with external data sources for accounting functions. Key features include:
+
+\begin{itemize}
+    \item \textbf{Accounting Integration:} Seamless integration with external data sources for transaction records, making financial management more efficient.
+    \item \textbf{Data Processing:} Handling and tracking reimbursement requests from initiation through completion.
+    \item \textbf{User Management:} Supports various user roles within MES to facilitate secure access and control over financial data.
+\end{itemize}
+
+The platform is designed to serve as a centralized tool for managing MES financial tasks, reducing the manual load on accounting staff and ensuring reliable financial record-keeping.
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+The primary objectives of this V\&V process are to:
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+\begin{itemize}
+    \item \textbf{Build Confidence in Software Correctness:} Verify that the software functions as intended for all primary use cases, reducing errors in financial and intake records.
+    \item \textbf{Demonstrate Adequate Usability:} Ensure the platform is intuitive, easy to adopt, and efficiently serves MES's accounting and reimbursement needs with minimal user training.
+    \item \textbf{Establish Data Security:} Validate that the platform secures sensitive financial data, instilling confidence among users regarding data safety and privacy.
+    \item \textbf{Ensure Maintainability:} Confirm that the codebase and system are designed to be easily understood, extended, and maintained by future MES teams or other developers.
+\end{itemize}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+\subsection{Out-of-Scope Objectives}
+
+\begin{itemize}
+    \item \textbf{Performance Optimization:} While the platform’s speed is important, performance tuning is considered a secondary priority for this V\&V plan, as it does not impact the primary functionalities.
+    \item \textbf{Reliability and Robustness Testing:} Long-term reliability under heavy load is out of scope, given MES's anticipated user volume is low. Robustness, including extensive error handling for edge cases, is beyond the available resources.
+    \item \textbf{Scalability:} The platform is intended for MES's internal use, so high scalability to support a large user base or high transaction volume is not prioritized.
+    \item \textbf{Portability and Reusability:} Adaptation for other organizations or platforms is not included, as this project is specifically tailored for MES.
+\end{itemize}
+
+In this project, the team recognizes the constraints on time and resources. Thus, while striving to meet MES’s immediate requirements, this V\&V plan will also ensure the platform lays a robust foundation for potential future improvements.
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
-
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+This project is classified as a general-level project. Given the critical role of user adoption and ease of use, the team has opted to include \textbf{user documentation} as an extra deliverable. This documentation will provide essential guidance to new users, helping to ease the learning curve and ensure sustained adoption of the platform by MES staff.
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+The following project documents will inform the V\&V process, providing necessary references for testing and validation efforts:
 
-\citet{SRS}
+\begin{itemize}
+    \item \textbf{Software Requirements Specification (SRS):} Details the specific functional and non-functional requirements for the platform, serving as the baseline for validation efforts.
+    \item \textbf{Software Design Document (SD):} Provides a comprehensive view of the platform's architecture and design decisions. This will help verify that the implemented software aligns with the intended structure and workflow.
+    \item \textbf{Module Guide (MG):} Describes the organization of the software into modules, assisting in modular testing and helping developers isolate and validate individual components.
+    \item \textbf{Module Interface Specification (MIS):} Defines the interface requirements for each module, supporting integration testing to confirm seamless interaction between components.
+\end{itemize}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+These documents collectively support the V\&V process by specifying expected behaviors, design constraints, and modular structures, ensuring that the platform aligns with MES's goals.
+% \citet{SRS}
+
+% \wss{Don't just list the other documents.  You should explain why they are relevant and 
+% how they relate to your VnV efforts.}
 
 \section{Plan}
 This section outlines the roadmap for the Verification and Validation (V\&V) process to ensure the reimbursement platform adheres to user requirements and system specifications. The subsections detail the responsibilities of the V\&V team, verification plans for the SRS, design, and overall V\&V plan, as well as the tools and approaches used.
@@ -964,41 +965,348 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Performance}
 		
-\paragraph{Title for Test}
+\paragraph{Speed and Latency}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T1 - SPLR1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Type: Automatic
 
-Type: Functional, Dynamic, Manual, Static etc.
+Initial state: System is ready to receive a new payment request
+
+Input/Condition: A dummy/QA payment request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+ 
 					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+\item{T2 - SPLR2\\}
+
+Type: Automatic
+
+Initial state: System is not processing and can accept a new invoice generation request
+
+Input/Condition: A dummy invoice generation request
+
+Output: Newly generated invoice or appropriate failure/error message
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+
+\item{T3 - SPLR3\\}
+
+Type: Automatic
+
+Initial state: System is ready to receive a new reimbursement request
+
+Input/Condition: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\Paragraph{Safety-Critical}
 
-...
+\begin{enumerate}
+
+\item{T1 - SFCR 1, PRD2\\}
+
+Type: Automatic
+
+Initial state: system is ready to receive a new reimbursement request
+
+Input: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message
+
+How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits.
+
+\item{T2 - SFCR 2, RFT 2, PRD3\\}
+
+Type: Automatic 
+
+Initial State: System is logged in with an account with access controls for student (non-MES admin)
+
+Input: Request for data from an MES admin account
+
+Output: Failure/Error message
+
+How test will be performed: System should not display information to non-authorized user but instead display an appropriate message explaining why the request was denied.
+\end{enumerate}
+
+\paragraph{Precision and Accuracy}
+
+\begin{enumerate}
+\item{T1 - POAR1\\}
+
+Type: Static/Manual 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: N/A
+
+How test will be performed: Static analysis of code modules to ensure all monetary calculations are rounded to 2 decimal places.
+\end{enumerate}
+
+\paragraph{Robustness or Fault-Tolerance}
+
+\begin{enumerate}
+
+\item{T1 - RFT 1, MR1\\}
+
+Type: Automatic
+
+Initial State: System is about to upload daily backups to backup server
+
+Input: N/A
+
+Output: Backed up data is moved to the other database
+
+How test will be performed: Module will automatically compare the entries added to the backup database with those added to the main database on that day and raise an exception for any mismatch.
+
+\end{enumerate}
+
+\paragraph{Capacity}
+
+\begin{enumerate}
+\item{T1 - CPR1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Large number of reimbursement, invoice, or payment requests (ie, from a load testing software to submit the requests to the API)
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity requirements without failing.
+
+\item{T2 - CPR2\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Large number of simultaneous reimbursement, invoice, or payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity requirements without failing.
+
+\item{T3 - CPR3\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: 10 years’ worth of dummy data
+
+Output: Successful data storage
+
+How test will be performed: 10 years’ worth of dummy data will be added to the backup database to ensure that it can store all data for 10 years.
+
+\end{enumerate}
+
+\paragraph{Scalability or Extensibility}
+
+\begin{enumerate}
+\item{T1 - SER2, PRD1, PRD7\\}
+
+Type: Automatic/Static Review
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Increasingly large numbers of payment requests to stress test (ie, from a load testing application)
+
+Output: Eventual system failure; system metrics provided by testing application or profiling tools
+
+How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability.
+
+\item{T2 - SER1, IAR2\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Dummy API requests (eg, from Postman) that mimic real third party requests
+
+Output: 200 Success and success body with proper format
+
+How test will be performed: Endpoints that will be open to third-party integrations provide success messages for basic requests (GET, POST) and return the message body in JSON format.
+
+\end{enumerate}
+
+\paragraph{Longevity}
+
+\begin{enumerate}
+
+\item{T1 - LOR1\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and adaptability. They will also review documentation to assess if future developers will have the necessary support to maintain the system without difficulties.
+
+\end{enumerate}
+
+\subsection{Operational and Environmental}
+
+\paragraph{Expected Physical Environment}
+
+\begin{enumerate}
+
+\item{T1 - OR1, OR2\\}
+  
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Several payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: This test will be performed on a machine with Windows 10 and matching or similar specs to Intuit Quickbooks’ minimum requirements. The test is successful if no requests fail and are delivered within maximum time requirements (as outlined in 12.1 of our SRS document).
+  
+\end{enumerate}
+
+\paragraph{Wider environment}
+
+\begin{enumerate}
+
+\item{T1 - WR1\\}
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist 
+
+How test will be performed: Static analysis of code, using a checklist, to ensure that the implemented processes conform to the industry standard for Canadian financial institutions
+  
+\end{enumerate}
+
+\paragraph{Interfacing with Adjacent Systems}
+
+\begin{enumerate}
+
+\item{T1 - IAR1, PRD4\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Mock payment request forms for users of all major Canadian banks (BMO, CIBC, RBC, Scotiabank, TD)
+
+Output: Success message
+
+How test will be performed: Valid request forms should be processed with a success message for all major Canadian financial institutions.
+
+\end{enumerate}
+
+\paragraph{Productization}
+
+\begin{enumerate}
+
+\item{T1 - PRD5, PRD6\\}
+  
+Type: Static 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Peer-review checklist
+
+How test will be performed: Users will be given training materials and fill out a checklist review of how easy they and the system are to understand.
+
+\end{enumerate}
+
+\paragraph{Release}
+
+\begin{enumerate}
+
+\item{T1 - RLR1\\}
+  
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 2 releases per year is doable and appropriate.
+
+\end{enumerate}
+
+\subsection{Maintainability and Support}
+
+\paragraph{Maintenance}
+
+\begin{itemize}
+
+\item{T1 - MR2, MR3\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 10% of each year is sufficient downtime to keep the software efficient, working, and scalable.
+
+\end{itemize}
+
+\paragraph{Supportability}
+
+\begin{itemize}
+
+\item{T1 - SR1\\}
+
+Type: Manual
+
+Initial State: System has just undergone functional changes/updates
+
+Input: N/A
+
+Output: Checklist
+
+How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software.
+
+\end{itemize}
+
+\paragraph{Adaptability}
+
+\begin{itemize}
+
+\item{T1 - AR1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Valid dummy payment requests
+
+Output: Success message
+
+How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software.
+
+\end{itemize}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -1163,11 +1471,15 @@ graduate attribute of Lifelong Learning.
   \item What went well while writing this deliverable? 
 
   \textbf{Christian:} There was a high degree of certainty with this document that made the final product come out well. Knowing that there must be tests for all requirements and that plans must be made to verify and validate all aspects of the project thus far as well as future elements, there is almost no ambiguity in what should be included, only with making sure everything relevant is included, as, to an extent, you can never be too sure when validating.
+  \textbf{Austin:} The availability of resources to facilitate the creation of this document.
+  \textbf{Jacob:} Being able to go back to prior documentation was useful for this deliverable, and provided a reference for keeping consistent while writing this deliverable.
 
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
 
   \textbf{Christian:} The biggest pain point was simply making sure that all relevant information was present in the document. With so much to potentially validate and verify, it becomes a worry that you're not being rigorous enough, or you haven't anticipated enough. To mitigate this we engaged in group brainstorming as well as constantly supporting each other remotely. Another fact that helped was knowing that many of the specifics for this document are not imminently necessary to nail down.
+  \textbf{Austin:} Trying to forecast what documents the VnV will use that have not been made yet
+  \textbf{Jacob:} Trying to cover all relevant information regarding the requirements we came up with a couple deliverables ago was difficult as there was a lot to cover and it was easy to miss things. I alleviated it by just being meticulous and cross-referencing the old documents.
 
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
@@ -1175,7 +1487,9 @@ graduate attribute of Lifelong Learning.
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
   identify at least one item for each team member.
 
+  \textbf{Austin:} One knowledge I need to aquire is a better traceability of design requirements and decisisons into their respective documentation, to ensure nothing has been overlooked.
   \textbf{Christian:} Personally, I will need to develop my knowledge of existing testing tools. I have a fair understanding of testing methods and what methods apply when, however I admittedly have little experience with actual testing tools, and should familiarize myself with any potential tools that can be useful for us going forward, whether it be for static or dynamic testing.
+  \textbf{Jacob:} For me it would be helpful to learn more about static code analysis and performance metrics. I have experience with testing tools for functionality but non-functional testing via other methods is relatively new to me.
 
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
@@ -1183,6 +1497,9 @@ graduate attribute of Lifelong Learning.
   member pursue, and why did they make this choice?
 
   \textbf{Christian:} One approach to mastering verification ot validation tools would be to simply read up on many different kinds and learn their strengths or weaknesses. While many testing platforms may explicitly offer the functionality we're looking for, some are lkely to be more geared to our application than othes. Another approach could be to find the most popular platform and get familiar with that one specifically, as a way to better prepare myself not only for this project but also what may be expected of me in industry for similar types of projects. Personally, I do prefer the first option however because I value versatility in my development abilities and would rather not be pidgeonholed into a specific niche too early.
+  \textbf{Austin:} Perhaps some visualization technique, to see the "flow" of requirements or design decisions reflected in a checklist
+  \textbf{Jacob:} Two approaches would be to gain firsthand experience by analyzing software or reading through educational materials to gain a better understanding of industry-standard techniques and tools. The latter is easier and more viable, so I would carry through with that.
+
 \end{enumerate}
 
 \end{document}

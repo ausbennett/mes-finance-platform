@@ -56,9 +56,6 @@ in.}
 \listoftables
 \wss{Remove this section if it isn't needed}
 
-\listoffigures
-\wss{Remove this section if it isn't needed}
-
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
@@ -348,7 +345,7 @@ The feedback from these activities will be documented and used to refine the sys
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-The following sections will cover system tests for functional and non-functional requirements outlined in the \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.pdf}{SRS}
+The following sections will cover system tests for functional and non-functional requirements outlined in the \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \subsection{Tests for Functional Requirements}
 
@@ -1357,6 +1354,8 @@ FR3.3-TC1 & FR3.3\\
 \wss{This section should not be filled in until after the MIS (detailed design
   document) has been completed.}
 
+\textit{This section cannot be completed until after the detailed design document has been completed, therefore it is omitted.}
+
 \wss{Reference your MIS (detailed design document) and explain your overall
 philosophy for test case selection.}  
 
@@ -1368,129 +1367,15 @@ and as many tests as needed for edge cases.  Rather than create the details of t
 and output here, you could point to the unit testing code.  For this to work, you code 
 needs to be well-documented, with meaningful names for all of the tests.}
 
-\subsection{Unit Testing Scope}
-
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
-
-\subsection{Tests for Functional Requirements}
-
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
-
-\subsubsection{Module 1}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
-
-\subsection{Traceability Between Test Cases and Modules}
-
-\wss{Provide evidence that all of the modules have been considered.}
-				
-\bibliographystyle{plainnat}
-
-\bibliography{../../refs/References}
-
 \newpage
 
 \section{Appendix}
 
-This is where you can place additional information.
+\textit{Not applicable for this deliverable}
 
 \subsection{Symbolic Parameters}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+\textit{Not applicable for this delierable}
 
 \subsection{Usability Survey Questions?}
 
@@ -1510,15 +1395,23 @@ graduate attribute of Lifelong Learning.
   \item What went well while writing this deliverable? 
 
   \textbf{Christian:} There was a high degree of certainty with this document that made the final product come out well. Knowing that there must be tests for all requirements and that plans must be made to verify and validate all aspects of the project thus far as well as future elements, there is almost no ambiguity in what should be included, only with making sure everything relevant is included, as, to an extent, you can never be too sure when validating.
+  
   \textbf{Austin:} The availability of resources to facilitate the creation of this document.
+  
   \textbf{Jacob:} Being able to go back to prior documentation was useful for this deliverable, and provided a reference for keeping consistent while writing this deliverable.
+
+  \textbf{Adam:} One thing that went well while writing this deliverable was having the SRS already written and being able to reference back to it when coming up with the system tests for the functional requirements. Having requirements organized by feature and labelled streamlined the process of formulating system requirements.
 
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
 
   \textbf{Christian:} The biggest pain point was simply making sure that all relevant information was present in the document. With so much to potentially validate and verify, it becomes a worry that you're not being rigorous enough, or you haven't anticipated enough. To mitigate this we engaged in group brainstorming as well as constantly supporting each other remotely. Another fact that helped was knowing that many of the specifics for this document are not imminently necessary to nail down.
+  
   \textbf{Austin:} Trying to forecast what documents the VnV will use that have not been made yet
+  
   \textbf{Jacob:} Trying to cover all relevant information regarding the requirements we came up with a couple deliverables ago was difficult as there was a lot to cover and it was easy to miss things. I alleviated it by just being meticulous and cross-referencing the old documents.
+
+  \textbf{Adam:} The biggest pain point experienced while writing this deliverable was simply ensuring all test cases were correctly mapped to all requirements. Since the document is very long and there are numerous test cases and requirements, it was quite tedious to ensure the mapping was correct in the traceability section. This was resolved by simply taking the time to double-check the mappings
 
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
@@ -1527,8 +1420,12 @@ graduate attribute of Lifelong Learning.
   identify at least one item for each team member.
 
   \textbf{Austin:} One knowledge I need to aquire is a better traceability of design requirements and decisisons into their respective documentation, to ensure nothing has been overlooked.
+  
   \textbf{Christian:} Personally, I will need to develop my knowledge of existing testing tools. I have a fair understanding of testing methods and what methods apply when, however I admittedly have little experience with actual testing tools, and should familiarize myself with any potential tools that can be useful for us going forward, whether it be for static or dynamic testing.
+  
   \textbf{Jacob:} For me it would be helpful to learn more about static code analysis and performance metrics. I have experience with testing tools for functionality but non-functional testing via other methods is relatively new to me.
+
+  \textbf{Adam:} One skill that I have to acquire is knowledge of how to use Postman for testing and developing APIs. This will come in handy for testing a lot of the functional requirements and making sure the correct requests are being made between frontend, backend and database.
 
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
@@ -1536,9 +1433,12 @@ graduate attribute of Lifelong Learning.
   member pursue, and why did they make this choice?
 
   \textbf{Christian:} One approach to mastering verification ot validation tools would be to simply read up on many different kinds and learn their strengths or weaknesses. While many testing platforms may explicitly offer the functionality we're looking for, some are lkely to be more geared to our application than othes. Another approach could be to find the most popular platform and get familiar with that one specifically, as a way to better prepare myself not only for this project but also what may be expected of me in industry for similar types of projects. Personally, I do prefer the first option however because I value versatility in my development abilities and would rather not be pidgeonholed into a specific niche too early.
+  
   \textbf{Austin:} Perhaps some visualization technique, to see the "flow" of requirements or design decisions reflected in a checklist
+  
   \textbf{Jacob:} Two approaches would be to gain firsthand experience by analyzing software or reading through educational materials to gain a better understanding of industry-standard techniques and tools. The latter is easier and more viable, so I would carry through with that.
 
+  \textbf{Adam:} Postman is a very popular tool so there is loads of documentation out there to learn from. Other than this, there are definitely numerous Youtube tutorials teaching the use of Postman in web development projects. Out of the two approaches, I think I will watch a few Youtube videos to gain a better understanding of this tool. This approach is slightly better seeing as the information is usually condensed and presented in a logical format, which is much more effective and time-efficient than just reading through documentation. 
 \end{enumerate}
 
 \end{document}

@@ -1,0 +1,1718 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage[round]{natbib}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\title{System Verification and Validation Plan for \progname{}} 
+\author{\authname}
+\date{\today}
+	
+\maketitle
+
+\pagenumbering{roman}
+
+\section*{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+11/4/2024 & 0 & All sections, including reflections\\
+\bottomrule
+\end{tabularx}
+
+~\\
+\wss{The intention of the VnV plan is to increase confidence in the software.
+However, this does not mean listing every verification and validation technique
+that has ever been devised.  The VnV plan should also be a \textbf{feasible}
+plan. Execution of the plan should be possible with the time and team available.
+If the full plan cannot be completed during the time available, it can either be
+modified to ``fake it'', or a better solution is to add a section describing
+what work has been completed and what work is still planned for the future.}
+
+\wss{The VnV plan is typically started after the requirements stage, but before
+the design stage.  This means that the sections related to unit testing cannot
+initially be completed.  The sections will be filled in after the design stage
+is complete.  the final version of the VnV plan should have all sections filled
+in.}
+
+\newpage
+
+\tableofcontents
+
+\listoftables
+\wss{Remove this section if it isn't needed}
+
+\newpage
+
+\section{Symbols, Abbreviations, and Acronyms}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  HTTP & Hypertext Transfer Protocol\\
+  POST & HTTP request method to create new resource\\
+  PUT & HTTP request method to update or create new resource\\
+  GET & HTTP request method to retrieve data\\
+  PATCH & HTTP request method to update part of existing data\\
+  JSON & JavaScript Object Notation\\
+  Postman & Tool for developing and testing APIs\\
+  JPEG & Joint Photographic Experts Group (image file format)\\
+  PNG & Portable Network Graphic (image file format)\\
+  PDF & Portable Document Format (file format)\\
+  UI & User Interface\\
+  DB & Database\\
+  API & Application Programming Interface\\
+  SRS & Software Requirements Specification (Document)\\
+  \bottomrule
+\end{tabular}\\
+
+\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
+  \citep{SRS} tables, if appropriate}
+
+\wss{Remove this section if it isn't needed}
+
+\newpage
+
+\pagenumbering{arabic}
+
+This document provides a structured Verification and Validation (V\&V) plan for the McMaster Engineering Society (MES) financial platform project. The purpose of this V\&V plan is to outline a systematic approach to evaluate the platform's reliability, usability, and security. This document includes a summary of the software, objectives for testing, identified out-of-scope areas, and relevant references to the project's technical documents. Following this introduction, each section will elaborate on key elements necessary to achieve confidence in the platform's correctness and suitability for MES’s needs.
+
+\section{General Information}
+
+\subsection{Summary}
+
+The MES financial platform is primarily a CRUD (Create, Read, Update, Delete) application tailored to streamline accounting and intake responsibilities for MES. At its core, the software is responsible for managing and processing data related to reimbursement requests and integrates with external data sources for accounting functions. Key features include:
+
+\begin{itemize}
+    \item \textbf{Accounting Integration:} Seamless integration with external data sources for transaction records, making financial management more efficient.
+    \item \textbf{Data Processing:} Handling and tracking reimbursement requests from initiation through completion.
+    \item \textbf{User Management:} Supports various user roles within MES to facilitate secure access and control over financial data.
+\end{itemize}
+
+The platform is designed to serve as a centralized tool for managing MES financial tasks, reducing the manual load on accounting staff and ensuring reliable financial record-keeping.
+
+\subsection{Objectives}
+
+The primary objectives of this V\&V process are to:
+
+\begin{itemize}
+    \item \textbf{Build Confidence in Software Correctness:} Verify that the software functions as intended for all primary use cases, reducing errors in financial and intake records.
+    \item \textbf{Demonstrate Adequate Usability:} Ensure the platform is intuitive, easy to adopt, and efficiently serves MES's accounting and reimbursement needs with minimal user training.
+    \item \textbf{Establish Data Security:} Validate that the platform secures sensitive financial data, instilling confidence among users regarding data safety and privacy.
+    \item \textbf{Ensure Maintainability:} Confirm that the codebase and system are designed to be easily understood, extended, and maintained by future MES teams or other developers.
+\end{itemize}
+
+\subsection{Out-of-Scope Objectives}
+
+\begin{itemize}
+    \item \textbf{Performance Optimization:} While the platform’s speed is important, performance tuning is considered a secondary priority for this V\&V plan, as it does not impact the primary functionalities.
+    \item \textbf{Reliability and Robustness Testing:} Long-term reliability under heavy load is out of scope, given MES's anticipated user volume is low. Robustness, including extensive error handling for edge cases, is beyond the available resources.
+    \item \textbf{Scalability:} The platform is intended for MES's internal use, so high scalability to support a large user base or high transaction volume is not prioritized.
+    \item \textbf{Portability and Reusability:} Adaptation for other organizations or platforms is not included, as this project is specifically tailored for MES.
+\end{itemize}
+
+In this project, the team recognizes the constraints on time and resources. Thus, while striving to meet MES’s immediate requirements, this V\&V plan will also ensure the platform lays a robust foundation for potential future improvements.
+
+\subsection{Challenge Level and Extras}
+
+This project is classified as a general-level project. Given the critical role of user adoption and ease of use, the team has opted to include \textbf{user documentation} as an extra deliverable. This documentation will provide essential guidance to new users, helping to ease the learning curve and ensure sustained adoption of the platform by MES staff.
+
+\subsection{Relevant Documentation}
+
+The following project documents will inform the V\&V process, providing necessary references for testing and validation efforts:
+
+\begin{itemize}
+    \item \textbf{Software Requirements Specification (SRS):} Details the specific functional and non-functional requirements for the platform, serving as the baseline for validation efforts.
+    \item \textbf{Software Design Document (SD):} Provides a comprehensive view of the platform's architecture and design decisions. This will help verify that the implemented software aligns with the intended structure and workflow.
+    \item \textbf{Module Guide (MG):} Describes the organization of the software into modules, assisting in modular testing and helping developers isolate and validate individual components.
+    \item \textbf{Module Interface Specification (MIS):} Defines the interface requirements for each module, supporting integration testing to confirm seamless interaction between components.
+\end{itemize}
+
+These documents collectively support the V\&V process by specifying expected behaviors, design constraints, and modular structures, ensuring that the platform aligns with MES's goals.
+% \citet{SRS}
+
+% \wss{Don't just list the other documents.  You should explain why they are relevant and 
+% how they relate to your VnV efforts.}
+
+\section{Plan}
+This section outlines the roadmap for the Verification and Validation (V\&V) process to ensure the reimbursement platform adheres to user requirements and system specifications. The subsections detail the responsibilities of the V\&V team, verification plans for the SRS, design, and overall V\&V plan, as well as the tools and approaches used.
+
+\subsection{Verification and Validation Team}
+The V\&V team comprises the following members, each with designated roles to facilitate the V\&V process:
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Role} & \textbf{Responsibilities} \\
+\hline
+Project Supervisor: \textbf{Adam Podolak} & Provides oversight and final approval for all V\&V activities, ensuring that project requirements align with MES standards. \\
+\hline
+Quality Assurance Lead: \textbf{Evan Sturmey} & Conducts regular reviews and quality checks for documentation and code. Oversees test planning and testing processes. \\
+\hline
+Test Engineer: \textbf{Austin Bennett} & Responsible for writing and executing test cases, managing test data, and reporting defects during verification. \\
+\hline
+Documentation Specialist: \textbf{Christian Petricca} & Prepares detailed documentation of the V\&V processes and results, and ensures all records are up to date and accessible for review. \\
+\hline
+Developer: \textbf{Jacob Kish} & Assists in integration testing and ensures that features are implemented according to specifications. \\
+\hline
+\end{tabularx}
+\caption{Verification and Validation Team Roles and Responsibilities}
+\end{table}
+
+\subsection{SRS Verification Plan}
+The verification of the Software Requirements Specification (SRS) will include:
+\begin{itemize}
+    \item \textbf{Peer Reviews}: Team members will perform thorough reviews to identify ambiguities, inconsistencies, and missing requirements.
+    \item \textbf{Feedback Meetings}: Scheduled meetings with stakeholders will validate that the documented requirements align with their expectations.
+    \item \textbf{Checklist-Based Inspections}: The team will use predefined checklists to verify that the SRS is complete, accurate, and adheres to industry standards.
+\end{itemize}
+These activities will be documented, and all feedback will be tracked using an issue tracker for consistent updates and resolution.
+
+\subsection*{Checklist for SRS Verification Plan (3.2)}
+\begin{itemize}
+    \item \textbf{Completeness Check}
+    \begin{itemize}
+        \item Verify that all user requirements are documented.
+        \item Confirm that all functional and non-functional requirements are included.
+        \item Ensure that all relevant use cases and user stories are covered.
+    \end{itemize}
+    \item \textbf{Consistency Review}
+    \begin{itemize}
+        \item Check for consistency in terminology and descriptions throughout the document.
+        \item Ensure that there are no conflicting requirements.
+    \end{itemize}
+    \item \textbf{Clarity and Ambiguity}
+    \begin{itemize}
+        \item Identify any vague or ambiguous language.
+        \item Ensure that all requirements are specific and measurable.
+    \end{itemize}
+    \item \textbf{Traceability}
+    \begin{itemize}
+        \item Confirm that each requirement can be traced back to a user need or stakeholder request.
+        \item Validate that the requirements can be mapped forward to the design and testing phases.
+    \end{itemize}
+    \item \textbf{Format and Compliance}
+    \begin{itemize}
+        \item Verify that the document follows the required format and style.
+        \item Ensure adherence to project documentation standards.
+    \end{itemize}
+    \item \textbf{Stakeholder Review}
+    \begin{itemize}
+        \item Include stakeholder feedback and address any concerns raised during review sessions.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Design Verification Plan}
+Verification of the system design will ensure alignment with the approved SRS. The following steps will be taken:
+\begin{itemize}
+    \item \textbf{Design Reviews}: Formal reviews will be conducted with peers and the project supervisor to evaluate design decisions, data flow, and overall system architecture.
+    \item \textbf{Checklist Inspections}: The design will be checked against a predefined checklist to verify that areas such as security, data integration, and scalability are thoroughly addressed.
+    \item \textbf{Classmate Feedback}: External reviews by classmates will provide an unbiased assessment of the design's robustness and potential areas of improvement.
+\end{itemize}
+These reviews will be documented, and necessary modifications will be made to strengthen the design.
+
+\subsection*{Checklist for Design Verification Plan (3.3)}
+\begin{itemize}
+    \item \textbf{Design Document Completeness}
+    \begin{itemize}
+        \item Ensure that all components of the system are detailed in the design document.
+        \item Confirm the inclusion of diagrams (e.g., system architecture, data flow).
+    \end{itemize}
+    \item \textbf{Alignment with SRS}
+    \begin{itemize}
+        \item Verify that the design adheres to the requirements outlined in the SRS.
+        \item Check for traceability between design elements and SRS requirements.
+    \end{itemize}
+    \item \textbf{Scalability}
+    \begin{itemize}
+        \item Review the design for future scalability and possible extensions.
+        \item Confirm that the design supports anticipated system loads and additional features.
+    \end{itemize}
+    \item \textbf{Security Considerations}
+    \begin{itemize}
+        \item Validate that security measures are incorporated into the design.
+        \item Ensure that access controls and data protection protocols are part of the architecture.
+    \end{itemize}
+    \item \textbf{Peer Review and Feedback}
+    \begin{itemize}
+        \item Conduct a formal review with peers and collect feedback.
+        \item Address any concerns and implement necessary changes based on feedback.
+    \end{itemize}
+    \item \textbf{Design Consistency}
+    \begin{itemize}
+        \item Check that consistent design practices and naming conventions are used throughout.
+        \item Validate that all design components are coherent and properly integrated.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Verification and Validation Plan Verification Plan}
+The verification and validation plan itself is a crucial artifact that must be verified to ensure it meets the project requirements. The plan will undergo structured reviews and mutation testing for thorough analysis. This review will be conducted by team members and peers to ensure the plan's integrity and applicability.
+
+\begin{itemize}
+    \item Conduct a peer review of the V\&V plan, focusing on coverage, accuracy, and relevance.
+    \item Utilize a checklist to verify that the plan includes all necessary components, such as strategies, methods, and validation steps.
+    \item Implement mutation testing to identify the robustness of the validation methods.
+\end{itemize}
+
+\subsection*{Checklist for Verification and Validation Plan Verification Plan (3.4)}
+\begin{itemize}
+    \item \textbf{Plan Completeness}
+    \begin{itemize}
+        \item Verify that all elements of the V\&V process are documented in the plan.
+        \item Confirm that the plan outlines both verification and validation strategies.
+    \end{itemize}
+    \item \textbf{Clarity of Methodology}
+    \begin{itemize}
+        \item Ensure that the V\&V methods (e.g., peer reviews, test cases, mutation testing) are clearly described.
+        \item Check that the plan includes details on how reviews will be conducted.
+    \end{itemize}
+    \item \textbf{Checklist Inclusion}
+    \begin{itemize}
+        \item Confirm the presence of checklists for reviewing the SRS, design, and other artifacts.
+        \item Ensure that the checklists cover relevant aspects and criteria for verification.
+    \end{itemize}
+    \item \textbf{Feedback Mechanism}
+    \begin{itemize}
+        \item Verify that there is a defined process for collecting and addressing feedback.
+        \item Check that the plan specifies how issues will be tracked and resolved.
+    \end{itemize}
+    \item \textbf{Alignment with Project Goals}
+    \begin{itemize}
+        \item Validate that the V\&V plan aligns with overall project timelines and goals.
+        \item Ensure that resources are adequately allocated for V\&V activities.
+    \end{itemize}
+    \item \textbf{Review by Team Members}
+    \begin{itemize}
+        \item Conduct a peer review of the V\&V plan to ensure that it meets the project standards.
+        \item Address any feedback provided by team members or external reviewers.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Implementation Verification Plan}
+The implementation phase will involve comprehensive testing and code walkthroughs to verify that the system aligns with the specified requirements.
+
+\begin{itemize}
+    \item Unit testing will be conducted for individual modules to verify functionality.
+    \item Static code analysis tools will be used to check for coding standards and vulnerabilities.
+    \item Code inspections and peer reviews will be carried out to ensure proper implementation and adherence to best practices.
+\end{itemize}
+
+The final class presentation can be utilized as a code walkthrough to further validate the implementation.
+
+\subsection{Automated Testing and Verification Tools}
+To ensure the robustness of the codebase, various automated testing and verification tools will be employed:
+
+\begin{itemize}
+    \item \textbf{Unit Testing Frameworks:} Jest and Mocha will be used for writing and running unit tests.
+    \item \textbf{Continuous Integration (CI):} GitHub Actions will be used for CI to automate the testing process.
+    \item \textbf{Static Analysis:} ESLint and SonarQube for analyzing code quality and detecting potential issues.
+    \item \textbf{Code Coverage:} Istanbul will be used to generate code coverage reports to summarize tested and untested portions.
+\end{itemize}
+
+These tools will help ensure code reliability and maintainability throughout the development process.
+
+\subsection{Software Validation Plan}
+Validation will ensure that the software meets the stakeholders' expectations and requirements. The following approaches will be used:
+
+\begin{itemize}
+    \item Conduct review sessions with stakeholders to validate that the requirements have been correctly implemented.
+    \item Organize a Rev 0 demo to present the software to the supervisor and gather feedback for potential improvements.
+    \item Utilize user testing to simulate real-world interactions and identify any usability issues.
+\end{itemize}
+
+The feedback from these activities will be documented and used to refine the system.
+
+
+\section{System Tests}
+
+\wss{There should be text between all headings, even if it is just a roadmap of
+the contents of the subsections.}
+
+The following sections will cover system tests for functional and non-functional requirements outlined in the \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\subsection{Tests for Functional Requirements}
+
+\wss{Subsets of the tests may be in related, so this section is divided into
+  different areas.  If there are no identifiable subsets for the tests, this
+  level of document structure can be removed.}
+
+\wss{Include a blurb here to explain why the subsections below
+  cover the requirements.  References to the SRS would be good here.}
+
+\subsubsection{Tests for Functional Requirements 9.1.1 - Reimbursement and Payment Request Feature}
+
+\wss{It would be nice to have a blurb here to explain why the subsections below
+  cover the requirements.  References to the SRS would be good here.  If a section
+  covers tests for input constraints, you should reference the data constraints
+  table in the SRS.}
+
+The subsections below cover tests relating to functional requirements for the reimbursement request feature. The tests below cover requirements FR1.1 - FR1.9 in section 9.1.1 of the \href{https://shorturl.at/FdAgR}{SRS}. 
+		
+\paragraph{FR1.1 - Successful Submissions of reimbursement request}
+
+\begin{enumerate}
+
+\item{\textbf{FR1.1-TC1}\\}
+
+Control: Manual
+					
+Initial State: User is authenticated and logged into the system. User has navigated to the "Submit Reimbursement Request" page.
+					
+Inputs:
+\begin{itemize}
+    \item Receipt images (JPEG or PNG format)
+    \item Supporting documents (PDFs)
+    \item Payment details - payment card number, expiry date, access code (through Stipe API)
+    \item Clicks "Submit" button
+\end{itemize}
+					
+Output: 
+\begin{itemize}
+    \item System securely stores the submission in the database
+    \item Confirmation message is displayed - "Your reimbursement request has been submitted"
+    \item Request appears in the user's "My Submitted Requests" page
+    \item Request status reads "Submitted"
+\end{itemize}
+
+Test Case Derivation: This test case verifies that the users can successfully submit a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS}. Successfully submitted requests will be given status "Submitted".
+					
+How test will be performed:
+\begin{itemize}
+    \item Log in as a user
+    \item Navigate to "Submit Reimbursement Request" page
+    \item Provide specified sample inputs above
+    \item Click "Submit"
+    \item Verify confirmation message is displayed
+    \item Navigate to "My Submitted Requests" page and confirm the newly created request appears with all the same information
+    \item Postman is a tool that can be used to verify the POST/PUT and GET requests sent to the API and database. HTTP requests can also be verified using a web browser's console to check response JSON objects
+\end{itemize}
+					
+\item{\textbf{FR1.1-TC2}}
+
+Control: Manual
+					
+Initial State: User is authenticated and logged into the system. User has navigated to the "Submit Reimbursement Request" page.
+					
+Input: 
+\begin{itemize}
+    \item Receipt images (NOT in JPEG or PNG fomrat)
+    \item Supporting documents (PDFs)
+    \item Payment details - payment card number, expiry date, access code (through Stipe API)
+    \item Clicks "Submit" button
+\end{itemize}
+					
+Output: 
+\begin{itemize}
+    \item System prevents submission
+    \item Error message is displayed - "Improper image format. Images must be JPEG or PNG)
+\end{itemize}
+
+Test Case Derivation: This test case enforces proper input of required fields to allow for the successful submission of a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS}. Improper input file type should result in the system not allowing a user to submit their request.
+
+How test will be performed: 
+\begin{itemize}
+    \item Log in as a user
+    \item Navigate to "Submit Reimbursement Request" page
+    \item Provide specified sample inputs except receipt image provide an incorrect file type (.pdf, .tiff, etc.)
+    \item Click "Submit"
+    \item Verify the error message is displayed within the the UI
+    \item Verify request is not successfully submitted into the database using Postman
+\end{itemize}
+
+\end{enumerate}
+
+\paragraph{FR1.2 - Admin Review and Approval of Submitted Request Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.2-TC1}}
+    Control: Manual	
+    
+    Initial State:
+    \begin{itemize}
+        \item A reimbursement request has been submitted and has "Submitted" status
+        \item An admin user is logged into the system
+    \end{itemize}
+    
+    Inputs:					
+    \begin{itemize}
+        \item Admin user navigates to the "Pending Requests" page
+        \item Admin user selects reimbursement request and reviews submission
+        \item Clicks "Approve" button
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Request status changed to "Approved". This change is reflected in both the UI and the DB
+        \item System records the approval action in the audit log
+        \item The user who submitted the reimbursement request receives a notification about the approval (Covered in FR1.5 tests)
+    \end{itemize}
+    
+    Test Case Derivation: This test case verifies that admins can review and approve submitted reimbursement requests as per FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Login as admin user
+        \item Navigate to "Pending Requests" and select a reimbursement request
+        \item Click "Approve"
+        \item Confirm request status is updated to "Approved". Use Postman to validate PATCH request. Check if status changes in the UI.
+        \item Check audit log to verify approval action was recorded, along with which admin user completed the approval.
+    \end{itemize}
+
+    \item{\textbf{FR1.2-TC2}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A reimbursement request has been submitted and has "Submitted" status
+        \item An admin user is logged into the system
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Admin user navigates to the "Pending Requests" page
+        \item Admin user selects reimbursement request and reviews submission
+        \item Clicks "Reject" button
+        \item Reason for rejection: "Receipt missing"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Request status changed to "Rejected". This change is reflected in both the UI and the DB
+        \item System records the approval action in the audit log
+        \item The user who submitted the reimbursement request receives a notification about the rejection (Covered in FR1.5 tests)
+        \item reason for rejection is stored with the associated request
+    \end{itemize}
+    
+    Test Case Derivation: This test case verifies that admins can review and reject submitted reimbursement requests as per FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Login as admin user
+        \item Navigate to "Pending Requests" and select a reimbursement request
+        \item Click "Reject"
+        \item Confirm request status is updated to "Rejected". Use Postman to validate PATCH request. Check if status changes in the UI.
+        \item Check audit log to verify rejection action was recorded
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.3 - Tests for Editing Submitted Requests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.3-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item User is authenticated and logged into the system
+        \item User's submitted reimbursement request has status "Requires Attention" because of an unclear image of a purchase receipt
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Click "Edit" on the reimbursement request
+        \item Change image of receipt
+        \item Click "Save"
+        \item Click "Re-submit"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Request status changed back to "Submitted"
+        \item Action is recorded in the audit log
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies users and admins can edit a submitted reimbursement request as per FR1.3 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as a user
+        \item Navigate to "My Requests"
+        \item Click "Edit' on the reimbursement request that has status "Requires Attention" 
+        \item Make the necessary edits
+        \item Click "Save" and "Re-submit"
+        \item Confirm request status has been changed back to "Submitted" in the UI on the "My Requests" page
+        \item Verify using Postman that the appropriate PATCH requests were successfully made (edited fields and status are reflected in the DB)
+        \item Verify the edit action is recorded in the audit log in the DB
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.4 - Status Tracking Test}
+
+\begin{enumerate}
+    \item{\textbf{FR1.4-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A submitted reimbursement request has status "Submitted"
+        \item Logged in user is an admin
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Admin selects reimbursement requests
+        \item Click "Set status"
+        \item Select "Under Review"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item System updates and displays the current status of reimbursement request to "Under Review"
+        \item System reflects this change of status in DB
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies that the system can track the status of each request as per FR1.4 in the \href{https://shorturl.at/FdAgR}{SRS}. If an admin sets a request's status to "Under Review" the status of the request should be changed to "Under Review".
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Logged in as an admin, change a request's status from "Submitted" to "Under Review"
+        \item Verify that the status is changed to "Under Review" in the UI
+        \item Verify using Postman that the correct PATCH request is made and the status is reflected in the DB
+        \item Repeat the above actions with various status values (Approved, Rejected).
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.5 - Notification Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.5-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item An admin is authenticated and logged into the system
+        \item A user's request has status "Submitted"
+        \item The user has a valid email and/or phone number associated with their account
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Admin changes the user's request from "Submitted" to "Approved"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item User receives an email or SMS notification updating them that their request status has changed from "Submitted" to "Approved"
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies the system can notify users of any changes to their reimbursement request status as per FR1.5 in the \href{https://shorturl.at/FdAgR}{SRS}. If a request's status is changed to "Approved" the user should be notified that their request's status has been changed to "Approved"
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as an admin
+        \item Change a user's request status to "Approved"
+        \item Check the user's email inbox or SMS message
+        \item Verify that the notification contains the correct information. This includes which request's status was changed, and what the status was changed to.
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.6 - Data Storage and Categorization Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.6-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A user is authenticated and logged into the system
+        \item User has navigated to the "Submit Reimbursement Request" page
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item User selects "Office Supplies" as budget category from predefined list
+        \item User submits the request
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Request information is stored in the DB
+        \item Request object is given budget category attribute "Office supplies"
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies that the system will store and categorize reimbursement requests based on budget categories for ledger tracking as per FR1.6 in the \href{https://shorturl.at/FdAgR}{SRS}.
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Logged in as a user, submit a reimbursement request with the budget category "Office Supplies"
+        \item Verify using Postman that the correct budget category was assigned to the request and reflected in the DB
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.7 - Access Control Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.7-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item User X and User Y have submitted reimbursement requests.
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item User X attempts to access User Y's request details
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The system denies access and displays an error message - "You do not have access"
+    \end{itemize}
+    
+    Test Case Derivation: This verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. General users should only have access to view requests that they have submitted.
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as User Y and navigate to "My Requests", and copy the URL.
+        \item Log in as User X and attempt to access the URL/page of User Y's requests page
+        \item Verify that access is denied and an error message is returned
+        \item Verify that User X can view their own requests
+    \end{itemize}
+
+    \item{\textbf{FR1.7-TC2}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item User X and User Y have submitted reimbursement requests.
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Admin navigate to "Pending Requests"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The system responds with all submitted reimbursement requests. Admin can view User X's requests and User Y's requests
+    \end{itemize}
+    
+    Test Case Derivation: This verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. Admin users should have access to view all submitted requests.
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as Admin and navigate to "Pending Requests" page
+        \item Verify that all requests displayed in the UI match all requests stored in the DB
+        \item Verify that User X's and User Y's requests can be selected, and viewed, and actions can be performed on them
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.8 - Admin Collaboration Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.8-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A reimbursement request has "Submitted" Status
+        \item Admin 1 and Admin 2 are authenticated and logged into the system
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item Both Admins access the same request
+        \item Admin 1 changes the status of the request to "Approved"
+        \item Admin 2 changes the status of the request to "Rejected"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The system flags the request and sets its status to "Needs Review"
+        \item The system tracks both actions in the audit log
+        \item The system adds a note associated with the requests - "Mismatched status update, please review and update" 
+        \item The system does not notify the user of this status change
+    \end{itemize}
+    
+    Test Case Derivation: This test case ensures that multiple admins can collaborate and review submitted requests as per FR1.8 in the \href{https://shorturl.at/FdAgR}{SRS}. If two different admins set a request's status to conflicting values, that request must be reviewed and a singular status value must be selected.
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as Admin 1 and Admin 2, access the same request, and make the respective status changes
+        \item Verify the system changes the request status to "Needs Review" in the UI and in the DB
+        \item Verify the system generated an associated 'note' field for the request that reads "Mismatched status update, please review and update." This field should be visible in the UI and stored in the DB
+        \item Verify the system did not send an update notification to the user by either accessing the user's inbox or using Postman to check that no API call was made
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR1.9 - Action Tracking Tests}
+
+\begin{enumerate}
+    \item{\textbf{FR1.9-TC1}}
+    
+    Control: Manual
+    
+    Initial State: 
+    \begin{itemize}
+        \item A reimbursement request has been submitted and has status "Submitted"
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item An admin changes the status of the request from "Submitted" to "Approved"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The system records the action with details: request ID, action type (status change), user (name, email), timestamp
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies that the system can track and store all actions performed concerning a single reimbursement request as per FR1.9 in the \href{https://shorturl.at/FdAgR}{SRS}. 
+    
+    How test will be performed:
+    \begin{itemize}
+        \item As a user, submit a request
+        \item As an admin, change the status of the request to "Approved"
+        \item Verify that the system stored the correct action details under the correct table in the DB.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Tests for Functional Requirements 9.1.2 - Custom Invoice Generation Feature}
+
+\textit{Note: These system tests have been omitted for this deliverable, as this feature may become a stretch goal depending on the progression of the project. If time permits, the system tests for this section will be included in the Revision 1 VnV Report}
+
+\subsubsection{Tests for Functional Requirements 9.1.3 - General Functional Requirements}
+
+\textit{Note: the below tests for requirements FR3.1-FR3.3 are subject to change as a concrete authentication method has not yet been established. This will likely be established in the detailed design document. The system will either use a classic authentication method (username and password login/signup), or authentication using tokens sent to the user's McMaster email address.}
+
+\paragraph{FR3.1 - Secure Storage of User Account Information}
+
+\begin{enumerate}
+    \item{\textbf{FR3.1-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item The system is operational with at least one registered user.
+        \item The database contains user account information, including full name, email, password, and phone number
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item legitimate user's credentials for log in
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Unauthorized access attempts are denied and an error message is displayed        
+        \item Passwords are securely stored (e.g., hashed and salted) and cannot be retrieved in plaintext
+        \item User account information is not exposed to unauthorized users
+    \end{itemize}
+    
+    Test Case Derivation: This test verifies that the system securely stores account information and prevents unauthorized access as per FR3.1 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as User A
+        \item Attempt to access User B's profile information by manipulating URLs or using application functionalities
+        \item Confirm that access is denied and an appropriate error message is displayed
+        \item Access the database (with proper authorization) to inspect the users table
+        \item Verify that passwords are stored using secure hashing algorithms (e.g., bcrypt, Argon2) and are not in plaintext
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR3.2 - Authentication of Users as McMaster Students}
+
+\begin{enumerate}
+    \item{\textbf{FR3.2-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A user who is a registered student has valid university credentials
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item User enters valid McMaster University email and credentials during registration/login
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The user is authenticated successfully
+    \end{itemize}
+    
+    Test Case Derivation: This test ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Attempt to register/log in using a valid McMaster University email (e.g., student@mcmaster.ca) and correct credentials
+        \item Verify that the system authenticates the user successfully and grants access to the landing page
+    \end{itemize}
+
+    \item{\textbf{FR3.2-TC2}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A user who is not a registered student attempts to register
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item User enters a non-university email or invalid credentials during registration/login
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item Authentication fails
+        \item The user receives an error message: "Authentication failed. You must be a registered McMaster University student to access this system."
+    \end{itemize}
+    
+    Test Case Derivation: This test ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Attempt to register/log in using a non-university email (e.g., user@gmail.com) or invalid credentials
+        \item Verify that authentication fails
+        \item Confirm that an appropriate error message is displayed
+        \item Ensure that no account is created or access granted for the invalid user
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{FR3.3 - Editing User Profile Information}
+
+\begin{enumerate}
+    \item{\textbf{FR3.3-TC1}}
+    
+    Control: Manual
+    
+    Initial State:
+    \begin{itemize}
+        \item A user is authenticated and logged into the system
+        \item The user's profile contains existing information (phone number, name, email, etc.)
+    \end{itemize}
+    
+    Inputs: 
+    \begin{itemize}
+        \item User clicks "Edit Profile"
+        \item User edits their phone number from "905-2134-2930" to "905-2134-2940"
+        \item User clicks "Save"
+    \end{itemize}
+    
+    Output: 
+    \begin{itemize}
+        \item The system saves the updated profile information
+        \item The system displays the updated information in the UI
+        \item The updated data is successfully stored in the DB
+        \item A confirmation message is displayed: "Profile information updated successfully"
+    \end{itemize}
+    
+    Test Case Derivation: This verifies that users can update their profile information as per FR3.3 in the \href{https://shorturl.at/FdAgR}{SRS}
+    
+    How test will be performed:
+    \begin{itemize}
+        \item Log in as a user
+        \item Navigate to "Profile" page, and select "Edit Profile"
+        \item Edit phone number from "905-2134-2930" to "905-2134-2940" and click "Save"
+        \item Verify the update is reflected in the system's UI
+        \item Verify with Postman the the appropriate PATCH request is made and the update is stored in the DB
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Tests for Nonfunctional Requirements}
+
+\wss{The nonfunctional requirements for accuracy will likely just reference the
+  appropriate functional tests from above.  The test cases should mention
+  reporting the relative error for these tests.  Not all projects will
+  necessarily have nonfunctional requirements related to accuracy.}
+
+\wss{For some nonfunctional tests, you won't be setting a target threshold for
+passing the test, but rather describing the experiment you will do to measure
+the quality for different inputs.  For instance, you could measure speed versus
+the problem size.  The output of the test isn't pass/fail, but rather a summary
+table or graph.}
+
+\wss{Tests related to usability could include conducting a usability test and
+  survey.  The survey will be in the Appendix.}
+
+\wss{Static tests, review, inspections, and walkthroughs, will not follow the
+format for the tests given below.}
+
+\wss{If you introduce static tests in your plan, you need to provide details.
+How will they be done?  In cases like code (or document) walkthroughs, who will
+be involved? Be specific.}
+
+\subsubsection{NFR10 - Look and Feel}
+\paragraph{Appearance}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on two different types of devices (desktop, tablet, mobile)
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the requirement is satisfied
+
+How Test Will Be Performed: The user will complete a checklist that determines whether the interface is responsive across different types of devices
+\end{enumerate}
+\paragraph{Style}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: NA
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user is familiar with the icon that appears in the program
+
+How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means.
+\end{enumerate}
+\subsubsection{NFR11 - Usability and Humanity}
+\paragraph{Ease of Use}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the ease of use of the system
+
+How Test Will Be Performed: The user will complete a checklist documenting how easy it was to complete a specified task and how long it took them to locate the relevant information.
+\item {T2\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the ease of use of the system
+
+How Test Will Be Performed: The user will be asked to complete a specific task while purposefully giving input errors. They will then fill out a checklist to determine whether the system includes relevant error messages that helps the user correct their mistake.
+\end{enumerate}
+\paragraph{Personalization and Internationalization}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the users account information
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the usability of the personalization features
+
+How Test Will Be Performed: The user will be asked to edit their profile and complete a checklist that documents how many clicks it takes and how long it takes for the changes to be reflected.
+\end{enumerate}
+\paragraph{Learning}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the learnability of the system
+
+How Test Will Be Performed: The user will be asked to complete a task with only the aid of the systems learning materials. They will then fill in a checklist of how accessible the information was and how much it helped them
+\end{enumerate}
+\paragraph{Understandability and Politeness}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: NA
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the understandability of the system
+
+How Test Will Be Performed: The user will be given a list of text and instructions that appear when navigating the system. They will then fill out a checklist ensuring that they believe the instruction is written in plain language and uses no technical jargon.
+\end{enumerate}
+\paragraph{Accessibility}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded at the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating the accessibility of the system
+
+How Test Will Be Performed: The user will be asked to complete a task only using their keyboard and they will complete a checklist determining how feasible it was
+\item {T2\\}\\
+Type: Automatic
+
+Initial State: System is loaded at the home page
+
+Input/Condition: The URL of the system
+
+Output: Pass Or Fail
+
+How Test Will Be Performed: Run a python script that locates all text elements on a page and determines the displayed font size. Test will pass if all text is at least 12 font size
+\end{enumerate}
+
+\subsubsection{NFR12 - Performance}
+		
+\paragraph{Speed and Latency}
+
+\begin{enumerate}
+
+\item{T1\\}
+
+Type: Automatic
+
+Initial state: System is ready to receive a new payment request
+
+Input/Condition: A dummy/QA payment request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+ 
+					
+\item{T2\\}
+
+Type: Automatic
+
+Initial state: System is not processing and can accept a new invoice generation request
+
+Input/Condition: A dummy invoice generation request
+
+Output: Newly generated invoice or appropriate failure/error message
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+
+\item{T3\\}
+
+Type: Automatic
+
+Initial state: System is ready to receive a new reimbursement request
+
+Input/Condition: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message following processing of the request
+
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+
+\end{enumerate}
+
+\Paragraph{Safety-Critical}
+
+\begin{enumerate}
+
+\item{T1\\}
+
+Type: Automatic
+
+Initial state: system is ready to receive a new reimbursement request
+
+Input: A dummy/QA reimbursement request form
+
+Output: Success/Failure/Error message
+
+How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits.
+
+\item{T2\\}
+
+Type: Automatic 
+
+Initial State: System is logged in with an account with access controls for student (non-MES admin)
+
+Input: Request for data from an MES admin account
+
+Output: Failure/Error message
+
+How test will be performed: System should not display information to non-authorized user but instead display an appropriate message explaining why the request was denied.
+\end{enumerate}
+
+\paragraph{Precision and Accuracy}
+
+\begin{enumerate}
+\item{T1\\}
+
+Type: Static/Manual 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: N/A
+
+How test will be performed: Static analysis of code modules to ensure all monetary calculations are rounded to 2 decimal places.
+\end{enumerate}
+
+\paragraph{Robustness or Fault-Tolerance}
+
+\begin{enumerate}
+
+\item{T1\\}
+
+Type: Automatic
+
+Initial State: System is about to upload daily backups to backup server
+
+Input: N/A
+
+Output: Backed up data is moved to the other database
+
+How test will be performed: Module will automatically compare the entries added to the backup database with those added to the main database on that day and raise an exception for any mismatch.
+
+\end{enumerate}
+
+\paragraph{Capacity}
+
+\begin{enumerate}
+\item{T1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Large number of reimbursement, invoice, or payment requests (ie, from a load testing software to submit the requests to the API)
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity requirements without failing.
+
+\item{T2\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Large number of simultaneous reimbursement, invoice, or payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity requirements without failing.
+
+\item{T3\\}
+
+Type: Automatic
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: 10 years’ worth of dummy data
+
+Output: Successful data storage
+
+How test will be performed: 10 years’ worth of dummy data will be added to the backup database to ensure that it can store all data for 10 years.
+
+\end{enumerate}
+
+\paragraph{Scalability or Extensibility}
+
+\begin{enumerate}
+\item{T1\\}
+
+Type: Automatic/Static Review
+
+Initial State: System in not processing and is prepared to receive new requests
+
+Input: Increasingly large numbers of payment requests to stress test (ie, from a load testing application)
+
+Output: Eventual system failure; system metrics provided by testing application or profiling tools
+
+How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability.
+
+\item{T2\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Dummy API requests (eg, from Postman) that mimic real third party requests
+
+Output: 200 Success and success body with proper format
+
+How test will be performed: Endpoints that will be open to third-party integrations provide success messages for basic requests (GET, POST) and return the message body in JSON format.
+
+\end{enumerate}
+
+\paragraph{Longevity}
+
+\begin{enumerate}
+
+\item{T1\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and adaptability. They will also review documentation to assess if future developers will have the necessary support to maintain the system without difficulties.
+
+\end{enumerate}
+
+\subsubsection{NFR13 - Operational and Environmental}
+
+\paragraph{Expected Physical Environment}
+
+\begin{enumerate}
+
+\item{T1\\}
+  
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Several payment requests
+
+Output: Success messages for all requests
+
+How test will be performed: This test will be performed on a machine with Windows 10 and matching or similar specs to Intuit Quickbooks’ minimum requirements. The test is successful if no requests fail and are delivered within maximum time requirements (as outlined in 12.1 of our SRS document).
+  
+\end{enumerate}
+
+\paragraph{Wider environment}
+
+\begin{enumerate}
+
+\item{T1\\}
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist 
+
+How test will be performed: Static analysis of code, using a checklist, to ensure that the implemented processes conform to the industry standard for Canadian financial institutions
+  
+\end{enumerate}
+
+\paragraph{Interfacing with Adjacent Systems}
+
+\begin{enumerate}
+
+\item{T1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Mock payment request forms for users of all major Canadian banks (BMO, CIBC, RBC, Scotiabank, TD)
+
+Output: Success message
+
+How test will be performed: Valid request forms should be processed with a success message for all major Canadian financial institutions.
+
+\end{enumerate}
+
+\paragraph{Productization}
+
+\begin{enumerate}
+
+\item{T1\\}
+  
+Type: Static 
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Peer-review checklist
+
+How test will be performed: Users will be given training materials and fill out a checklist review of how easy they and the system are to understand.
+
+\end{enumerate}
+
+\paragraph{Release}
+
+\begin{enumerate}
+
+\item{T1\\}
+  
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 2 releases per year is doable and appropriate.
+
+\end{enumerate}
+
+\subsubsection{NFR14 - Maintainability and Support}
+
+\paragraph{Maintenance}
+
+\begin{itemize}
+
+\item{T1\\}
+
+Type: Static
+
+Initial State: N/A
+
+Input: N/A
+
+Output: Checklist of recommendations, and comments
+
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 10% of each year is sufficient downtime to keep the software efficient, working, and scalable.
+
+\end{itemize}
+
+\paragraph{Supportability}
+
+\begin{itemize}
+
+\item{T1\\}
+
+Type: Manual
+
+Initial State: System has just undergone functional changes/updates
+
+Input: N/A
+
+Output: Checklist
+
+How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software.
+
+\end{itemize}
+
+\paragraph{Adaptability}
+
+\begin{itemize}
+
+\item{T1\\}
+
+Type: Automatic
+
+Initial State: System is not processing and is prepared to receive new requests
+
+Input: Valid dummy payment requests
+
+Output: Success message
+
+How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software.
+
+\end{itemize}
+
+\subsubsection{NFR15 - Security}
+\paragraph{Access}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user has access to the correct features
+
+How Test Will Be Performed: The user will complete a checklist determining which features they have access to, test will be done across a student level and an admin level.
+
+\item {T2\\}\\
+Type: Static
+
+Initial State: System is loaded at the login portal
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the login portal meets all requirements.
+
+How Test Will Be Performed: The user will complete a checklist to determine the security of the login portal. They will be asked to rate the performance of multi-factor authentication, password strengths and how inactive users are handled.
+\end{enumerate}
+\paragraph{Integrity/Audit}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is showing transaction logs
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system has data integrity
+
+How Test Will Be Performed: The user will be given a list of financial transaction that should be logged, and will verify that they are correctly logged
+\end{enumerate}
+\paragraph{Privacy}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is showing financial data that is meant to be anonymous
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the privacy requirements are met
+
+How Test Will Be Performed: The user will complete a checklist determining whether the sensitive information is encrypted and anonymous
+\end{enumerate}
+\paragraph{Immunity}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Manual
+
+Initial State: System is operational with available data stored in the database
+
+Input/Condition: Corrupting a file and initiating recovery procedures
+
+Output: Time it took the successfully recover the data
+
+How Test Will Be Performed: Simulate a data corruption event and time how long it takes to successfully recover the data, ensure that it is under 4 hours
+\end{enumerate}
+\subsubsection{NFR16 - Cultural}
+\paragraph{Cultural}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the user can understand the system
+
+How Test Will Be Performed: The user will complete a checklist determining whether they can understand the system instructions and how the system performs. This test will be done primarily by international students or students who do not speak English as their first language.
+\end{enumerate}
+\subsubsection{NFR17 - Compliance}
+\paragraph{Legal}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system meets legal requirements
+
+How Test Will Be Performed: The user will be given a list of relevant laws and regulations and will complete a checklist determining whether the system complies
+\end{enumerate}
+\paragraph{Standard Compliance}
+\begin{enumerate}
+\item {T1\\}\\
+Type: Static
+
+Initial State: System is loaded on the home page
+
+Input/Condition: NA
+
+Output: Completed checklist, indicating whether the system meets web security standards
+
+How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines
+\end{enumerate}
+
+\newpage
+\subsection{Traceability Between Test Cases and Requirements}
+
+\wss{Provide a table that shows which test cases are supporting which
+  requirements.}
+
+\subsubsection{Traceability Between Test Cases and Functional Requirements}
+
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
+\toprule {\bf Test Case} & {\bf Functional Requirement}\\
+\midrule 
+FR1.1-TC1 & FR1.1\\
+FR1.1-TC2 & FR1.1\\
+FR1.2-TC1 & FR1.2\\
+FR1.2-TC2 & FR1.2\\
+FR1.3-TC1 & FR1.3\\
+FR1.4-TC1 & FR1.4\\
+FR1.5-TC1 & FR1.5\\
+FR1.6-TC1 & FR1.6\\
+FR1.7-TC1 & FR1.7\\
+FR1.7-TC2 & FR1.7\\
+FR1.8-TC1 & FR1.8\\
+FR1.9-TC1 & FR1.9\\
+\midrule
+FR3.1-TC1 & FR3.1\\
+FR3.2-TC1 & FR3.2\\
+FR3.2-TC2 & FR3.2\\
+FR3.3-TC1 & FR3.3\\
+\bottomrule
+\end{tabularx}
+\caption{Mapping between test cases and functional requirements}
+\end{table}
+
+\newpage
+\subsubsection{Traceability Between Test Cases and Non-Functional Requirements}
+
+\begin{table}
+\begin{tabularx}{\textwidth}{p{7cm}p{7cm}}
+\toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
+\midrule
+{NFR10 - Appearance -  T1} & {APR1, APR2} \\
+{NFR10 - Style - T1} & {STYR1, STYR2} \\
+{NFR11 - Ease of Use - T1} & {EUR1, EUR3} \\
+{NFR11 - Ease of Use - T2} & {EUR2} \\
+{NFR11 - Personalization and Internationalization - T1} & {PIR1, PIR2} \\
+{NFR11 - Learning - T1} & {LER1, LER2} \\
+{NFR11 - Understandability and Politeness - T1} & {UAPR1} \\
+{NFR11 - Accessibility - T1} & {ACSR1} \\
+{NFR11 - Accessibility - T2} & {ACSR2} \\
+{NFR12 - Speed and Latency - T1} & {SPLR1} \\
+{NFR12 - Speed and Latency - T2} & {SPLR2} \\
+{NFR12 - Speed and Latency - T3} & {SPLR3} \\
+{NFR12 - Safety Critical - T1} & {SFCR 1, PRD2} \\
+{NFR12 - Safety Critical - T2} & {SFCR 2, RFT 2, PRD3} \\
+{NFR12 - Precision and Accuracy - T1} & {POAR1} \\
+{NFR12 - Robustness Or Fault-Tolerance - T1} & {RFT 1, MR1} \\
+{NFR12 - Capacity - T1} & {CPR1} \\
+{NFR12 - Capacity - T2} & {CPR2} \\
+{NFR12 - Capacity - T3} & {CPR3} \\
+{NFR12 - Scalability or Extensibility - T1} & {SER2, PRD1, PRD7} \\
+{NFR12 - Scalability or Extensibility - T2} & {SER1, IAR2} \\
+{NFR12 - Longevity - T1} & {LOR1} \\
+
+\bottomrule
+\end{tabularx}
+\caption{Mapping between test cases and non-functional requirements}
+\end{table}
+
+\begin{tabularx}{\textwidth}{p{7cm}p{7cm}}
+\toprule {\bf Test Case} & {\bf Non-Functional Requirement}\\
+\midrule
+{NFR13 - Operational and Environmental - Expected Physical Environment - T1} & {OR1, OR2} \\
+{NFR13 - Operational and Environmental - Wider Environment - T1} & {WR1} \\
+{NFR13 - Operational and Environmental - Interfacing with Adjacent Systems - T1 } & {IAR1, PRD4} \\
+{NFR13 - Operational and Environmental - Productization - T1} & {PRD5, PRD6} \\
+{NFR13 - Operational and Environmental - Release - T1} & {RLR1} \\
+{NFR14 - Maintainability and Support - Maintenance - T1} & {MR2, MR3} \\
+{NFR14 - Maintainability and Support - Supportability - T1} & {SR1} \\
+{NFR14 - Maintainability and Support - Adaptability - T1} & {AR1} \\
+{NFR15 - Access - T1} & {SCR1} \\
+{NFR15 - Access - T2} & {SCR2, SCR3, SCR4, SCR5, SCR6} \\
+{NFR15 - Integrity/Audit - T1} & {INR1, ADR1, ADR2} \\
+{NFR15 - Privacy - T1} & {PVR1, PVR2} \\
+{NFR15 - Immunity - T1} & {IMM1} \\
+{NFR16 - Cultural - T1} & {CLTR1} \\
+{NFR17 - Legal - T1} & {LR1, LR2} \\
+{NFR17 - Standards Compliance} & {STR1}\\
+\bottomrule
+\end{tabularx}
+
+\newpage
+\section{Unit Test Description}
+
+\wss{This section should not be filled in until after the MIS (detailed design
+  document) has been completed.}
+
+\textit{This section cannot be completed until after the detailed design document has been completed, therefore it is omitted.}
+
+\wss{Reference your MIS (detailed design document) and explain your overall
+philosophy for test case selection.}  
+
+\wss{To save space and time, it may be an option to provide less detail in this section.  
+For the unit tests you can potentially layout your testing strategy here.  That is, you 
+can explain how tests will be selected for each module.  For instance, your test building 
+approach could be test cases for each access program, including one test for normal behaviour 
+and as many tests as needed for edge cases.  Rather than create the details of the input 
+and output here, you could point to the unit testing code.  For this to work, you code 
+needs to be well-documented, with meaningful names for all of the tests.}
+
+\newpage
+
+\section{Appendix}
+
+\textit{Not applicable for this deliverable}
+
+\subsection{Symbolic Parameters}
+
+\textit{Not applicable for this delierable}
+
+\wss{This is a section that would be appropriate for some projects.}
+
+\newpage{}
+\section*{Appendix --- Reflection}
+
+\wss{This section is not required for CAS 741}
+
+The information in this section will be used to evaluate the team members on the
+graduate attribute of Lifelong Learning.
+
+\input{../Reflection.tex}
+
+\begin{enumerate}
+  \item What went well while writing this deliverable? 
+
+  \textbf{Christian:} There was a high degree of certainty with this document that made the final product come out well. Knowing that there must be tests for all requirements and that plans must be made to verify and validate all aspects of the project thus far as well as future elements, there is almost no ambiguity in what should be included, only with making sure everything relevant is included, as, to an extent, you can never be too sure when validating.
+  
+  \textbf{Austin:} The availability of resources to facilitate the creation of this document.
+  
+  \textbf{Jacob:} Being able to go back to prior documentation was useful for this deliverable, and provided a reference for keeping consistent while writing this deliverable.
+
+  \textbf{Adam:} One thing that went well while writing this deliverable was having the SRS already written and being able to reference back to it when coming up with the system tests for the functional requirements. Having requirements organized by feature and labelled streamlined the process of formulating system requirements.
+
+  \textbf{Evan: } One thing that went well when writing this deliverable was the time we were given. Allowing us to get feedback on our SRS before this deliverable was due made a huge impact on the quality of our submission. Some times it can feel rushed, especially when deliverables are due on Wednesday and we have our TA meeting on Monday, but this assignment was spread out enough that we were able to feel the benefits of the feedback.
+  
+  \item What pain points did you experience during this deliverable, and how
+    did you resolve them?
+
+  \textbf{Christian:} The biggest pain point was simply making sure that all relevant information was present in the document. With so much to potentially validate and verify, it becomes a worry that you're not being rigorous enough, or you haven't anticipated enough. To mitigate this we engaged in group brainstorming as well as constantly supporting each other remotely. Another fact that helped was knowing that many of the specifics for this document are not imminently necessary to nail down.
+  
+  \textbf{Austin:} Trying to forecast what documents the VnV will use that have not been made yet
+  
+  \textbf{Jacob:} Trying to cover all relevant information regarding the requirements we came up with a couple deliverables ago was difficult as there was a lot to cover and it was easy to miss things. I alleviated it by just being meticulous and cross-referencing the old documents.
+
+  \textbf{Adam:} The biggest pain point experienced while writing this deliverable was simply ensuring all test cases were correctly mapped to all requirements. Since the document is very long and there are numerous test cases and requirements, it was quite tedious to ensure the mapping was correct in the traceability section. This was resolved by simply taking the time to double-check the mappings
+
+  \textbf{Evan: } The biggest pain point of this deliverable was the amount of tests that were needed for NFRs. We used the Volere template for our SRS which added a lot of NFRS and making test cases that covered each one was tedious.
+  
+  \item What knowledge and skills will the team collectively need to acquire to
+  successfully complete the verification and validation of your project?
+  Examples of possible knowledge and skills include dynamic testing knowledge,
+  static testing knowledge, specific tool usage, Valgrind etc.  You should look to
+  identify at least one item for each team member.
+
+  \textbf{Austin:} One knowledge I need to aquire is a better traceability of design requirements and decisisons into their respective documentation, to ensure nothing has been overlooked.
+  
+  \textbf{Christian:} Personally, I will need to develop my knowledge of existing testing tools. I have a fair understanding of testing methods and what methods apply when, however I admittedly have little experience with actual testing tools, and should familiarize myself with any potential tools that can be useful for us going forward, whether it be for static or dynamic testing.
+  
+  \textbf{Jacob:} For me it would be helpful to learn more about static code analysis and performance metrics. I have experience with testing tools for functionality but non-functional testing via other methods is relatively new to me.
+
+  \textbf{Adam:} One skill that I have to acquire is knowledge of how to use Postman for testing and developing APIs. This will come in handy for testing a lot of the functional requirements and making sure the correct requests are being made between frontend, backend and database.
+
+  \textbf{Evan:} I would need to learn more about automated testing. Familiarizing myself with the tools that we will be using is important for this project to be succesful.
+
+  \item For each of the knowledge areas and skills identified in the previous
+  question, what are at least two approaches to acquiring the knowledge or
+  mastering the skill?  Of the identified approaches, which will each team
+  member pursue, and why did they make this choice?
+
+  \textbf{Christian:} One approach to mastering verification ot validation tools would be to simply read up on many different kinds and learn their strengths or weaknesses. While many testing platforms may explicitly offer the functionality we're looking for, some are lkely to be more geared to our application than othes. Another approach could be to find the most popular platform and get familiar with that one specifically, as a way to better prepare myself not only for this project but also what may be expected of me in industry for similar types of projects. Personally, I do prefer the first option however because I value versatility in my development abilities and would rather not be pidgeonholed into a specific niche too early.
+  
+  \textbf{Austin:} Perhaps some visualization technique, to see the "flow" of requirements or design decisions reflected in a checklist
+  
+  \textbf{Jacob:} Two approaches would be to gain firsthand experience by analyzing software or reading through educational materials to gain a better understanding of industry-standard techniques and tools. The latter is easier and more viable, so I would carry through with that.
+
+  \textbf{Adam:} Postman is a very popular tool so there is loads of documentation out there to learn from. Other than this, there are definitely numerous Youtube tutorials teaching the use of Postman in web development projects. Out of the two approaches, I think I will watch a few Youtube videos to gain a better understanding of this tool. This approach is slightly better seeing as the information is usually condensed and presented in a logical format, which is much more effective and time-efficient than just reading through documentation. 
+
+  \textbf{Evan:} To familiarize myself with automated testing tools there are two ways to go about it. Doing research online or attending classes or seminars about it. Online research might be easier to do but in-person hands-on experience might prove to be more valuable across the length of this project. Personally, I will choose to do online research since it is less time-consuming and there are plenty of thorough resources that I can use.
+  \end{enumerate}
+
+\end{document}

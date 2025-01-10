@@ -967,7 +967,7 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\hypertarget{testNFR}{}
+\hypertarget{NFR10}{}
 \subsubsection{NFR10 - Look and Feel}
 \paragraph{Appearance}
 \begin{enumerate}
@@ -1537,7 +1537,7 @@ How Test Will Be Performed: The user will be given a list of relevant compliance
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf NFR Test Case} & {\bf Check List}\\
 \midrule 
-  \hyperlink{testNFR}{NFR.XX} & \hyperlink{checklist1}{CHECK LIST X.XX}\\
+  \hyperlink{NFR10}{NFR10} & \hyperlink{checklist-nfr10}{Look and Feel Checklist}\\
 
 \bottomrule
 \end{tabularx}
@@ -1662,13 +1662,21 @@ needs to be well-documented, with meaningful names for all of the tests.}
 \subsection{Checklists}
 
 
-\hypertarget{checklist1}{}
-\subsubsection{Test List}
+\hypertarget{checklist-nfr10}{}
+\subsubsection{Look and Feel}
+
   \begin{itemize}[label=$\square$] % Use an empty box as the checkbox
-      \item Item 1
-      \item Item 2
-      \item Item 3
-  \end{itemize}
+    \item Does the UI render properly on desktops (minimum resolution 1024x768) 
+    \item Does the UI render properly on mobile devices 
+    \item Are all elements correctly aligned on all devices? 
+    \item Are fonts, colors, and spacing consistent acorss all pages?
+    \item Are the branding elements (logos, colors) consistent with existing MES branding?
+    \item Are all icons easily recognizable and intuitive to their function?
+    \item Is there a tooltip or label for icons without obvious meaning?
+    \item Is the most important information on each page displayed clearly and prominently?
+ \end{itemize}
+
+
 
 
 

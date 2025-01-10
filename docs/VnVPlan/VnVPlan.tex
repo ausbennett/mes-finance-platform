@@ -1084,6 +1084,7 @@ Output: Pass Or Fail
 How Test Will Be Performed: Run a python script that locates all text elements on a page and determines the displayed font size. Test will pass if all text is at least 12 font size
 \end{enumerate}
 
+\hypertarget{nfr12}{}
 \subsubsection{NFR12 - Performance}
 		
 \paragraph{Speed and Latency}
@@ -1539,9 +1540,10 @@ How Test Will Be Performed: The user will be given a list of relevant compliance
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf NFR Test Case} & {\bf Check List}\\
 \midrule 
+
   \hyperlink{nfr10}{NFR10} & \hyperlink{checklist-nfr10}{Look and Feel Checklist}\\
   \hyperlink{nfr11}{NFR11} & \hyperlink{checklist-nfr11}{Usability and Humanity Checklist}\\
-
+  \hyperlink{nfr12}{NFR12} & \hyperlink{checklist-nfr12}{Performance Checklist}\\
 
 \bottomrule
 \end{tabularx}
@@ -1691,6 +1693,17 @@ needs to be well-documented, with meaningful names for all of the tests.}
     \item Is the user tutorial video easily accessible from the home page?
     \item Are all instructions free of technical jargon, written in clear and simple language?
     \item Are button labels self-explanatory? (i.e "Submit Request")
+  \end{itemize}
+
+\hypertarget{checklist-nfr12}{}
+\subsubsection{Performance}
+  \begin{itemize}[label=$\square$] % Use an empty box as the checkbox
+    \item Are responses to users actions completed to under 1 second for ~95\% of tasks?
+    \item Does the system process large files (i.e invoices) within 30 seconds?
+    \item Does the system recover from a simulated crash without data loss?
+    \item Are backups stored and verified successfully?
+    \item Can the system handle 20 simultaneous users without performance degradation?
+    \item Can it process 10 years of dummy data without failure?
   \end{itemize}
 
 

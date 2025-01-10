@@ -12,6 +12,9 @@
 }
 \usepackage[round]{natbib}
 
+\usepackage{enumitem}
+\usepackage{amssymb} % For checkbox
+
 \input{../Comments}
 \input{../Common}
 
@@ -32,6 +35,7 @@
 \midrule
 11/4/2024 & 0 & All sections, including reflections\\
 12/29/2024 & 0 & Syntax Fixes \\
+1/10/2025 & 0 & Explicit non-functional checklists\\
 \bottomrule
 \end{tabularx}
 
@@ -963,6 +967,7 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
+\hypertarget{testNFR}{}
 \subsubsection{NFR10 - Look and Feel}
 \paragraph{Appearance}
 \begin{enumerate}
@@ -1399,7 +1404,7 @@ Input: N/A
 Output: Checklist
 
 How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software.
-
+:
 \end{itemize}
 
 \paragraph{Adaptability}
@@ -1526,6 +1531,20 @@ Output: Completed checklist, indicating whether the system meets web security st
 How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines
 \end{enumerate}
 
+\subsubsection{Non-Functional Checklist Summary}
+
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
+\toprule {\bf NFR Test Case} & {\bf Check List}\\
+\midrule 
+  \hyperlink{testNFR}{NFR.XX} & \hyperlink{checklist1}{CHECK LIST X.XX}\\
+
+\bottomrule
+\end{tabularx}
+\caption{Mapping between non-functional test cases and their respective checklist}
+\end{table}
+
+
 \newpage
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -1640,7 +1659,21 @@ needs to be well-documented, with meaningful names for all of the tests.}
 
 \section{Appendix}
 
-\textit{Not applicable for this deliverable}
+\subsection{Checklists}
+
+
+\hypertarget{checklist1}{}
+\subsubsection{Test List}
+  \begin{itemize}[label=$\square$] % Use an empty box as the checkbox
+      \item Item 1
+      \item Item 2
+      \item Item 3
+  \end{itemize}
+
+
+
+
+
 
 \subsection{Symbolic Parameters}
 

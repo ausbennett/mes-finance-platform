@@ -967,7 +967,7 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\hypertarget{NFR10}{}
+\hypertarget{nfr10}{}
 \subsubsection{NFR10 - Look and Feel}
 \paragraph{Appearance}
 \begin{enumerate}
@@ -995,6 +995,8 @@ Output: Completed checklist, indicating whether the user is familiar with the ic
 
 How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means.
 \end{enumerate}
+
+\hypertarget{nfr11}{}
 \subsubsection{NFR11 - Usability and Humanity}
 \paragraph{Ease of Use}
 \begin{enumerate}
@@ -1537,7 +1539,9 @@ How Test Will Be Performed: The user will be given a list of relevant compliance
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf NFR Test Case} & {\bf Check List}\\
 \midrule 
-  \hyperlink{NFR10}{NFR10} & \hyperlink{checklist-nfr10}{Look and Feel Checklist}\\
+  \hyperlink{nfr10}{NFR10} & \hyperlink{checklist-nfr10}{Look and Feel Checklist}\\
+  \hyperlink{nfr11}{NFR11} & \hyperlink{checklist-nfr11}{Usability and Humanity Checklist}\\
+
 
 \bottomrule
 \end{tabularx}
@@ -1676,7 +1680,18 @@ needs to be well-documented, with meaningful names for all of the tests.}
     \item Is the most important information on each page displayed clearly and prominently?
  \end{itemize}
 
-
+\hypertarget{checklist-nfr11}{}
+\subsubsection{Usability and Humanity}
+  \begin{itemize}[label=$\square$] % Use an empty box as the checkbox
+    \item Can users navigate to primary function pages (i.e reimbursement request, generate invoice, admin page) within 3 clicks from the home page?
+    \item Does it take the user 2 minutes to complete desired task?
+    \item Are form validation messages correct? (i.e "Enter valid email address", "Enter valid McMaster Student Number")?
+    \item Can user edit personal profile information within 3 clicks?
+    \item Are personalization changes reflected immediately in the UI? (i.e Phone number)
+    \item Is the user tutorial video easily accessible from the home page?
+    \item Are all instructions free of technical jargon, written in clear and simple language?
+    \item Are button labels self-explanatory? (i.e "Submit Request")
+  \end{itemize}
 
 
 

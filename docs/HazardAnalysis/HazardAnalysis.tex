@@ -40,7 +40,8 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-10/25/2024 & All team members & Revision 0, including all sections and appendix\\
+  10/25/2024 & All team members & Revision 0, including all sections and appendix\\
+  1/11/2025 & Austin Bennett & System Components, notification and invoice modules revisions.\\
 
 \bottomrule
 \end{tabularx}
@@ -78,8 +79,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   \item \textbf{Backup Database:} A separate database, holding similar data to the User Information DB, but backed up regularly via the main database. Used in the event old data is needed or there is a problem with the main db.
   \item \textbf{User Interface:} An umbrella term for the graphical layout of the software system. All interactions between user and system will be facilitated through the UI, which provides a visual outline of system usage.
   \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
-  \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
-  \item \textbf{Notification Module:} A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
+  \item \textbf{Invoice Generation Module:} A partition of the system that allows users to generate and submit personalized invoices. For instance, users can create detailed invoices for reimbursement requests, ensuring compliance with required financial documentation formats and aiding in seamless transaction records.
+  \item \textbf{Notification Module:} A partition of the system responsible for sending automated notifications to users. For example, it alerts users when their payment or reimbursement requests are approved, provides reminders for pending actions, and informs users of system updates via email to ensure effective communication. 
   \item \textbf{Authentication Module:} A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.
   \item \textbf{Stripe API:} External API for streamlining future integration with other MES services or even third parties.
 \end{itemize}

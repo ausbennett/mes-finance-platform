@@ -420,6 +420,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \subsubsection{FRs for Reimbursement and Payment Request Feature}
 
+\label{FROne}
+
 \begin{itemize}
     \item \textbf{FR1.1.} The system must allow users to submit reimbursement/payment requests by inputting relevant information, such as budget line items, receipts, documents, and payment details.
     \item \textbf{FR1.2.} The system must allow admins to review and approve/reject submitted requests.
@@ -433,6 +435,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsubsection{FRs for Custom Invoice Generation Feature}
+
+\label{FRTwo}
+
 \textit{Note: this may become a stretch goal later on, depending on how the project progresses.}
 \begin{itemize}
     \item \textbf{FR2.1.} The system shall allow users to generate custom invoices by allowing users to input relevant information such as budget categories, and payment details/amounts into a pre-built template.
@@ -445,6 +450,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsubsection{General Functional Requirements}
+
+\label{FRThree}
+
 \begin{itemize}
     \item \textbf{FR3.1.} The system shall securely store account or profile information on each user.
     \begin{itemize}
@@ -458,6 +466,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
 
+\label{APR}
+
 \begin{itemize}
     \item \textbf{APR1.} The system's UI shall be responsive across various devices and screen sizes (desktop, tablet, mobile).
     \begin{itemize}
@@ -467,6 +477,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsection{Style Requirements}
+
+\label{STYR}
+
 \begin{itemize}
     \item \textbf{STYR1.} The system's UI shall incorporate universally recognizable icons, with at least 1 icon being used per screen.
     \item \textbf{STYR2.} The system's UI shall maintain a typography standard by using no more than 2 different fonts across the platform. The system shall use standard fonts used by the MES (if applicable).
@@ -474,6 +487,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
+
+\label{EUR}
 
 \begin{itemize}
     \item \textbf{EUR1.} Users shall be able to complete a specific task, such as editing a request, with no more than 3 CTAs.
@@ -483,12 +498,16 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \subsection{Personalization and Internationalization Requirements}
 
+\label{PIR}
+
 \begin{itemize}
     \item \textbf{PIR1.} Users shall be able to edit their account/profile information with less than 3 clicks or actions from the landing page.
     \item \textbf{PIR2.} Personalization actions shall be reflected on the UI within 2 seconds of a user action.
 \end{itemize}
 
 \subsection{Learning Requirements}
+
+\label{LER}
 
 \begin{itemize}
     \item \textbf{LER1.} All learning materials, including user documentation and FAQs shall provided on the landing page and accessible to the user at any time.
@@ -497,11 +516,16 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \subsection{Understandability and Politeness Requirements}
 
+\label{UAPR}
+
 \begin{itemize}
     \item \textbf{UAPR1.} All text and instructions within the system's UI will be written in plain language and use no technical jargon.
 \end{itemize}
 
 \subsection{Accessibility Requirements}
+
+\label{ACSR}
+
 \begin{itemize}
     \item \textbf{ACSR1.} The system should allow for keyboard navigation within input forms.
     \item \textbf{ACSR2.} All text should be no less than size 12 font to ensure all content is readable.
@@ -509,6 +533,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
+
+\label{SPLR}
+
 \begin{itemize}
     \item \textbf{SPLR1.} The system shall process payment requests within 5 seconds.
     \item \textbf{SPLR2.} Invoices shall be generated within 3 seconds.
@@ -516,23 +543,35 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsection{Safety-Critical Requirements}
+
+\label{SFCR}
+
 \begin{itemize}
     \item \textbf{SFCR1.} Sensitive financial information such as credit card numbers shall be encrypted when stored.
     \item \textbf{SFCR2.} Access controls shall restrict access to confidential information.
 \end{itemize}
 
 \subsection{Precision or Accuracy Requirements}
+
+\label{POAR}
+
 \begin{itemize}
     \item \textbf{POAR1.} Monetary values would be rounded off to the nearest cent (i.e., x.yz)
 \end{itemize}
 
 \subsection{Robustness or Fault-Tolerance Requirements}
+
+\label{RFT}
+
 \begin{itemize}
     \item \textbf{RFT1.} Backup servers shall store critical information in case of failure, including daily backups.
     \item \textbf{RFT2.} Graceful error handling would preserve sensitive information in case of improper use.
 \end{itemize}
 
 \subsection{Capacity Requirements}
+
+\label{CPR}
+
 \begin{itemize}
     \item \textbf{CPR1.} The system shall be able to handle 1000 reimbursement requests, 1000 invoices, and 500 payment requests daily.
     \item \textbf{CPR2.} The system would be able to handle up to 10 requests simultaneously.
@@ -540,33 +579,51 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsection{Scalability or Extensibility Requirements}
+
+\label{SER}
+
 \begin{itemize}
     \item \textbf{SER1.} API integration would support future third-party connectivity.
     \item \textbf{SER2.} The system shall be designed to scale efficiently, accommodating double the current maximum usage within one year through mechanisms such as load balancing and modular architecture.
 \end{itemize}
 
 \subsection{Longevity Requirements}
+
+\label{LOR}
+
 \begin{itemize}
     \item \textbf{LOR1.} The system shall be serviceable, at its current usage rate, for at least the next 10 years without needing considerable updates or overhauls made to it. MES plans to continue working on the platform as needed after the completion of this capstone. As such, maintainability of this platform is an important consideration.
 \end{itemize}
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
+
+\label{OR1}
+
 \begin{itemize}
     \item \textbf{OR1.} The system shall run on Windows 10 and 11 operating systems.
 \end{itemize}
 
 \subsection{Wider Environment Requirements}
+
+\label{WR}
+
 \begin{itemize}
     \item \textbf{WR1.} Financial institutions integrated with the payment/reimbursement features shall make use of industry-standard systems and processes for Canadian banks.
 \end{itemize}
 
 \subsection{Requirements for Interfacing with Adjacent Systems}
+
+\label{IAR}
+
 \begin{itemize}
     \item \textbf{IAR1.} The system shall be adaptable enough to gracefully handle interactions with different financial institutions.
 \end{itemize}
 
 \subsection{Productization Requirements}
+
+\label{PRD}
+
 \begin{itemize}
     \item \textbf{PRD1.} Ensure server and database can handle increased usage and data with automated scaling capabilities.
     \item \textbf{PRD2.} Implement data encryption, secure authentication.
@@ -578,12 +635,18 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsection{Release Requirements}
+
+\label{RLR}
+
 \begin{itemize}
     \item \textbf{RLR1.} Stable releases shall be released twice a year.
 \end{itemize}
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
+
+\label{MR}
+
 \begin{itemize}
     \item \textbf{MR1.} Data backups shall be performed daily to protect sensitive information.
     \item \textbf{MR2.} The system shall experience scheduled maintenance downtime for 10 percent of each year (specifics to be determined).
@@ -591,73 +654,104 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \subsection{Supportability Requirements}
+
+\label{SR}
+
 \begin{itemize}
     \item \textbf{SR1.} Documentation for users and the team shall be kept up to date as new releases are made.
 \end{itemize}
 
 \subsection{Adaptability Requirements}
+
+\label{AR}
+
 \begin{itemize}
     \item \textbf{AR1.} The system shall be robust enough to adapt to changes from external and connected sources such as McMaster University or Canadian financial institutions without losing core functionalities.
 \end{itemize}
 
 \section{Security Requirements}
 \subsection{Access Requirements}
+
+\label{SCR}
+
 \begin{itemize}
     \item \textbf{SCR1.} The system shall ensure that users only have access to the data they are authorized to.
     \item \textbf{SCR2.} The system shall have a secure login portal to prevent unauthorized access.
 \end{itemize}
 
 \subsection{Integrity Requirements}
+
+\label{INR}
+
 \begin{itemize}
     \item \textbf{INR1.} The system shall log 100\% of transactions to ensure financial history is traceable. To ensure complicity with audit requirements.
 \end{itemize}
 \subsection{Privacy Requirements}
+
+\label{PVR}
+
 \begin{itemize}
     \item \textbf{PVR1.} The system shall encrypt sensitive information in transit and at rest.
     \item \textbf{PVR2.} The system shall return anonymous data when generating reports that do not require personal info.
 \end{itemize}
 \subsection{Audit Requirements}
+
+\label{ADR}
+
 \begin{itemize}
     \item \textbf{ADR1.} The system shall maintain a detailed log of 100\% of transactions to ensure financial transparency.
     \item \textbf{ADR2.} The system shall retain audit logs for a minimum of 10 years.
 \end{itemize}
 \subsection{Immunity Requirements}
+
+\label{IMM}
+
 \begin{itemize}
     \item \textbf{IMM1.} The system shall be resilient to data corruption, ensuring that data can be recovered within 4 hours of a failure.
 \end{itemize}
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
+
+\label{CLTR}
+
 \begin{itemize}
     \item \textbf{CLTR1.} The system shall be scaleable to implement future multi-language support to accommodate international students or personnel.
 \end{itemize}
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
+
+\label{LR}
+
 \begin{itemize}
     \item \textbf{LR1.} The system shall follow user data protection laws to ensure proper handling of sensitive information.
     \item \textbf{LR2.} The system shall follow any relevant financial regulations for non-profit organizations.
 \end{itemize}
 \subsection{Standards Compliance Requirements}
+
+\label{STR}
+\textbf{STR1}
+
 \begin{table}[h]
     \centering
     \begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{5cm}|>{\raggedright\arraybackslash}p{6.5cm}|}
         \hline
         \textbf{Standard} & \textbf{Full Name} & \textbf{Relevance} \\
         \hline
-        PIPEDA & Personal Information Protection and Electronic Documents Act & Ensures that personal information is collected, used, and disclosed with appropriate consent. Relevant for protecting user data on the reimbursement platform. \\
+        \textbf{STR1.1} PIPEDA & Personal Information Protection and Electronic Documents Act & Ensures that personal information is collected, used, and disclosed with appropriate consent. Relevant for protecting user data on the reimbursement platform. \\
         \hline
-        FIPPA & Freedom of Information and Protection of Privacy Act & Governs how public institutions in Ontario, such as McMaster University, handle personal information. Ensures compliance with legal requirements for privacy. \\
+        \textbf{STR1.2} FIPPA & Freedom of Information and Protection of Privacy Act & Governs how public institutions in Ontario, such as McMaster University, handle personal information. Ensures compliance with legal requirements for privacy. \\
         \hline
-        GAAP & Generally Accepted Accounting Principles & Provides standard guidelines for financial reporting and record-keeping. Ensures that all reimbursements are recorded and reported accurately. \\
+        \textbf{STR1.3} GAAP & Generally Accepted Accounting Principles & Provides standard guidelines for financial reporting and record-keeping. Ensures that all reimbursements are recorded and reported accurately. \\
         \hline
-        ISO/IEC 27001 & Information Security Management Standard & Specifies best practices for managing information security. Relevant to ensure the confidentiality, integrity, and availability of sensitive data. \\
+        \textbf{STR1.4} ISO/IEC 27001 & Information Security Management Standard & Specifies best practices for managing information security. Relevant to ensure the confidentiality, integrity, and availability of sensitive data. \\
         \hline
-        PCI-DSS & Payment Card Industry Data Security Standard & Ensures secure processing of credit card transactions. Relevant if the platform handles payment or reimbursement processing involving credit cards. \\
+        \textbf{STR1.5} PCI-DSS & Payment Card Industry Data Security Standard & Ensures secure processing of credit card transactions. Relevant if the platform handles payment or reimbursement processing involving credit cards. \\
         \hline
-        ISO 9241 & Ergonomics of Human-System Interaction & Provides guidelines for user-centered design, ensuring the platform is easy to use and meets usability standards. \\
+        \textbf{STR1.6} ISO 9241 & Ergonomics of Human-System Interaction & Provides guidelines for user-centered design, ensuring the platform is easy to use and meets usability standards. \\
         \hline
-        CRA & Canada Revenue Agency Guidelines & Provides rules and documentation requirements for reimbursements and expense claims. Ensures compliance with tax regulations. \\
+        \textbf{STR1.7} CRA & Canada Revenue Agency Guidelines & Provides rules and documentation requirements for reimbursements and expense claims. Ensures compliance with tax regulations. \\
         \hline
     \end{tabular}
     \caption{Adherence to Standards and Regulations}
@@ -671,31 +765,31 @@ PUC-5 & Access financial documentation for audit purposes \\
 \caption{Traceability Matrix between NFRs and FRs (Part 1)}
 \begin{tabularx}{\textwidth}{|p{1.5cm}|*{9}{>{\centering\arraybackslash}X|}}
 \hline
-\textbf{NFR / FR} & \textbf{FR1.1} & \textbf{FR1.2} & \textbf{FR1.3} & \textbf{FR1.4} & \textbf{FR1.5} & \textbf{FR1.6} & \textbf{FR1.7} & \textbf{FR1.8} & \textbf{FR1.9} \\
+\textbf{NFR / FR} & \textbf{\hyperref[FROne]{FR1.1}} & \textbf{\hyperref[FROne]{FR1.2}} & \textbf{\hyperref[FROne]{FR1.3}} & \textbf{\hyperref[FROne]{FR1.4}} & \textbf{\hyperref[FROne]{FR1.5}} & \textbf{\hyperref[FROne]{FR1.6}} & \textbf{\hyperref[FROne]{FR1.7}} & \textbf{\hyperref[FROne]{FR1.8}} & \textbf{\hyperref[FROne]{FR1.9}} \\
 \hline
-\textbf{APR1} & X & X & X & X & X & X & X & X & X \\
+\textbf{\hyperref[APR]{APR1}} & X & X & X & X & X & X & X & X & X \\
 \hline
-\textbf{APR2} & X &  &  &  &  &  &  &  &  \\
+\textbf{\hyperref[APR]{APR2}} & X &  &  &  &  &  &  &  &  \\
 \hline
-\textbf{STYR1} & X &  &  &  &  &  &  &  &  \\
+\textbf{\hyperref[STYR]{STYR1}} & X &  &  &  &  &  &  &  &  \\
 \hline
-\textbf{EUR1} &  &  & X &  &  &  &  &  &  \\
+\textbf{\hyperref[EUR]{EUR1}} &  &  & X &  &  &  &  &  &  \\
 \hline
-\textbf{EUR2} & X &  & X &  &  &  &  &  &  \\
+\textbf{\hyperref[EUR]{EUR2}} & X &  & X &  &  &  &  &  &  \\
 \hline
-\textbf{EUR3} &  &  &  & X &  &  &  &  &  \\
+\textbf{\hyperref[EUR]{EUR3}} &  &  &  & X &  &  &  &  &  \\
 \hline
-\textbf{ACSR1} & X &  & X & X &  &  &  &  &  \\
+\textbf{\hyperref[ACSR]{ACSR1}} & X &  & X & X &  &  &  &  &  \\
 \hline
-\textbf{SPLR1} & X &  &  &  &  &  &  &  &  \\
+\textbf{\hyperref[SPLR]{SPLR1}} & X &  &  &  &  &  &  &  &  \\
 \hline
-\textbf{SFCR1} & X &  &  &  &  & X & X &  &  \\
+\textbf{\hyperref[SFCR]{SFCR1}} & X &  &  &  &  & X & X &  &  \\
 \hline
-\textbf{SCR1} &  & X &  &  &  &  & X &  &  \\
+\textbf{\hyperref[SCR]{SCR1}} &  & X &  &  &  &  & X &  &  \\
 \hline
-\textbf{INR1} &  & X & X & X & X & X & X & X & X \\
+\textbf{\hyperref[INR]{INR1}} &  & X & X & X & X & X & X & X & X \\
 \hline
-\textbf{STR1} & X & X & X & X & X & X & X & X & X \\
+\textbf{\hyperref[STR]{STR1}} & X & X & X & X & X & X & X & X & X \\
 \hline
 \end{tabularx}
 \end{table}
@@ -705,27 +799,27 @@ PUC-5 & Access financial documentation for audit purposes \\
 \caption{Traceability Matrix between NFRs and FRs (Part 2)}
 \begin{tabularx}{\textwidth}{|p{3cm}|*{7}{>{\centering\arraybackslash}X|}}
 \hline
-\textbf{NFR / FR} & \textbf{FR2.1} & \textbf{FR2.2} & \textbf{FR2.3} & \textbf{FR2.4} & \textbf{FR2.5} & \textbf{FR2.6} & \textbf{FR2.7} \\
+\textbf{NFR / FR} & \textbf{\hyperref[FRTwo]{FR2.1}} & \textbf{\hyperref[FRTwo]{FR2.2}} & \textbf{\hyperref[FRTwo]{FR2.3}} & \textbf{\hyperref[FRTwo]{FR2.4}} & \textbf{\hyperref[FRTwo]{FR2.5}} & \textbf{\hyperref[FRTwo]{FR2.6}} & \textbf{\hyperref[FRTwo]{FR2.7}} \\
 \hline
-\textbf{APR1} & X & X & X & X & X & X & X \\
+\textbf{\hyperref[APR]{APR1}} & X & X & X & X & X & X & X \\
 \hline
-\textbf{APR2} & X &  &  &  &  &  &  \\
+\textbf{\hyperref[APR]{APR2}} & X &  &  &  &  &  &  \\
 \hline
-\textbf{STYR1} & X &  &  &  &  &  &  \\
+\textbf{\hyperref[STYR]{STYR1}} & X &  &  &  &  &  &  \\
 \hline
-\textbf{EUR1} &  &  &  &  & X &  &  \\
+\textbf{\hyperref[EUR]{EUR1}} &  &  &  &  & X &  &  \\
 \hline
-\textbf{EUR2} & X &  &  &  & X &  &  \\
+\textbf{\hyperref[EUR]{EUR2}} & X &  &  &  & X &  &  \\
 \hline
-\textbf{ACSR1} & X &  &  &  & X &  &  \\
+\textbf{\hyperref[ACSR]{ACSR1}} & X &  &  &  & X &  &  \\
 \hline
-\textbf{SPLR2} & X &  &  &  &  & X &  \\
+\textbf{\hyperref[SPLR]{SPLR2}} & X &  &  &  &  & X &  \\
 \hline
-\textbf{SFCR1} & X &  &  & X &  &  & X \\
+\textbf{\hyperref[SFCR]{SFCR1}} & X &  &  & X &  &  & X \\
 \hline
-\textbf{INR1} & X & X & X & X & X & X & X \\
+\textbf{\hyperref[INR]{INR1}} & X & X & X & X & X & X & X \\
 \hline
-\textbf{STR1} & X & X & X & X & X & X & X \\
+\textbf{\hyperref[STR]{STR1}} & X & X & X & X & X & X & X \\
 \hline
 \end{tabularx}
 \end{table}
@@ -735,25 +829,25 @@ PUC-5 & Access financial documentation for audit purposes \\
 \caption{Traceability Matrix between NFRs and FRs (Part 3)}
 \begin{tabularx}{\textwidth}{|p{3cm}|*{3}{>{\centering\arraybackslash}X|}}
 \hline
-\textbf{NFR / FR} & \textbf{FR3.1} & \textbf{FR3.2} & \textbf{FR3.3} \\
+\textbf{NFR / FR} & \textbf{\hyperref[FRThree]{FR3.1}} & \textbf{\hyperref[FRThree]{FR3.2}} & \textbf{\hyperref[FRThree]{FR3.3}} \\
 \hline
-\textbf{APR1} & X & X & X \\
+\textbf{\hyperref[APR]{APR1}} & X & X & X \\
 \hline
-\textbf{EUR1} &  &  & X \\
+\textbf{\hyperref[EUR]{EUR1}} &  &  & X \\
 \hline
-\textbf{EUR2} &  &  & X \\
+\textbf{\hyperref[EUR]{EUR2}} &  &  & X \\
 \hline
-\textbf{PIR1} &  &  & X \\
+\textbf{\hyperref[PIR]{PIR1}} &  &  & X \\
 \hline
-\textbf{PIR2} &  &  & X \\
+\textbf{\hyperref[PIR]{PIR2}} &  &  & X \\
 \hline
-\textbf{ACSR1} &  &  & X \\
+\textbf{\hyperref[ACSR]{ACSR1}} &  &  & X \\
 \hline
-\textbf{SCR2} & X & X & X \\
+\textbf{\hyperref[SCR]{SCR2}} & X & X & X \\
 \hline
-\textbf{INR1} & X & X & X \\
+\textbf{\hyperref[INR]{INR1}} & X & X & X \\
 \hline
-\textbf{STR1} & X & X & X \\
+\textbf{\hyperref[STR]{STR1}} & X & X & X \\
 \hline
 \end{tabularx}
 \end{table}

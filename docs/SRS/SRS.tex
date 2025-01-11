@@ -554,7 +554,6 @@ PUC-5 & Access financial documentation for audit purposes \\
 \subsection{Expected Physical Environment}
 \begin{itemize}
     \item \textbf{OR1.} The system shall run on Windows 10 and 11 operating systems.
-    \item \textbf{OR2.} The system shall require similar minimum specs to Intuit Quickbooks to run.
 \end{itemize}
 
 \subsection{Wider Environment Requirements}
@@ -565,13 +564,12 @@ PUC-5 & Access financial documentation for audit purposes \\
 \subsection{Requirements for Interfacing with Adjacent Systems}
 \begin{itemize}
     \item \textbf{IAR1.} The system shall be adaptable enough to gracefully handle interactions with different financial institutions.
-    \item \textbf{IAR2.} The API shall be adaptable for use with other (Future) third-party connections.
 \end{itemize}
 
 \subsection{Productization Requirements}
 \begin{itemize}
     \item \textbf{PRD1.} Ensure server and database can handle increased usage and data with automated scaling capabilities.
-    \item \textbf{PRD2.} Implement data encryption, secure authentication (e.g., OAuth, 2FA)
+    \item \textbf{PRD2.} Implement data encryption, secure authentication.
     \item \textbf{PRD3.} Develop an intuitive interface with role-based access control (RBAC) and adhere to WCAG accessibility guidelines.
     \item \textbf{PRD4.} Ensure compatibility with MES infrastructure (e.g., DigitalOcean) and integrate with external services (e.g., payment processors, audit tools).
     \item \textbf{PRD5.} Provide comprehensive documentation, automated testing (CI/CD) via GitHub Actions, and ensure error handling with clear logs and user feedback.

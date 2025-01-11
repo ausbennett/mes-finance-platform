@@ -641,9 +641,30 @@ PUC-5 & Access financial documentation for audit purposes \\
     \item \textbf{LR2.} The system shall follow any relevant financial regulations for non-profit organizations.
 \end{itemize}
 \subsection{Standards Compliance Requirements}
-\begin{itemize}
-    \item \textbf{STR1.} The system shall follow web security standards.
-\end{itemize}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{5cm}|>{\raggedright\arraybackslash}p{6.5cm}|}
+        \hline
+        \textbf{Standard} & \textbf{Full Name} & \textbf{Relevance} \\
+        \hline
+        PIPEDA & Personal Information Protection and Electronic Documents Act & Ensures that personal information is collected, used, and disclosed with appropriate consent. Relevant for protecting user data on the reimbursement platform. \\
+        \hline
+        FIPPA & Freedom of Information and Protection of Privacy Act & Governs how public institutions in Ontario, such as McMaster University, handle personal information. Ensures compliance with legal requirements for privacy. \\
+        \hline
+        GAAP & Generally Accepted Accounting Principles & Provides standard guidelines for financial reporting and record-keeping. Ensures that all reimbursements are recorded and reported accurately. \\
+        \hline
+        ISO/IEC 27001 & Information Security Management Standard & Specifies best practices for managing information security. Relevant to ensure the confidentiality, integrity, and availability of sensitive data. \\
+        \hline
+        PCI-DSS & Payment Card Industry Data Security Standard & Ensures secure processing of credit card transactions. Relevant if the platform handles payment or reimbursement processing involving credit cards. \\
+        \hline
+        ISO 9241 & Ergonomics of Human-System Interaction & Provides guidelines for user-centered design, ensuring the platform is easy to use and meets usability standards. \\
+        \hline
+        CRA & Canada Revenue Agency Guidelines & Provides rules and documentation requirements for reimbursements and expense claims. Ensures compliance with tax regulations. \\
+        \hline
+    \end{tabular}
+    \caption{Adherence to Standards and Regulations}
+    \label{tab:standards}
+\end{table}
 
 \section{Requirements Traceability Tables}
 

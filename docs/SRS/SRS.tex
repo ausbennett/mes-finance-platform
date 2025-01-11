@@ -464,6 +464,9 @@ PUC-5 & Access financial documentation for audit purposes \\
     
 
 \section{Look and Feel Requirements}
+
+\label{LookAndFeel}
+
 \subsection{Appearance Requirements}
 
 \label{APR}
@@ -486,6 +489,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \section{Usability and Humanity Requirements}
+
+\label{UseandHum}
+
 \subsection{Ease of Use Requirements}
 
 \label{EUR}
@@ -532,6 +538,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \section{Performance Requirements}
+
+\label{PerformanceReq}
+
 \subsection{Speed and Latency Requirements}
 
 \label{SPLR}
@@ -596,6 +605,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \end{itemize}
 
 \section{Operational and Environmental Requirements}
+
+\label{OpsandEnv}
+
 \subsection{Expected Physical Environment}
 
 \label{OR1}
@@ -642,7 +654,10 @@ PUC-5 & Access financial documentation for audit purposes \\
     \item \textbf{RLR1.} Stable releases shall be released twice a year.
 \end{itemize}
 
-\section{Maintainability and Support Requirements}
+\section{Maintainability and Support Requirements}\
+
+\label{MaintainSupport}
+
 \subsection{Maintenance Requirements}
 
 \label{MR}
@@ -949,11 +964,11 @@ Key tasks in project planning include:
 \subsection{Planning of the Development Phases}
 Development should proceed in phases:
 \begin{itemize}
-    \item \textbf{Phase 1: (Present - Nov)} Initial research and requirements gathering from MES personnel and student groups. 
-    \item \textbf{Phase 2: (Dec - March)} Core system design, focusing on the backend ledger management and reimbursement workflows. This phase would be the most intensive.
-    \item \textbf{Phase 3: (Feb - March) } UI/UX design to ensure the platform is user-friendly and accessible to all MES members.
-    \item \textbf{Phase 4: (Feb - March)} System testing and debugging, including user feedback to refine functionality.
-    \item \textbf{Phase 5: (March - April)} Final deployment and training for users.
+    \item \textbf{Phase 1: (Present - Nov)} Initial research and requirements gathering from MES personnel and student groups. \textbf{\hyperref[FROne]{FR1.1, FR1.9, FR2.1-2.7, FR3.1-3.3}} 
+    \item \textbf{Phase 2: (Dec - March)} Core system design, focusing on the backend ledger management and reimbursement workflows. This phase would be the most intensive. \textbf{\hyperref[FROne]{FR1.1, FR1.9, FR2.1-2.7, FR3.1-3.3}}
+    \item \textbf{Phase 3: (Feb - March) } UI/UX design to ensure the platform is user-friendly and accessible to all MES members. \textbf{\hyperref[LookAndFeel]{APR1, APR2, STYR1, STYR2}} \textbf{\hyperref[UseandHum]{EUR1-3, PIR1-2, LER1-2, UAPR1, ACSR1-2}}
+    \item \textbf{Phase 4: (Feb - March)} System testing and debugging, including user feedback to refine functionality. \textbf{\hyperref[PerformanceReq]{SPLR1-3, SFCR1-2, POAR1, RFT1-2, CPR1-3, SER1-2}}
+    \item \textbf{Phase 5: (March - April)} Final deployment and training for users. \textbf{\hyperref[OpsandEnv]{OR1-2, WR1, PRD1-7, RLR1}} \textbf{\hyperref[MaintainSupport]{MR1-3, SR1, AR1}}
 \end{itemize}
 
 \section{Migration to the New Product}

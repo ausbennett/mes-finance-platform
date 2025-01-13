@@ -16,6 +16,7 @@
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{float}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -760,9 +761,7 @@ PUC-5 & Access financial documentation for audit purposes \\
 \subsection{Standards Compliance Requirements}
 
 \label{STR}
-\textbf{STR1}
-
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{5cm}|>{\raggedright\arraybackslash}p{6.5cm}|}
         \hline
@@ -887,8 +886,17 @@ PUC-5 & Access financial documentation for audit purposes \\
 The key open issues currently revolve around undecided functionality, particularly regarding the integration of automated reporting features and the appropriate level of customization for the needs of various student groups. Other considerations include:
 \begin{itemize}
     \item How granular the platform should be in tracking compliance for audit purposes.
+    \begin{itemize}
+    \item Action: Organize a meeting with MES representatives to determine the minimum required compliance and the desired granularity
+    \end{itemize}
     \item Whether the system will support all financial workflows such as reimbursement requests, intramural funding, and payment tracking.
+    \begin{itemize}
+    \item Action: Review a detailed list of financial workflows through consultations with MES representatives. Prioritize these workflows based on the importance and frequency of request
+    \end{itemize}
     \item Ensuring that the user experience is intuitive for both administrators and students.
+    \begin{itemize}
+    \item Action: Conduct a usability survey with administrators and students to identify any major pain points 
+    \end{itemize}
 \end{itemize}
 These decisions will significantly influence the overall architecture of the solution and the development timeline.
 

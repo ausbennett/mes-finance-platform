@@ -5,7 +5,8 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{array}
-
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.9}
 
 
 \hypersetup{
@@ -40,8 +41,7 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-  10/25/2024 & All team members & Revision 0, including all sections and appendix\\
-  1/11/2025 & Austin Bennett & System Components, notification and invoice modules revisions.\\
+10/25/2024 & All team members & Revision 0, including all sections and appendix\\
 
 \bottomrule
 \end{tabularx}
@@ -79,8 +79,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   \item \textbf{Backup Database:} A separate database, holding similar data to the User Information DB, but backed up regularly via the main database. Used in the event old data is needed or there is a problem with the main db.
   \item \textbf{User Interface:} An umbrella term for the graphical layout of the software system. All interactions between user and system will be facilitated through the UI, which provides a visual outline of system usage.
   \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
-  \item \textbf{Invoice Generation Module:} A partition of the system that allows users to generate and submit personalized invoices. For instance, users can create detailed invoices for reimbursement requests, ensuring compliance with required financial documentation formats and aiding in seamless transaction records.
-  \item \textbf{Notification Module:} A partition of the system responsible for sending automated notifications to users. For example, it alerts users when their payment or reimbursement requests are approved, provides reminders for pending actions, and informs users of system updates via email to ensure effective communication. 
+  \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
+  \item \textbf{Notification Module:} A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
   \item \textbf{Authentication Module:} A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.
   \item \textbf{Stripe API:} External API for streamlining future integration with other MES services or even third parties.
 \end{itemize}
@@ -105,32 +105,31 @@ By identifying and managing these hazards, we aim to protect the integrity and d
     \item \textbf{Third-Party Software Licenses:} We assume that any third-party software (e.g., for PDF generation or data visualization) used in the system will remain licensed and supported during the platform's lifetime.
 \end{itemize}
 
-
-
 \section{Failure Mode and Effect Analysis}
 
-
 \begin{landscape}
+
 
 \begin{table}
 \centering
 \caption{FMEA for User Authentication and Access Control Design Function}
 \begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
 \hline
+\rowcolor{lightgray}
 \textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
 
 %Row 1
 \parbox[t]{2.5cm}{\raggedright User Authentication and Access Control} & \parbox[t]{3cm}{\raggedright Unauthorized user access} & \parbox[t]{3cm}{\raggedright Unauthorized users gain access to sensitive data} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Weak password policies/restrictions allowing use of simple/commonly used passwords
+      \item[a.] Weak password policies/restrictions
       \item[b.] Lack of multi-factor authentication
     \end{enumerate}
   } &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-        \item[a.] Enforce users to create strong passwords (over 8 characters, including special symbols and upper/lower cases)
-        \item[b.] Implement and enforce multi-factor authentication of at least 2 steps (eg. Microsoft Authenticator)
+        \item[a.] Enforce users to create strong passwords
+        \item[b.] Implement and enforce multi-factor authentication
     \end{enumerate}
 } &
 
@@ -144,17 +143,16 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 
 %Row 2
 &
-\parbox[t]{3cm}{\raggedright User accounts are compromised/leaked to a third party} &
+\parbox[t]{3cm}{\raggedright User accounts are compromised} &
 \parbox[t]{3cm}{\raggedright Data theft, manipulation, or system sabotage} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Weak or reused passwords, including commonly-used passwords on the internet
+      \item[a.] Weak or reused passwords
     \end{enumerate}
   } &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Enforce strong password policies, as above
-      \item[b.] Encrypt sensitive password information 
+      \item[a.] Enforce strong password policies
     \end{enumerate}
   } &
 \parbox[t]{2cm}{\raggedright
@@ -165,8 +163,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 
 %Row 3
 &
-\parbox[t]{3cm}{\raggedright Unauthorized privilege escalation by users} &
-\parbox[t]{3cm}{\raggedright Users perform actions above their authorization level} &
+\parbox[t]{3cm}{\raggedright Improper privilege escalation by users} &
+\parbox[t]{3cm}{\raggedright Users perform actions beyond their authorization} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
       \item[a.] Missing or incorrect configuration of access controls
@@ -174,7 +172,7 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   } &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Use role-based access control, including checks before certain actions are performed
+      \item[a.] Use role-based access control
     \end{enumerate}
   } &
 \parbox[t]{2cm}{\raggedright
@@ -192,19 +190,20 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 \caption{FMEA for Data Privacy and Compliance Design Function}
 \begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
 \hline
+\rowcolor{lightgray}
 \textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
 
 %Row 1
 \parbox[t]{2.5cm}{\raggedright Data Privacy and Compliance} & \parbox[t]{3cm}{\raggedright Exposure of confidential personal financial information} & \parbox[t]{3cm}{\raggedright Legal/financial penalties and damage to the organization's reputation} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Poor security practices for accessing and storing finance info
+      \item[a.] Poor security practices
       \item[b.] Lack of encryption of data in transit 
     \end{enumerate}
   } &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-        \item[a.] Encrypt all data containing sensitive financial information at rest and in transit, including masking card numbers with * symbol
+        \item[a.] Encrypt all data containing sensitive financial information at rest and in transit
     \end{enumerate}
 } &
 
@@ -247,10 +246,11 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 \caption{FMEA for Data Backup and Recovery Design Function}
 \begin{tabular}{|p{2.5cm}|p{3cm}|p{3cm}|p{5cm}|p{5cm}|p{2cm}|}
 \hline
+\rowcolor{lightgray}
 \textbf{Design function} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Actions} & \textbf{Req.} \\ \hline
 
 %Row 1
-\parbox[t]{2.5cm}{\raggedright Data Backup and Recovery} & \parbox[t]{3cm}{\raggedright Scheduled data backup fails to execute or complete} & \parbox[t]{3cm}{\raggedright Financial data is lost, compromising transaction history and further transactions} &
+\parbox[t]{2.5cm}{\raggedright Data Backup and Recovery} & \parbox[t]{3cm}{\raggedright Scheduled data backup fails to execute or complete} & \parbox[t]{3cm}{\raggedright Financial data is lost} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
       \item[a.] Errors in the configuration of backup schedule automation
@@ -278,13 +278,12 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 \parbox[t]{3cm}{\raggedright Inability to retrieve data or restore system functionality promptly} &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
-      \item[a.] Remote database failures or propagation errors when transmitting data to the backup database
+      \item[a.] Remote database failures
     \end{enumerate}
   } &
 \parbox[t]{5cm}{\raggedright
     \begin{enumerate}
       \item[a.] Store backed-up data in multiple, secure locations
-      \item[b.] Verify data was not modified after being backed up
     \end{enumerate}
   } &
 \parbox[t]{2cm}{\raggedright

@@ -77,11 +77,7 @@ See SRS Documentation at \wss{give url}
 \section{Introduction}
 
 The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
-
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+the MES Finance Platform. The document specifies how each module interfaces with other parts of the program. Complementary documents include the System Requirement Specifications and Module Guide.  The full documentation and implementation can be found at \url{https://github.com/ausbennett/mes-finance-platform}.
 
 \section{Notation}
 
@@ -134,18 +130,22 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding} 
+& Account Management Module\\
+& Requests Module\\
+& Notification Module\\
+& User Dashboard Module\\
+& Authentication Module\\ 
+& Email Module\\
+& Account Management Controller Module\\
+& Requests Controller Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.3\textwidth}{Software Decision} 
+& Clubs Database\\
+& Users Database\\
+& Requests Database\\
+& Graphical User Interface\\
 \bottomrule
 
 \end{tabular}

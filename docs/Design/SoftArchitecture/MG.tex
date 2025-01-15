@@ -192,7 +192,18 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mBH1}:] Account Management Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH2}:] Requests Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH3}:] Notification Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH4}:] User Dashboard Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH5}:] Authentication Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH6}:] Email Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH7}:] Account Management Controller Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH8}:] Requests Controller Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSD1}:] Clubs Database
+\item [\refstepcounter{mnum} \mthemnum \label{mSD2}:] Users Database
+\item [\refstepcounter{mnum} \mthemnum \label{mSD3}:] Requests Database
+\item [\refstepcounter{mnum} \mthemnum \label{mSD4}:] Graphical User Interface
 \end{description}
 
 
@@ -206,19 +217,22 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} 
+& Account Management Module\\
+& Requests Module\\
+& Notification Module\\
+& User Dashboard Module\\
+& Authentication Module\\
+& Email Module\\
+& Account Management Controller Module\\
+& Requests Controller Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} 
+& Clubs Database\\
+& Users Database\\
+& Requests Database\\
+& Graphical User Interface\\
 \bottomrule
 
 \end{tabular}
@@ -278,17 +292,17 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Account Management Module}
+\subsubsection{Account Management Module (\mref{mBH1})}
 
 \begin{description}
-\item[Secrets:] User credentials, 
+\item[Secrets:]The contents of the required behaviours.
 \item[Services:] 
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] MES Finance Platform
 \item[Type of Module:] 
 \end{description}
 
-\subsubsection{Requests Module}
+\subsubsection{Requests Module (\mref{mBH2})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -301,7 +315,7 @@ to be implemented.
 \item[Type of Module:] 
 \end{description}
 
-\subsubsection{Notification Module}
+\subsubsection{Notification Module (\mref{mBH3})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -314,7 +328,7 @@ to be implemented.
 \item[Type of Module:] 
 \end{description}
 
-\subsubsection{User Dashboard Module}
+\subsubsection{User Dashboard Module (\mref{mBH4})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -327,7 +341,7 @@ to be implemented.
 \item[Type of Module:] 
 \end{description}
 
-\subsubsection{Authentication Module}
+\subsubsection{Authentication Module (\mref{mBH5})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -341,7 +355,34 @@ to be implemented.
 \end{description}
 
 
-\subsubsection{Email Module}
+\subsubsection{Email Module (\mref{mBH6})}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
+
+\subsubsection{Account Management Controller Module (\mref{mBH7})}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
+
+
+\subsubsection{Requests Controller Module (\mref{mBH8})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.
@@ -368,7 +409,46 @@ to be implemented.
 \item[Implemented By:]
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Clubs Database (\mref{mSD1})}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
+
+\subsubsection{Users Database (\mref{mSD2})}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
+
+\subsubsection{Requests Database (\mref{mSD3})}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
+
+\subsubsection{Graphical User Interface (\mref{mSD4})}
 
 \begin{description}
 \item[Secrets:]The contents of the required behaviours.

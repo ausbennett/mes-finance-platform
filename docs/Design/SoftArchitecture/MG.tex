@@ -295,106 +295,74 @@ to be implemented.
 \subsubsection{Account Management Module (\mref{mBH1})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:] 
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] MES Finance Platform
-\item[Type of Module:] 
+\item[Secrets:] User account details, including personal information, access levels, and account statuses.
+\item[Services:] Provides functionality for creating, updating, and deleting user accounts. It manages user roles and permissions, ensuring that appropriate access is granted to each user based on their role within the system. This module ensures secure storage of account information and integrates with the authentication module for login and identity verification purposes.
+\item[Implemented By:] Account Management Controller
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{Requests Module (\mref{mBH2})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\item[Type of Module:] 
+\item[Secrets:] Internal data structure of requests, including status, history, and associated user information.
+\item[Services:] Manages the creation, tracking, and approval of reimbursement requests. This module handles the submission of new requests by users, updates the status of existing requests, and logs all request-related activities for auditing purposes. It communicates with the notification module to inform users about the progress of their requests.
+\item[Implemented By:] Requests Controller
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{Notification Module (\mref{mBH3})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\item[Type of Module:] 
+\item[Secrets:] Notification content, delivery methods, and scheduling information.
+\item[Services:] Sends notifications to users regarding updates to their reimbursement requests, account changes, and other system events. It supports email. The module ensures that notifications are timely.
+\item[Implemented By:] Emailer API
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{User Dashboard Module (\mref{mBH4})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\item[Type of Module:] 
+\item[Secrets:] The organization and structure of displayed data, including summaries and real-time updates.
+\item[Services:] Provides a user-friendly interface displaying the current status of reimbursement requests, notifications, and account information. It updates dynamically based on user interactions and backend data changes. The module interacts with the requests, and account management modules to present comprehensive information.
+\item[Implemented By:] MRM
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{Authentication Module (\mref{mBH5})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\item[Type of Module:] 
+\item[Secrets:] Validation processes, and session management details.
+\item[Services:] Handles user login, logout, and session management. It ensures secure authentication using encrypted credentials. The module integrates with the account management module to verify user identities and enforce access control.
+\item[Implemented By:] MRM
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-
-\subsubsection{Email Module (\mref{mBH6})}
+\subsubsection{Emailer API (\mref{mBH6})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] Email templates, SMTP server credentials.
+\item[Services:] Provides an interface for sending emails to users. It handles notification delivery, and verification communications, and ensures successful delivery through integration with external SMTP services. The module is used by the notification module to send email-based alerts to users.
+\item[Implemented By:] TBD
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{Account Management Controller Module (\mref{mBH7})}
+\subsubsection{Account Management Controller (\mref{mBH7})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The flow of control for account operations and error handling mechanisms.
+\item[Services:] Acts as a controller for the account management module. It receives requests from the user dashboard and other modules, processes them, and invokes appropriate functions within the account management module. It ensures consistency and error handling in account-related operations.
+\item[Implemented By:] MRM
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-
-\subsubsection{Requests Controller Module (\mref{mBH8})}
+\subsubsection{Requests Controller (\mref{mBH8})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The flow of control for request operations and error handling mechanisms.
+\item[Services:] Acts as a controller for the requests module. It handles user inputs for creating and managing requests, processes these inputs, and invokes the necessary functions within the requests module. The controller ensures that all requests are valid and consistent with the system’s requirements.
+\item[Implemented By:] MRM
+\item[Type of Module:] Abstract Data Type
 \end{description}
-
 
 \subsection{Software Decision Module}
 

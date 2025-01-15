@@ -281,13 +281,11 @@ to be implemented.
 \subsubsection{Account Management Module}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
+\item[Secrets:] User credentials, 
+\item[Services:] 
   module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
+\item[Implemented By:] MES Finance Platform
+\item[Type of Module:] 
 \end{description}
 
 \subsubsection{Requests Module}
@@ -300,6 +298,7 @@ to be implemented.
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
+\item[Type of Module:] 
 \end{description}
 
 \subsubsection{Notification Module}
@@ -312,6 +311,7 @@ to be implemented.
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
+\item[Type of Module:] 
 \end{description}
 
 \subsubsection{User Dashboard Module}
@@ -324,6 +324,7 @@ to be implemented.
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
+\item[Type of Module:] 
 \end{description}
 
 \subsubsection{Authentication Module}
@@ -336,6 +337,7 @@ to be implemented.
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
 \item[Implemented By:] --
+\item[Type of Module:] 
 \end{description}
 
 
@@ -348,23 +350,9 @@ to be implemented.
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
+\item[Implemented By:]
+\item[Type of Module:] 
 \end{description}
-
-\subsubsection{Input Format Module (\mref{mInput})}
-
-
-
-\begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
-\end{description}
-
-\subsubsection{Etc.}
 
 
 \subsection{Software Decision Module}
@@ -377,10 +365,21 @@ to be implemented.
   do not provide direct interaction with the user. 
   % Changes in these modules are more likely to be motivated by a desire to
   % improve performance than by externally imposed changes.
-\item[Implemented By:] --
+\item[Implemented By:]
 \end{description}
 
 \subsubsection{Etc.}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]Includes programs that provide externally visible behaviour of
+  the system as specified in the software requirements specification (SRS)
+  documents. This module serves as a communication layer between the
+  hardware-hiding module and the software decision module. The programs in this
+  module will need to change if there are changes in the SRS.
+\item[Implemented By:]
+\item[Type of Module:] 
+\end{description}
 
 
 \section{Traceability Matrix} \label{SecTM}

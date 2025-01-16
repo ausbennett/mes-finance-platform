@@ -227,6 +227,103 @@ The following table is taken directly from the Module Guide document for this pr
   explicitly.  Even if they are implemented, they are not exported; they only
   have local scope.}
 
+\section{MIS of Account Management API} \label{AccountManagementAPI}
+
+\subsection{Module}
+Account Management API
+
+\subsection{Uses}
+Account Management Controller
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+auth & token: String & JSON & InvalidTokenException \\
+loginUser & email: String & String & EmailNotFoundException \\
+registerUser & userDetails: JSON & JSON & DatabaseException \\
+getAllUsers & adminToken: String & JSON & AuthorizationException \\
+getUser & userId: String & JSON & UserNotFoundException \\
+editProfile & userId: String, updates: JSON & Boolean & DatabaseException \\
+editClub & clubId: String, updates: JSON & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+MongoDB connection (via Mongoose)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Valid and authenticated tokens are provided for admin and user-specific actions.
+  \item All inputs are sanitized before being processed.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent auth(token: String):
+\begin{itemize}
+  \item transition: Validates the provided token and grants access.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: InvalidTokenException if token is malformed or expired.
+\end{itemize}
+
+\noindent loginUser(email: String):
+\begin{itemize}
+  \item transition: Sends a confirmation link to the provided email.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: EmailNotFoundException if email does not exist in the system.
+\end{itemize}
+
+\noindent registerUser(userDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new user record to the database.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue saving to MongoDB.
+\end{itemize}
+
+\noindent getAllUsers(adminToken: String):
+\begin{itemize}
+  \item input: admin auth token 
+  \item output: returns a JSON object with detailed information about the result and array (users).
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent getUser(userID: String):
+\begin{itemize}
+  \item input: userID of user
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent editUser(userID: String, updates: JSON):
+\begin{itemize}
+  \item input: userID, and a JSON object containing updates to user information.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent editClub(clubID: String, updates: JSON):
+\begin{itemize}
+  \item input: clubID, and a JSON object containing updates to club information.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 
 \section{MIS of Account Management Controller} \label{AccountManagementController}
 

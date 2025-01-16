@@ -306,8 +306,8 @@ to be implemented.
 \subsubsection{Requests Module (\mref{mBH2})}
 
 \begin{description}
-\item[Secrets:] Internal data structure of requests, including status, history, and associated user information.
-\item[Services:] Manages the creation, tracking, and approval of reimbursement requests. This module handles the submission of new requests by users, updates the status of existing requests, and logs all request-related activities for auditing purposes. It communicates with the notification module to inform users about the progress of their requests.
+\item[Secrets:] Internal data structure of requests, including status, history, and associated user transaction information.
+\item[Services:] Manages the creation, tracking, and approval of reimbursement requests. This module handles the submission of new requests by users, updates the status of existing requests, and reconcilies transactions with external plaid API for auditing purposes. It communicates with the notification module to inform users about the progress of their requests.
 \item[Implemented By:] Requests Controller
 \item[Type of Module:] Abstract Data Type
 \end{description}

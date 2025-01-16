@@ -20,7 +20,14 @@ const config = new Configuration({
 
 const client = new PlaidApi(config);
 
-app.post('/api/sandbox/create-public-token', async (req, res) => {
+/*
+ * Because of how plaid works, you need to get a public token first
+ * Then use this token to get an access token
+ * FINALLY
+ * You're able to use this access token to query finances (just transactions in our case)
+ * */
+
+app.get('/api/sandbox/create-public-token', async (req, res) => {
     try {
         const response = await client.sandboxPublicTokenCreate({
             institution_id: 'ins_109508', // Sample institution ID

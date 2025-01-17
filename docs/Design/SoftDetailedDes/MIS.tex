@@ -757,6 +757,78 @@ MongoDB connection via Mongoose (database connection client)
 \subsubsection{Local Functions}
 None
 
+\section{MIS of Requests Database} \label{Requests Database}
+
+\subsection{Module}
+Requests Database
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addRequest & requestDetails: JSON & JSON & DatabaseException \\
+getRequest & requestId: String & JSON & RequestNotFoundException \\
+updateRequest & requestId: String, updates: JSON & JSON & DatabaseException \\
+deleteRequest & requestId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB Request Schema
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item Request schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addRequest(requestDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new request record to MongoDB.
+  \item output: Creates request object and returns as JSON
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent getRequest(requestId: String):
+\begin{itemize}
+  \item transition: Fetches request data from the database.
+  \item output: Returns request data in JSON format.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
+\noindent updateRequest(requestId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified request information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
+\noindent deleteRequest(requestId: String):
+\begin{itemize}
+  \item transition: Removes the specified request from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
 \newpage
 
 \bibliographystyle {plainnat}

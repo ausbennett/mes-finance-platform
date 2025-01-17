@@ -27,52 +27,56 @@ const client = new PlaidApi(config);
  * You're able to use this access token to query finances (just transactions in our case)
  * */
 
-app.get('/api/sandbox/create-public-token', async (req, res) => {
+
+const fetchTransactionsWithRetry = async (accessToken, retries = 5, delay = 5000) => {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await client.transactionsGet({
+                access_token: accessToken,
+                start_date: '2023-01-01',
+                end_date: '2025-01-15',
+            });
+
+            return response.data.transactions; // Transactions are ready
+        } catch (error) {
+            if (error.response?.data?.error_code === 'PRODUCT_NOT_READY') {
+                console.log(`Retrying... (${i + 1}/${retries})`);
+                await new Promise((resolve) => setTimeout(resolve, delay)); // Wait before retrying
+            } else {
+                throw error; // Other errors should not be retried
+            }
+        }
+    }
+
+    throw new Error('Transactions product not ready after retries');
+};
+
+
+app.get('/api/sandbox/transactions', async (req, res) => {
     try {
-        const response = await client.sandboxPublicTokenCreate({
-            institution_id: 'ins_109508', // Sample institution ID
-            initial_products: ['transactions'], // Specify the products you need
+        const publicTokenResponse = await client.sandboxPublicTokenCreate({
+            institution_id: 'ins_109508',
+            initial_products: ['transactions'],
         });
 
-        const publicToken = response.data.public_token;
-        res.json({ public_token: publicToken });
-    } catch (error) {
-        console.error('Error creating sandbox public token:', error);
-        res.status(500).json({ error: 'Failed to create sandbox public token' });
-    }
-});
+        const publicToken = publicTokenResponse.data.public_token;
 
-app.post('/api/exchange-public-token', async (req, res) => {
-    const { public_token } = req.body;
-
-    try {
-        const response = await client.itemPublicTokenExchange({ public_token });
-        const accessToken = response.data.access_token;
-        res.json({ accessToken });
-    } catch (error) {
-        console.error('Error exchanging public token:', error);
-        res.status(500).json({ error: 'Failed to exchange public token' });
-    }
-});
-
-app.get('/api/transactions', async (req, res) => {
-    const { accessToken } = req.query; // Pass the access token in the query
-
-    try {
-        const response = await client.transactionsGet({
-            access_token: accessToken,
-            start_date: '2023-01-01',
-            end_date: '2025-01-15',
+        const accessTokenResponse = await client.itemPublicTokenExchange({
+            public_token: publicToken,
         });
 
-        res.json(response.data.transactions);
+        const accessToken = accessTokenResponse.data.access_token;
+
+        // Fetch transactions with retry logic
+        const transactions = await fetchTransactionsWithRetry(accessToken);
+
+        res.json(transactions);
     } catch (error) {
-        console.error('Error fetching transactions:', error);
-        res.status(500).json({ error: 'Failed to fetch transactions' });
+        console.error('Error fetching sandbox transactions:', error.response?.data || error.message);
+        res.status(500).json({ error: error.response?.data || 'Failed to fetch transactions' });
     }
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

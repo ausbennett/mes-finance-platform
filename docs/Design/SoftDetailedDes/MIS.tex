@@ -425,6 +425,50 @@ None
   \item Functions to compose email body.
 \end{itemize}
 
+\section{MIS of User Dashboard Module} \label{UserDashboard} \subsection{Module} User Dashboard
+
+\subsection{Uses}
+Requests Module, Account Management API, Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+viewDashboard & userId: String & JSON & AuthorizationException \\
+viewRequests & userId: String & Array (Requests) & AuthorizationException \\
+editProfile & userId: String, updates: JSON & Boolean & UpdateException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+- Connections to other modules for data abstraction.
+
+\subsubsection{Assumptions}
+- The user is authenticated and authorized before accessing the dashboard.
+
+\subsubsection{Access Routine Semantics}
+\noindent viewDashboard(userId: String):
+\begin{itemize}
+\item transition: None
+\item output: Returns the user's dashboard data.
+\item exception: AuthorizationException if the user is not authorized.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 \section{MIS of Emailer API} \label{EmailerAPI}
 
 \subsection{Module}

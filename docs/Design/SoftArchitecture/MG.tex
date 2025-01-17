@@ -382,54 +382,39 @@ to be implemented.
 \subsubsection{Clubs Database (\mref{mSD1})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The structure and format of the database storing information about McMaster University clubs, including club names, member rosters, and financial data.
+\item[Services:] Provides methods to store, retrieve, and update club-related data, ensuring data integrity and quick access. It supports queries for club membership, financial histories, and active/inactive statuses, which are used by other modules to process reimbursement requests.
+\item[Implemented By:] MongoDB
+\item[Type of Module:] Library
 \end{description}
 
-\subsubsection{Users Database (\mref{mSD2})}
+\subsubsection{User Database (\mref{mSD2})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The structure and format of the database storing user account details, including personal information, roles, and activity logs.
+\item[Services:] Offers methods to store and retrieve user data efficiently. It supports authentication and authorization processes by interfacing with the authentication module. Additionally, it logs user activity for auditing purposes.
+\item[Implemented By:] MongoDB
+\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Requests Database (\mref{mSD3})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The structure and format of the database containing reimbursement request records, including statuses, timestamps, and related documents.
+\item[Services:] Enables the creation, update, and retrieval of reimbursement requests. It tracks the status and history of each request, ensuring data consistency and providing an audit trail. Other modules, such as the requests module and notification module, interact with this database for data access.
+\item[Implemented By:] MongoDB
+\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Graphical User Interface (\mref{mSD4})}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:]
-\item[Type of Module:] 
+\item[Secrets:] The structure and layout of user interaction elements, including buttons, forms, and visual themes. It also contains methods to style and manage user inputs efficiently.
+\item[Services:] Builds a visual interface for users to interact with the platform. Handles user input events (e.g., button clicks, form submissions) and sends commands to the appropriate modules. Provides error handling for invalid inputs and visual feedback.
+\item[Implemented By:] React
+\item[Type of Module:] Library
 \end{description}
+
 
 
 \section{Traceability Matrix} \label{SecTM}

@@ -558,6 +558,54 @@ MongoDB connection via Mongoose (database connection client)
 
 \newpage
 
+\section{MIS of Requests Controller Module} \label{RequestsController}
+
+\subsection{Module}
+Requests Controller
+
+\subsection{Uses}
+Database (via ORM)
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+storeReimbursement & requestData: JSON & Boolean & DatabaseException \\
+storePayment & paymentData: JSON & Boolean & DatabaseException \\
+reconcileLedger & ledgerData: JSON & Boolean & DatabaseException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+- MongoDB collections for requests and ledgers
+
+\subsubsection{Environment Variables}
+- Database connection (via Mongoose ORM)
+
+\subsubsection{Assumptions}
+- Database schema is correctly defined and applied.
+- Database connection is persistent.
+
+\subsubsection{Access Routine Semantics}
+\noindent storeReimbursement(requestData: JSON):
+\begin{itemize}
+\item transition: Saves the reimbursement request in the database.
+\item output: Returns true if the operation is successful.
+\item exception: DatabaseException if the request cannot be stored.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 \section{Appendix} \label{Appendix}
 
 \wss{Extra information if required}

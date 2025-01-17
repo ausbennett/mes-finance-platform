@@ -325,83 +325,6 @@ MongoDB connection (via Mongoose)
 \subsubsection{Local Functions}
 None
 
-\section{MIS of Account Management Controller} \label{AccountManagementController}
-
-\subsection{Module}
-Account Management Controller
-
-\subsection{Uses}
-Mongoose Schema, MongoDB
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-createUser & userDetails: JSON & JSON & DatabaseException \\
-findUser & userId: String & JSON & UserNotFoundException \\
-updateUser & userId: String, updates: JSON & JSON & DatabaseException \\
-deleteUser & userId: String & JSON & AuthorizationException \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-MongoDB User Schema (defines fields like email, password, roles, etc.)
-
-\subsubsection{Environment Variables}
-MongoDB connection via Mongoose (database connection client)
-
-\subsubsection{Assumptions}
-\begin{itemize}
-  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
-  \item User schema validations are performed automatically during operations.
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent createUser(userDetails: JSON):
-\begin{itemize}
-  \item transition: Saves a new user record to MongoDB.
-  \item output: Returns a JSON object with detailed information about the result.
-  \item exception: DatabaseException if saving fails due to validation or connection issues.
-\end{itemize}
-
-\noindent findUser(userId: String):
-\begin{itemize}
-  \item transition: Queries the MongoDB collection for the specified user.
-  \item output: Returns user data in JSON format.
-  \item exception: UserNotFoundException if the user ID does not exist.
-\end{itemize}
-
-\noindent updateUser(userId: String, updates: JSON):
-\begin{itemize}
-  \item transition: Updates the MongoDB collection for the specified user information.
-  \item output: Returns a JSON object with detailed information about the result.
-  \item exception: UserNotFoundException if the user ID does not exist.
-\end{itemize}
-
-\noindent deleteUser(userId: String):
-\begin{itemize}
-  \item transition: Removes the specified user from the MongoDB collection.
-  \item output: Returns a JSON object with detailed information about the result.
-  \item exception: UserNotFoundException if the user ID does not exist.
-\end{itemize}
-
-\subsubsection{Local Functions}
-\begin{itemize}
-  \item Validation functions for email and password.
-\end{itemize}
-
 \section{MIS of Notification Module} \label{NotificationModule}
 
 \subsection{Module}
@@ -502,6 +425,83 @@ Connection to donotreply automated email service
 
 \subsubsection{Local Functions}
 None
+
+\section{MIS of Account Management Controller} \label{AccountManagementController}
+
+\subsection{Module}
+Account Management Controller
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createUser & userDetails: JSON & JSON & DatabaseException \\
+findUser & userId: String & JSON & UserNotFoundException \\
+updateUser & userId: String, updates: JSON & JSON & DatabaseException \\
+deleteUser & userId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB User Schema (defines fields like email, password, roles, etc.)
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item User schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createUser(userDetails: JSON):
+\begin{itemize}
+  \item transition: Saves a new user record to MongoDB.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent findUser(userId: String):
+\begin{itemize}
+  \item transition: Queries the MongoDB collection for the specified user.
+  \item output: Returns user data in JSON format.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent updateUser(userId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified user information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent deleteUser(userId: String):
+\begin{itemize}
+  \item transition: Removes the specified user from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+\begin{itemize}
+  \item Validation functions for email and password.
+\end{itemize}
 
 \newpage
 

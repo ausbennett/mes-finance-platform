@@ -469,6 +469,55 @@ None
 
 \subsubsection{Local Functions}
 None
+
+\section{MIS of Authentication Module} \label{AuthenticationModule}
+
+\subsection{Module}
+Authentication
+
+\subsection{Uses}
+Emailer API, JWT tokens
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+sendConfirmation & email: String & Boolean & EmailException \\
+verifyToken & token: String & Boolean & InvalidTokenException \\
+authenticateUser & credentials: JSON & Boolean & AuthenticationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+- Active JWT tokens.
+
+\subsubsection{Environment Variables}
+- Email service for sending confirmation links.
+
+\subsubsection{Assumptions}
+- Email service is operational and configured correctly.
+
+\subsubsection{Access Routine Semantics}
+\noindent sendConfirmation(email: String):
+\begin{itemize}
+\item transition: Sends a confirmation email with a token link.
+\item output: Returns true if the email is successfully sent.
+\item exception: EmailException if the email service fails.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
 \section{MIS of Emailer API} \label{EmailerAPI}
 
 \subsection{Module}

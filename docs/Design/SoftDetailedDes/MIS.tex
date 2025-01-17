@@ -572,13 +572,6 @@ MongoDB connection via Mongoose (database connection client)
   \item Validation functions for email and password.
 \end{itemize}
 
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
-
-\newpage
-
 \section{MIS of Requests Controller Module} \label{RequestsController}
 
 \subsection{Module}
@@ -627,11 +620,79 @@ reconcileLedger & ledgerData: JSON & Boolean & DatabaseException \\
 
 \subsubsection{Local Functions}
 None
+
+\section{Clubs Database} \label{Clubs Database}
+
+\subsection{Module}
+Clubs Database
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addClub & clubDetails: JSON & JSON & DatabaseException \\
+getClub & clubId: String & JSON & ClubNotFoundException \\
+updateClub & clubId: String, updates: JSON & JSON & DatabaseException \\
+deleteClub & clubId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB Club Schema
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item Club schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addClub(clubDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new club record to MongoDB.
+  \item output: Creates club object and returns as JSON
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent getClub(clubId: String):
+\begin{itemize}
+  \item transition: Fetches club data from the database.
+  \item output: Returns club data in JSON format.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\newpage
+
+\bibliographystyle {plainnat}
+\bibliography {../../../refs/References}
+
+\newpage
+
 \section{Appendix} \label{Appendix}
 
 \wss{Extra information if required}
 
-\newpage{}
 
 \section*{Appendix --- Reflection}
 

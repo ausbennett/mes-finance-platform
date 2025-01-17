@@ -402,6 +402,106 @@ MongoDB connection via Mongoose (database connection client)
   \item Validation functions for email and password.
 \end{itemize}
 
+\section{MIS of Notification Module} \label{NotificationModule}
+
+\subsection{Module}
+Notification Module
+
+\subsection{Uses}
+Requests Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+notifyUser & email: String & String & EmailNotFoundException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+User Details (email and notification status)
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent notifyUser(email: String):
+\begin{itemize}
+  \item transition: Queries Requests module for user info including email and request status.
+  \item output: Returns an email body to be given to emailer API.
+  \item exception: EmailNotFoundException if the user has no valid email to be returned.
+\end{itemize}
+
+\subsubsection{Local Functions}
+\begin{itemize}
+  \item Validation functions for email.
+  \item Functions to compose email body.
+\end{itemize}
+
+\section{MIS of Emailer API} \label{EmailerAPI}
+
+\subsection{Module}
+Emailer API
+
+\subsection{Uses}
+Account Management Module, Notification Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+Email sending address (An automated, do-not-reply email adress)
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+sendEmail & body: JSON, address: String & Boolean & InvalidEmailException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+Connection to donotreply automated email service
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item An external API will be used. Specifics TBD
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent sendEmail(body: JSON):
+\begin{itemize}
+  \item transition: Sends an email with body to the address specified.
+  \item output: Returns a success or failure message depending on if the email was successfully sent.
+  \item exception: InvalidEmailException if the address is invalid or the body is unsendable.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 

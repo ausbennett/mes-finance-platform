@@ -325,6 +325,54 @@ MongoDB connection (via Mongoose)
 \subsubsection{Local Functions}
 None
 
+\section{MIS of Requests Module} \label{RequestsModule}
+
+\subsection{Module}
+Requests
+
+\subsection{Uses}
+Requests Controller, Plaid Service API
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+submitReimbursement & requestData: JSON & Boolean & ValidationException \\
+submitPayment & paymentData: JSON & Boolean & PaymentProcessingException \\
+processLedger & ledgerData: JSON & Boolean & ReconciliationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+- Plaid Service API for payment and ledger reconciliation
+
+\subsubsection{Assumptions}
+- All inputs are validated prior to processing.
+- Plaid Service API is available and operational.
+
+\subsubsection{Access Routine Semantics}
+\noindent submitReimbursement(requestData: JSON):
+\begin{itemize}
+\item transition: Stores the reimbursement request and initiates processing via the Requests Controller.
+\item output: Returns true if the request is successfully submitted.
+\item exception: ValidationException if the input data is invalid.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 \section{MIS of Notification Module} \label{NotificationModule}
 
 \subsection{Module}

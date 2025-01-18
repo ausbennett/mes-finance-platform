@@ -1,0 +1,952 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{amsmath, mathtools}
+
+\usepackage[round]{natbib}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{xr}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[section]{placeins}
+\usepackage{caption}
+\usepackage{fullpage}
+
+\hypersetup{
+bookmarks=true,     % show bookmarks bar?
+colorlinks=true,       % false: boxed links; true: colored links
+linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+citecolor=blue,      % color of links to bibliography
+filecolor=magenta,  % color of file links
+urlcolor=cyan          % color of external links
+}
+
+\usepackage{array}
+
+\externaldocument{../../SRS/SRS}
+
+\input{../../Comments}
+\input{../../Common}
+
+\begin{document}
+
+\title{Module Interface Specification for \progname{}}
+
+\author{\authname}
+
+\date{\today}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+Jan 17 2025 & 1.0 & All Sections\\
+% Date 2 & 1.1 & Notes\\
+\bottomrule
+\end{tabularx}
+
+~\newpage
+
+\section{Symbols, Abbreviations and Acronyms}
+
+See SRS Documentation at \wss{give url}
+
+\wss{Also add any additional symbols, abbreviations or acronyms}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+The following document details the Module Interface Specifications for
+the MES Finance Platform. The document specifies how each module interfaces with other parts of the program. Complementary documents include the System Requirement Specifications and Module Guide.  The full documentation and implementation can be found at \url{https://github.com/ausbennett/mes-finance-platform}.
+
+\section{Notation}
+
+\wss{You should describe your notation.  You can use what is below as
+  a starting point.}
+
+The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
+with the addition that template modules have been adapted from
+\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
+\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
+multiple assignment statement and conditional rules follow the form $(c_1
+\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+
+The following table summarizes the primitive data types used by \progname. 
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\noindent 
+\begin{tabular}{l l p{7.5cm}} 
+\toprule 
+\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+\midrule
+character & char & a single symbol or digit\\
+integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
+natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
+real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+\bottomrule
+\end{tabular} 
+\end{center}
+
+\noindent
+The specification of \progname \ uses some derived data types: sequences, strings, and
+tuples. Sequences are lists filled with elements of the same data type. Strings
+are sequences of characters. Tuples contain a list of values, potentially of
+different types. In addition, \progname \ uses functions, which
+are defined by the data types of their inputs and outputs. Local functions are
+described by giving their type signature followed by their specification.
+
+\section{Module Decomposition}
+
+The following table is taken directly from the Module Guide document for this project.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Level 1} & \textbf{Level 2}\\
+\midrule
+
+{Hardware-Hiding} & ~ \\
+\midrule
+
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding} 
+& Account Management Module\\
+& Requests Module\\
+& Notification Module\\
+& User Dashboard Module\\
+& Authentication Module\\ 
+& Email Module\\
+& Account Management Controller Module\\
+& Requests Controller Module\\
+\midrule
+
+\multirow{3}{0.3\textwidth}{Software Decision} 
+& Clubs Database\\
+& Users Database\\
+& Requests Database\\
+& Graphical User Interface\\
+\bottomrule
+
+\end{tabular}
+\caption{Module Hierarchy}
+\label{TblMH}
+\end{table}
+
+\newpage
+~\newpage
+
+\section{MIS of Account Management API} \label{AccountManagementAPI}
+
+\subsection{Module}
+Account Management API
+
+\subsection{Uses}
+Account Management Controller
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+auth & token: String & JSON & InvalidTokenException \\
+loginUser & email: String & String & EmailNotFoundException \\
+registerUser & userDetails: JSON & JSON & DatabaseException \\
+getAllUsers & adminToken: String & JSON & AuthorizationException \\
+getUser & userId: String & JSON & UserNotFoundException \\
+editProfile & userId: String, updates: JSON & Boolean & DatabaseException \\
+editClub & clubId: String, updates: JSON & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+MongoDB connection (via Mongoose)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Valid and authenticated tokens are provided for admin and user-specific actions.
+  \item All inputs are sanitized before being processed.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent auth(token: String):
+\begin{itemize}
+  \item transition: Validates the provided token and grants access.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: InvalidTokenException if token is malformed or expired.
+\end{itemize}
+
+\noindent loginUser(email: String):
+\begin{itemize}
+  \item transition: Sends a confirmation link to the provided email.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: EmailNotFoundException if email does not exist in the system.
+\end{itemize}
+
+\noindent registerUser(userDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new user record to the database.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue saving to MongoDB.
+\end{itemize}
+
+\noindent getAllUsers(adminToken: String):
+\begin{itemize}
+  \item input: admin auth token 
+  \item output: returns a JSON object with detailed information about the result and array (users).
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent getUser(userID: String):
+\begin{itemize}
+  \item input: userID of user
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent editUser(userID: String, updates: JSON):
+\begin{itemize}
+  \item input: userID, and a JSON object containing updates to user information.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\noindent editClub(clubID: String, updates: JSON):
+\begin{itemize}
+  \item input: clubID, and a JSON object containing updates to club information.
+  \item output: returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if there is an issue communicating to MongoDB.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Requests Module} \label{RequestsModule}
+
+\subsection{Module}
+Requests
+
+\subsection{Uses}
+Requests Controller, Plaid Service API
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+submitReimbursement & requestData: JSON & Boolean & ValidationException \\
+submitPayment & paymentData: JSON & Boolean & PaymentProcessingException \\
+processLedger & ledgerData: JSON & Boolean & ReconciliationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+- Plaid Service API for payment and ledger reconciliation
+
+\subsubsection{Assumptions}
+- All inputs are validated prior to processing.
+- Plaid Service API is available and operational.
+
+\subsubsection{Access Routine Semantics}
+\noindent submitReimbursement(requestData: JSON):
+\begin{itemize}
+\item transition: Stores the reimbursement request and initiates processing via the Requests Controller.
+\item output: Returns true if the request is successfully submitted.
+\item exception: ValidationException if the input data is invalid.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+\section{MIS of Notification Module} \label{NotificationModule}
+
+\subsection{Module}
+Notification Module
+
+\subsection{Uses}
+Requests Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+notifyUser & email: String & String & EmailNotFoundException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+User Details (email and notification status)
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent notifyUser(email: String):
+\begin{itemize}
+  \item transition: Queries Requests module for user info including email and request status.
+  \item output: Returns an email body to be given to emailer API.
+  \item exception: EmailNotFoundException if the user has no valid email to be returned.
+\end{itemize}
+
+\subsubsection{Local Functions}
+\begin{itemize}
+  \item Validation functions for email.
+  \item Functions to compose email body.
+\end{itemize}
+
+\section{MIS of User Dashboard Module} \label{UserDashboard} \subsection{Module} User Dashboard
+
+\subsection{Uses}
+Requests Module, Account Management API, Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+viewDashboard & userId: String & JSON & AuthorizationException \\
+viewRequests & userId: String & Array (Requests) & AuthorizationException \\
+editProfile & userId: String, updates: JSON & Boolean & UpdateException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+- Connections to other modules for data abstraction.
+
+\subsubsection{Assumptions}
+- The user is authenticated and authorized before accessing the dashboard.
+
+\subsubsection{Access Routine Semantics}
+\noindent viewDashboard(userId: String):
+\begin{itemize}
+\item transition: None
+\item output: Returns the user's dashboard data.
+\item exception: AuthorizationException if the user is not authorized.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Authentication Module} \label{AuthenticationModule}
+
+\subsection{Module}
+Authentication
+
+\subsection{Uses}
+Emailer API, JWT tokens
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+sendConfirmation & email: String & Boolean & EmailException \\
+verifyToken & token: String & Boolean & InvalidTokenException \\
+authenticateUser & credentials: JSON & Boolean & AuthenticationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+- Active JWT tokens.
+
+\subsubsection{Environment Variables}
+- Email service for sending confirmation links.
+
+\subsubsection{Assumptions}
+- Email service is operational and configured correctly.
+
+\subsubsection{Access Routine Semantics}
+\noindent sendConfirmation(email: String):
+\begin{itemize}
+\item transition: Sends a confirmation email with a token link.
+\item output: Returns true if the email is successfully sent.
+\item exception: EmailException if the email service fails.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Emailer API} \label{EmailerAPI}
+
+\subsection{Module}
+Emailer API
+
+\subsection{Uses}
+Account Management Module, Notification Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+Email sending address (An automated, do-not-reply email adress)
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+sendEmail & body: JSON, address: String & Boolean & InvalidEmailException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+Connection to donotreply automated email service
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item An external API will be used. Specifics TBD
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent sendEmail(body: JSON):
+\begin{itemize}
+  \item transition: Sends an email with body to the address specified.
+  \item output: Returns a success or failure message depending on if the email was successfully sent.
+  \item exception: InvalidEmailException if the address is invalid or the body is unsendable.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Account Management Controller} \label{AccountManagementController}
+
+\subsection{Module}
+Account Management Controller
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createUser & userDetails: JSON & JSON & DatabaseException \\
+findUser & userId: String & JSON & UserNotFoundException \\
+updateUser & userId: String, updates: JSON & JSON & DatabaseException \\
+deleteUser & userId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB User Schema (defines fields like email, password, roles, etc.)
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item User schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createUser(userDetails: JSON):
+\begin{itemize}
+  \item transition: Saves a new user record to MongoDB.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent findUser(userId: String):
+\begin{itemize}
+  \item transition: Queries the MongoDB collection for the specified user.
+  \item output: Returns user data in JSON format.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent updateUser(userId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified user information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent deleteUser(userId: String):
+\begin{itemize}
+  \item transition: Removes the specified user from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+\begin{itemize}
+  \item Validation functions for email and password.
+\end{itemize}
+
+\section{MIS of Requests Controller Module} \label{RequestsController}
+
+\subsection{Module}
+Requests Controller
+
+\subsection{Uses}
+Database (via ORM)
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+storeReimbursement & requestData: JSON & Boolean & DatabaseException \\
+storePayment & paymentData: JSON & Boolean & DatabaseException \\
+reconcileLedger & ledgerData: JSON & Boolean & DatabaseException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+- MongoDB collections for requests and ledgers
+
+\subsubsection{Environment Variables}
+- Database connection (via Mongoose ORM)
+
+\subsubsection{Assumptions}
+- Database schema is correctly defined and applied.
+- Database connection is persistent.
+
+\subsubsection{Access Routine Semantics}
+\noindent storeReimbursement(requestData: JSON):
+\begin{itemize}
+\item transition: Saves the reimbursement request in the database.
+\item output: Returns true if the operation is successful.
+\item exception: DatabaseException if the request cannot be stored.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Clubs Database} \label{Clubs Database}
+
+\subsection{Module}
+Clubs Database
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addClub & clubDetails: JSON & JSON & DatabaseException \\
+getClub & clubId: String & JSON & ClubNotFoundException \\
+updateClub & clubId: String, updates: JSON & JSON & DatabaseException \\
+deleteClub & clubId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB Club Schema
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item Club schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addClub(clubDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new club record to MongoDB.
+  \item output: Creates club object and returns as JSON
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent getClub(clubId: String):
+\begin{itemize}
+  \item transition: Fetches club data from the database.
+  \item output: Returns club data in JSON format.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\noindent updateClub(clubId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified club information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\noindent deleteClub(clubId: String):
+\begin{itemize}
+  \item transition: Removes the specified club from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of User Database} \label{User Database}
+
+\subsection{Module}
+User Database
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addUser & userDetails: JSON & JSON & DatabaseException \\
+getUser & userId: String & JSON & UserNotFoundException \\
+updateUser & userId: String, updates: JSON & JSON & DatabaseException \\
+deleteUser & userId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB User Schema
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item User schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addUser(userDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new user record to MongoDB.
+  \item output: Creates user object and returns as JSON
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent getUser(userId: String):
+\begin{itemize}
+  \item transition: Fetches user data from the database.
+  \item output: Returns user data in JSON format.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent updateUser(userId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified user information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\noindent deleteUser(userId: String):
+\begin{itemize}
+  \item transition: Removes the specified user from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: UserNotFoundException if the user ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Requests Database} \label{Requests Database}
+
+\subsection{Module}
+Requests Database
+
+\subsection{Uses}
+Mongoose Schema, MongoDB
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addRequest & requestDetails: JSON & JSON & DatabaseException \\
+getRequest & requestId: String & JSON & RequestNotFoundException \\
+updateRequest & requestId: String, updates: JSON & JSON & DatabaseException \\
+deleteRequest & requestId: String & JSON & AuthorizationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+MongoDB Request Schema
+
+\subsubsection{Environment Variables}
+MongoDB connection via Mongoose (database connection client)
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Mongoose (database connection client) is properly configured and connected to MongoDB.
+  \item Request schema validations are performed automatically during operations.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addRequest(requestDetails: JSON):
+\begin{itemize}
+  \item transition: Adds a new request record to MongoDB.
+  \item output: Creates request object and returns as JSON
+  \item exception: DatabaseException if saving fails due to validation or connection issues.
+\end{itemize}
+
+\noindent getRequest(requestId: String):
+\begin{itemize}
+  \item transition: Fetches request data from the database.
+  \item output: Returns request data in JSON format.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
+\noindent updateRequest(requestId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified request information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
+\noindent deleteRequest(requestId: String):
+\begin{itemize}
+  \item transition: Removes the specified request from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: RequestNotFoundException if the request ID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Graphical User Interface} \label{Graphical User Interfae}
+
+\subsection{Module}
+Graphical User Interface
+
+\subsection{Uses}
+React.js, API Endpoints
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+renderDashboard & userToken: String & JS & AuthorizationException \\
+handleInput & inputData: JSON & Boolean & InputValidationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+Web browser, network connection
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item User authentication is performed before accessing GUI components
+  \item Input data is validated at the client side
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent renderDashboard(userToken: String):
+\begin{itemize}
+  \item transition: Renders user dashboard based on provided token.
+  \item output: Returns a rendered GUI to the user
+  \item exception: AuthorizationException if the token is invalid.
+\end{itemize}
+
+\subsubsection{Local Functions}
+Fetch API data
+
+\newpage
+
+\bibliographystyle {plainnat}
+\bibliography {../../../refs/References}
+
+\newpage
+
+\section{Appendix} \label{Appendix}
+
+\wss{Extra information if required}
+
+
+\section*{Appendix --- Reflection}
+
+\wss{Not required for CAS 741 projects}
+
+The information in this section will be used to evaluate the team members on the
+graduate attribute of Problem Analysis and Design.
+
+\input{../../Reflection.tex}
+
+\begin{enumerate}
+  \item What went well while writing this deliverable? \\
+One thing that went well during this deliverable was the team meeting where we discussed the design of the project in detail. It allowed us all to have a clear understanding of the modules we would be focusing on, which then made it easy to divide responsibilities since everyone was on the same page. Since we were all able to visualize how each module interacted with others, it made writing the document much easier. 
+
+  \item What pain points did you experience during this deliverable, and how
+    did you resolve them?\\
+One of the pain points we came across during this deliverable was aligning the sections with the evolving requirements. Coming back from winter break, there were still some requirements and specifications that needed to be cleared up. This is what drove us to schedule multiple team meetings to help us map-out a high-level design of the project which then helped us complete this deliverable.
+
+  \item Which of your design decisions stemmed from speaking to your client(s)
+  or a proxy (e.g. your peers, stakeholders, potential users)? For those that
+  were not, why, and where did they come from?\\
+Some key design decisions, such as the focus on functionality and ensuring all request systems work seamlessly, were driven by client feedback. They emphasized the importance of a reliable and efficient platform over an aesthetically pleasing front-end. Other decisions like our choice of technology stack, were based on the MES' existing technologies to ensure compatability.
+
+  
+  \item While creating the design doc, what parts of your other documents (e.g.
+  requirements, hazard analysis, etc), it any, needed to be changed, and why?\\
+While creating this document, no other previous deliverables had to be changed. Before starting, we had closed all existing issues such as TA feedback and peer review. Having already gone through each document, we ensured that they were up-to-date and contained all the necessary information.
+  
+  \item What are the limitations of your solution?  Put another way, given
+  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)\\
+One limitation of our current solution is that it does not account for certain scalability challenges that could arise in the future, such as handling a high volume of simultaneous requests or users. With unlimited resources, we would implement a more robust infrastructure with auto-scaling capabilities and an optimized database that would be able to handle more traffic. Another big thing we would change with more resources is that we would invest in user experience design to ensure the system is intuitive and easy to use, even as more features are added.
+
+  \item Give a brief overview of other design solutions you considered.  What
+  are the benefits and tradeoffs of those other designs compared with the chosen
+  design?  From all the potential options, why did you select the documented design?
+  (LO\_Explores)\\
+One alternative design considered was using a monolithic approach, where all modules were tightly integrated into a single unit. This would have simplified some aspects of the system, particularly in terms of testing and deployment. However, the downside would be a lack of flexibility and scalability, as adding new features or making changes to one part of the system could potentially impact others. We opted for a modular design instead, as it offers better flexibility, scalability, and maintainability in the long term, allowing us to develop and deploy individual components independently.
+\end{enumerate}
+
+
+\end{document}

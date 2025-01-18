@@ -269,7 +269,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -365,7 +365,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -413,7 +413,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -587,7 +587,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -621,7 +621,7 @@ reconcileLedger & ledgerData: JSON & Boolean & DatabaseException \\
 \subsubsection{Local Functions}
 None
 
-\section{Clubs Database} \label{Clubs Database}
+\section{MIS of Clubs Database} \label{Clubs Database}
 
 \subsection{Module}
 Clubs Database
@@ -676,6 +676,20 @@ MongoDB connection via Mongoose (database connection client)
 \begin{itemize}
   \item transition: Fetches club data from the database.
   \item output: Returns club data in JSON format.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\noindent updateClub(clubId: String, updates: JSON):
+\begin{itemize}
+  \item transition: Updates the MongoDB collection for the specified club information.
+  \item output: Returns a JSON object with detailed information about the result.
+  \item exception: ClubNotFoundException if the club ID does not exist.
+\end{itemize}
+
+\noindent deleteClub(clubId: String):
+\begin{itemize}
+  \item transition: Removes the specified club from the MongoDB collection.
+  \item output: Returns a JSON object with detailed information about the result.
   \item exception: ClubNotFoundException if the club ID does not exist.
 \end{itemize}
 
@@ -828,6 +842,61 @@ MongoDB connection via Mongoose (database connection client)
   \item output: Returns a JSON object with detailed information about the result.
   \item exception: RequestNotFoundException if the request ID does not exist.
 \end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\section{MIS of Graphical User Interface} \label{Graphical User Interfae}
+
+\subsection{Module}
+Graphical User Interface
+
+\subsection{Uses}
+React.js, API Endpoints
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{2cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+renderDashboard & userToken: String & JS & AuthorizationException \\
+handleInput & inputData: JSON & Boolean & InputValidationException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+Web browser, network connection
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item User authentication is performed before accessing GUI components
+  \item Input data is validated at the client side
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent renderDashboard(userToken: String):
+\begin{itemize}
+  \item transition: Renders user dashboard based on provided token.
+  \item output: Returns a rendered GUI to the user
+  \item exception: AuthorizationException if the token is invalid.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 

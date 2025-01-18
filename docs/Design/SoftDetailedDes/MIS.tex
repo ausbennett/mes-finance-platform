@@ -896,7 +896,7 @@ Web browser, network connection
 \end{itemize}
 
 \subsubsection{Local Functions}
-None
+Fetch API data
 
 \newpage
 
@@ -920,20 +920,32 @@ graduate attribute of Problem Analysis and Design.
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable? \\
+One thing that went well during this deliverable was the team meeting where we discussed the design of the project in detail. It allowed us all to have a clear understanding of the modules we would be focusing on, which then made it easy to divide responsibilities since everyone was on the same page. Since we were all able to visualize how each module interacted with others, it made writing the document much easier. 
+
   \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+    did you resolve them?\\
+One of the pain points we came across during this deliverable was aligning the sections with the evolving requirements. Coming back from winter break, there were still some requirements and specifications that needed to be cleared up. This is what drove us to schedule multiple team meetings to help us map-out a high-level design of the project which then helped us complete this deliverable.
+
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
+  were not, why, and where did they come from?\\
+Some key design decisions, such as the focus on functionality and ensuring all request systems work seamlessly, were driven by client feedback. They emphasized the importance of a reliable and efficient platform over an aesthetically pleasing front-end. Other decisions like our choice of technology stack, were based on the MES' existing technologies to ensure compatability.
+
+  
   \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
+  requirements, hazard analysis, etc), it any, needed to be changed, and why?\\
+While creating this document, no other previous deliverables had to be changed. Before starting, we had closed all existing issues such as TA feedback and peer review. Having already gone through each document, we ensured that they were up-to-date and contained all the necessary information.
+  
   \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)\\
+One limitation of our current solution is that it does not account for certain scalability challenges that could arise in the future, such as handling a high volume of simultaneous requests or users. With unlimited resources, we would implement a more robust infrastructure with auto-scaling capabilities and an optimized database that would be able to handle more traffic. Another big thing we would change with more resources is that we would invest in user experience design to ensure the system is intuitive and easy to use, even as more features are added.
+
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
+  (LO\_Explores)\\
+One alternative design considered was using a monolithic approach, where all modules were tightly integrated into a single unit. This would have simplified some aspects of the system, particularly in terms of testing and deployment. However, the downside would be a lack of flexibility and scalability, as adding new features or making changes to one part of the system could potentially impact others. We opted for a modular design instead, as it offers better flexibility, scalability, and maintainability in the long term, allowing us to develop and deploy individual components independently.
 \end{enumerate}
 
 

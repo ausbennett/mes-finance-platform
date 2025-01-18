@@ -46,8 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+1/17/2025 & 0 & All sections\\
 \bottomrule
 \end{tabularx}
 
@@ -417,11 +416,10 @@ to be implemented.
 \end{description}
 
 
-
 \section{Traceability Matrix} \label{SecTM}
 
 This section shows two traceability matrices: between the modules and the
-requirements and between the modules and the anticipated changes.
+requirements and between the modules and the anticipated changes. Note: hyperlinks to requirements in the SRS will be added in a later version of this document.
 
 % the table should use mref, the requirements should be named, use something
 % like fref
@@ -431,17 +429,83 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR1.1 & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
+FR1.2 & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
+FR1.3 & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
+FR1.4 & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
+FR1.5 & \mref{mBH3},\mref{mBH6}\\
+FR1.6 & \mref{mSD3}\\
+FR1.7 & \mref{mBH5}\\
+FR1.8 & \mref{mBH4},\mref{mBH2},\mref{mBH8},\mref{mSD4}\\
+FR1.9 & \mref{mSD3}\\
+FR3.1 & \mref{mSD1},\mref{mSD2}\\
+FR3.2 & \mref{mBH5}\\
+FR3.3 & \mref{mBH1},\mref{mBH7}\\
+APR1 & \mref{mSD4}\\
+APR2 & \mref{mSD4}\\
+STYR1 & \mref{mSD4}\\
+STYR2 & \mref{mSD4}\\
+EUR1 & \mref{mSD4}\\
+EUR2 & \mref{mSD4}\\
+EUR3 & \mref{mSD4}\\
+PIR1 & \mref{mBH1},\mref{mBH7}\\
+PIR2 & \mref{mBH1},\mref{mBH7}\\
+UAPR1 & \mref{mSD4}\\
+ACSR1 & \mref{mSD4}\\
+ACSR2 & \mref{mSD4}\\
+SPLR1 & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
+SPLR2 & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
+SPLR3 & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
+SFCR1 & \mref{mSD2},\mref{mSD3}\\
+SFCR2 & \mref{mBH5}\\
+POAR1 & \mref{mBH8}\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Requirements and Modules}
+\label{TblRT}
+\end{table}
+
+\newpage
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+CPR1 & \mref{mBH2},\mref{mBH8}\\
+CPR2 & \mref{mBH2},\mref{mBH8}\\
+CPR3 & \mref{mSD1},\mref{mSD2},\mref{mSD3}\\
+OR1 & \mref{mHH}\\
+IAR1 & \mref{mHH} - \mref{mSD4}\\
+PRD1 & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+PRD2 & \mref{mBH5}\\
+PRD3 & \mref{mSD4}\\
+PRD4 & \mref{mHH} - \mref{mSD4}\\
+PRD5 & \mref{mHH} - \mref{mSD4}\\
+PRD6 & \mref{mHH} - \mref{mSD4}\\
+PRD7 & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+RLR1 & \mref{mHH} - \mref{mSD4}\\
+MR1 & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+MR2 & \mref{mHH} - \mref{mSD4}\\
+MR3 & \mref{mHH} - \mref{mSD4}\\
+SR1 & \mref{mHH} - \mref{mSD4}\\
+AR1 & \mref{mHH} - \mref{mSD4}\\
+SCR1 & \mref{mBH5}\\
+SCR2 & \mref{mBH5},\mref{mBH1},\mref{mBH7}\\
+SCR3 & \mref{mBH5},\mref{mBH3},\mref{mBH6}\\
+SCR4 & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
+SCR5 & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
+SCR6 & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
+INR1 & \mref{mBH2},\mref{mBH8}\\
+PVR1 & \mref{mBH1},\mref{mBH2},\mref{mBH3},\mref{mBH5},\mref{mBH6},\mref{mBH7},\mref{mBH8},\mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+PVR2 & \mref{mBH1} - \mref{mSD4}\\
+ADR1 & \mref{mBH1},\mref{mBH2},\mref{mBH3},\mref{mBH5},\mref{mBH6},\mref{mBH7},\mref{mBH8},\mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+ADR2 & \mref{mSD3}\\
+IMM1 & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+CLTR1 & \mref{mSD4}\\
+LR1 & \mref{mHH} - \mref{mSD4}\\
+LR2 & \mref{mHH} - \mref{mSD4}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -454,18 +518,12 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acDataSchema} & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
+\acref{acNotifications} & \mref{mBH3}, \mref{mBH6}\\
+\acref{acCompliance} & \mref{mBH8}, \mref{mBH4}, \mref{mBH2}\\
+\acref{acUI} & \mref{mSD4}\\
+\acref{acIntegration} & \mref{mBH1}, \mref{mBH7}\\
+\acref{acLogin} & \mref{mBH5}, \mref{mHH}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -559,6 +617,7 @@ needed. Drawings, Sketches, Figma}
 \newpage
 
 \section{Design of Communication Protocols}
+Not applicable for this project.
 
 \wss{If appropriate}
 
@@ -570,8 +629,8 @@ Timeline will be found on GitHub Projects \href{https://github.com/users/ausbenn
 
 \wss{You can point to GitHub if this information is included there}
 
-\bibliographystyle {plainnat}
-\bibliography{../../../refs/References}
+%\bibliographystyle {plainnat}
+%\bibliography{../../../refs/References}
 
 \newpage{}
 

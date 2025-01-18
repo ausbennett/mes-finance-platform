@@ -463,14 +463,14 @@ PUC-5 & Access financial documentation for audit purposes \\
 
 \begin{itemize}
     \item \hypertarget{FROneOne}{\textbf{FR1.1.} The system must allow users to submit reimbursement/payment requests by inputting relevant information, such as budget line items, receipts, documents, and payment details.}
-    \item \textbf{FR1.2.} The system must allow admins to review and approve/reject submitted requests.
-    \item \textbf{FR1.3.} The system will enable users and admins to edit submitted requests.
-    \item \textbf{FR1.4.} The system must track and display the status of each submitted reimbursement/payment request (submitted, under review, approved/rejected, disbursed/completed, requires attention)
-    \item \textbf{FR1.5.} The system shall notify users of any changes to the status of their submitted request via email or SMS.
-    \item \textbf{FR1.6.} The system must store and categorize submitted reimbursement/payment request information, linking each request to the appropriate budget category for ledger tracking.
-    \item \textbf{FR1.7.} The system shall restrict access to view sensitive financial information submitted by users based on security roles. General users must only have access to view the requests they submitted. Admin users must have access to view all submitted requests.
-    \item \textbf{FR1.8.} The system must allow multiple admins to collaborate and review submitted requests without data conflicts
-    \item \textbf{FR1.9.} The system shall track and store all actions performed concerning a single reimbursement or payment request. Actions to be tracked include submission, editing, review, approval/rejection, disbursement, and withdrawal/deletion.
+    \item \hypertarget{FROneTwo}{\textbf{FR1.2.} The system must allow admins to review and approve/reject submitted requests.}
+    \item \hypertarget{FROneThree}{ \textbf{FR1.3.} The system will enable users and admins to edit submitted requests. }
+    \item \hypertarget{FROneFour}{ \textbf{FR1.4.} The system must track and display the status of each submitted reimbursement/payment request (submitted, under review, approved/rejected, disbursed/completed, requires attention) }
+    \item \hypertarget{FROneFive}{ \textbf{FR1.5.} The system shall notify users of any changes to the status of their submitted request via email or SMS. }
+    \item \hypertarget{FROneSix}{ \textbf{FR1.6.} The system must store and categorize submitted reimbursement/payment request information, linking each request to the appropriate budget category for ledger tracking. }
+    \item \hypertarget{FROneSeven}{ \textbf{FR1.7.} The system shall restrict access to view sensitive financial information submitted by users based on security roles. General users must only have access to view the requests they submitted. Admin users must have access to view all submitted requests. }
+    \item \hypertarget{FROneEight}{ \textbf{FR1.8.} The system must allow multiple admins to collaborate and review submitted requests without data conflicts }
+    \item \hypertarget{FROneNine}{ \textbf{FR1.9.} The system shall track and store all actions performed concerning a single reimbursement or payment request. Actions to be tracked include submission, editing, review, approval/rejection, disbursement, and withdrawal/deletion. }
 \end{itemize}
 
 \subsubsection{FRs for Custom Invoice Generation Feature}
@@ -493,12 +493,12 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{FRThree}
 
 \begin{itemize}
-    \item \textbf{FR3.1.} The system shall securely store account or profile information on each user.
+    \item \hypertarget{FRThreeOne}{ \textbf{FR3.1.} The system shall securely store account or profile information on each user. }
     \begin{itemize}
         \item Explanation: basic account information includes full name, email, password, and phone number. (subject to change)
     \end{itemize}
-    \item \textbf{FR3.2.} The system shall authenticate users to ensure they are registered students of McMaster University.
-    \item \textbf{FR3.3.} The system shall allow users to edit their profile information.
+    \item \hypertarget{FRThreeTwo}{ \textbf{FR3.2.} The system shall authenticate users to ensure they are registered students of McMaster University. }
+    \item \hypertarget{FRThreeThree}{ \textbf{FR3.3.} The system shall allow users to edit their profile information. }
 \end{itemize}
     
 
@@ -511,11 +511,11 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{APR}
 
 \begin{itemize}
-    \item \textbf{APR1.} The system's UI shall be responsive across various devices and screen sizes (desktop, tablet, mobile).
+    \item \hypertarget{APROne}{ \textbf{APR1.} The system's UI shall be responsive across various devices and screen sizes (desktop, tablet, mobile). }
     \begin{itemize}
         \item Explanation: no information or functionality should be unavailable to the user because of varying device screen sizes.
     \end{itemize}
-    \item \textbf{APR2.} The system's UI shall integrate MES branding throughout its UI screens, including MES brand colours, and logos.
+    \item \hypertarget{APROne}{ \textbf{APR2.} The system's UI shall integrate MES branding throughout its UI screens, including MES brand colours, and logos. }
 \end{itemize}
 
 \subsection{Style Requirements}
@@ -523,8 +523,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{STYR}
 
 \begin{itemize}
-    \item \textbf{STYR1.} The system's UI shall incorporate universally recognizable icons, with at least 1 icon being used per screen.
-    \item \textbf{STYR2.} The system's UI shall maintain a typography standard by using no more than 2 different fonts across the platform. The system shall use standard fonts used by the MES (if applicable).
+    \item \hypertarget{STYROne}{ \textbf{STYR1.} The system's UI shall incorporate universally recognizable icons, with at least 1 icon being used per screen. }
+    \item \hypertarget{STYRTWo}{ \textbf{STYR2.} The system's UI shall maintain a typography standard by using no more than 2 different fonts across the platform. The system shall use standard fonts used by the MES (if applicable). }
 \end{itemize}
 
 \section{Usability and Humanity Requirements}
@@ -536,9 +536,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{EUR}
 
 \begin{itemize}
-    \item \textbf{EUR1.} Users shall be able to complete a specific task, such as editing a request, with no more than 3 CTAs.
-    \item \textbf{EUR2.} For all input fields, the system shall include error messages to guide users in correcting input errors.
-    \item \textbf{EUR3.} Users shall be able to search for and locate a piece of information within the system's UI within 10 seconds.
+    \item \hypertarget{EUROne}{ \textbf{EUR1.} Users shall be able to complete a specific task, such as editing a request, with no more than 3 CTAs. }
+    \item \hypertarget{EURTwo}{ \textbf{EUR2.} For all input fields, the system shall include error messages to guide users in correcting input errors. }
+    \item \hypertarget{EURThree}{ \textbf{EUR3.} Users shall be able to search for and locate a piece of information within the system's UI within 10 seconds. }
 \end{itemize}
 
 \subsection{Personalization and Internationalization Requirements}
@@ -546,8 +546,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{PIR}
 
 \begin{itemize}
-    \item \textbf{PIR1.} Users shall be able to edit their account/profile information with less than 3 clicks or actions from the landing page.
-    \item \textbf{PIR2.} Personalization actions shall be reflected on the UI within 2 seconds of a user action.
+    \item \hypertarget{PIROne}{ \textbf{PIR1.} Users shall be able to edit their account/profile information with less than 3 clicks or actions from the landing page. }
+    \item \hypertarget{PIRTwo}{ \textbf{PIR2.} Personalization actions shall be reflected on the UI within 2 seconds of a user action. }
 \end{itemize}
 
 \subsection{Learning Requirements}
@@ -564,7 +564,7 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{UAPR}
 
 \begin{itemize}
-    \item \textbf{UAPR1.} All text and instructions within the system's UI will be written in plain language and use no technical jargon.
+    \item \hypertarget{UAPROne}{ \textbf{UAPR1.} All text and instructions within the system's UI will be written in plain language and use no technical jargon. }
 \end{itemize}
 
 \subsection{Accessibility Requirements}
@@ -572,8 +572,8 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{ACSR}
 
 \begin{itemize}
-    \item \textbf{ACSR1.} The system should allow for keyboard navigation within input forms.
-    \item \textbf{ACSR2.} All text should be no less than size 12 font to ensure all content is readable.
+    \item \hypertarget{ACSROne}{ \textbf{ACSR1.} The system should allow for keyboard navigation within input forms. }
+    \item \hypertarget{ACSRTwo}{ \textbf{ACSR2.} All text should be no less than size 12 font to ensure all content is readable. }
 \end{itemize}
 
 \section{Performance Requirements}
@@ -585,9 +585,9 @@ PUC-5 & Access financial documentation for audit purposes \\
 \label{SPLR}
 
 \begin{itemize}
-    \item \textbf{SPLR1.} The system shall process payment requests within 5 seconds.
-    \item \textbf{SPLR2.} Invoices shall be generated within 3 seconds.
-    \item \textbf{SPLR3.} Reimbursement requests shall be processed within 5 seconds.
+    \item \hypertarget{SPLROne}{ \textbf{SPLR1.} The system shall process payment requests within 5 seconds. }
+    \item \hypertarget{SPLRTwo}{ \textbf{SPLR2.} Invoices shall be generated within 3 seconds. }
+    \item \hypertarget{SPLRThree}{ \textbf{SPLR3.} Reimbursement requests shall be processed within 5 seconds. }
 \end{itemize}
 Explanation: These requirements will be achieved through database optimization to accelerate query performance and using parallel processing to distribute workload and minimize delays.
 
@@ -596,8 +596,8 @@ Explanation: These requirements will be achieved through database optimization t
 \label{SFCR}
 
 \begin{itemize}
-    \item \textbf{SFCR1.} Sensitive financial information such as credit card numbers shall be encrypted when stored.
-    \item \textbf{SFCR2.} Access controls shall restrict access to confidential information.
+    \item \hypertarget{SFCROne}{ \textbf{SFCR1.} Sensitive financial information such as credit card numbers shall be encrypted when stored. }
+    \item \hypertarget{SFCRTwo}{ \textbf{SFCR2.} Access controls shall restrict access to confidential information. }
 \end{itemize}
 
 \subsection{Precision or Accuracy Requirements}
@@ -605,7 +605,7 @@ Explanation: These requirements will be achieved through database optimization t
 \label{POAR}
 
 \begin{itemize}
-    \item \textbf{POAR1.} Monetary values would be rounded off to the nearest cent (i.e., x.yz)
+    \item \hypertarget{POAROne}{ \textbf{POAR1.} Monetary values would be rounded off to the nearest cent (i.e., x.yz) }
 \end{itemize}
 
 \subsection{Robustness or Fault-Tolerance Requirements}

@@ -1,4 +1,10 @@
-require('dotenv').config();
+/* PLAID SERVICE
+ * Main Responsibility: implements the Plaid API package,
+ * provides the main logic for token tradeoffs during the authentication process
+ *
+ */
+
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 const { Configuration, PlaidApi, PlaidEnvironments } = require('plaid');
 
 class PlaidService {
@@ -20,11 +26,10 @@ class PlaidService {
     try {
       const response = await this.client.linkTokenCreate({
         user: { client_user_id: userId },
-        client_name: 'Your App Name',
+        client_name: 'MES',
         products: ['transactions'],
         country_codes: ['US'],
         language: 'en',
-        redirect_uri: 'https://your-redirect-url.com',
       });
       return response.data.link_token;
     } catch (error) {

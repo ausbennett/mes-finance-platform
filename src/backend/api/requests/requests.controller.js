@@ -3,7 +3,7 @@
  * The router uses this and passes data into the functions here
  * */
 
-const plaidService = require('../../services/plaid.service')
+const PlaidService = require('../../services/plaid.service')
 
 // request specific function templates
 exports.getAllRequests = (req, res) => {
@@ -23,14 +23,29 @@ exports.getRequestById = (req, res) => {
     });
 };
 
-// PlaidAPI Functionality
+// Plaid Functionality
+
+exports.plaidSandboxToken = async (req,res) => {
+  try {
+    const response = await PlaidService.client.sandboxPublicTokenCreate({
+      institution_id: 'ins_109508', // Example institution ID
+      initial_products: ['transactions'], // Products to enable
+    })
+    res.status(200).json(response.data.public_token)
+  } catch (error) {
+    console.log('Error', error.data) 
+    res.status(500).json(error)
+  }
+}
+
+//
 exports.plaidCreateLinkToken = async (req, res) => {
   try {
     const userId = req.body.userId; // Unique user identifier
     const linkToken = await PlaidService.createLinkToken(userId);
     res.status(200).json({ linkToken });
   } catch (error) {
-    console.error('Error creating Link Token:', error);
+    console.error('Error creating Link Token:', error.data);
     res.status(500).json({ error: 'Failed to create Link Token' });
   }
 };
@@ -41,24 +56,25 @@ exports.plaidExchangePublicToken = async (req, res) => {
     const { access_token, item_id } = await PlaidService.exchangePublicToken(publicToken);
     res.status(200).json({ access_token, item_id });
   } catch (error) {
-    console.error('Error exchanging Public Token:', error);
+    console.error('Error exchanging Public Token:', error.data);
     res.status(500).json({ error: 'Failed to exchange Public Token' });
   }
 };
 
 exports.plaidGetTransactions = async (req, res) => {
   try {
-    const { accessToken, startDate, endDate } = req.query;
+    const { accessToken, startDate, endDate } = req.body;
     const transactions = await PlaidService.getTransactions(accessToken, startDate, endDate);
     res.status(200).json(transactions);
   } catch (error) {
-    console.error('Error fetching transactions:', error);
+    console.error('Error fetching transactions:', error.data);
     res.status(500).json({ error: 'Failed to fetch transactions' });
   }
 };
 
 
-
+// ========= RECONCILING DATA FUNCTION ====== 
+// SAVE THIS DATA FOR TESTCASES
 const reqsData = [
   {
     req_id: "r1",

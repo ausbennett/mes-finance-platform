@@ -4,7 +4,36 @@
  * */
 
 const { json } = require('express');
+
+const Reimbursement = require('../../models/reimbursement.model')
+
 const PlaidService = require('../../services/plaid.service')
+
+exports.createReimbursement = async (req, res) => {
+  try {
+    // Extract required fields from the request body
+    const { club, user, amount, plaid } = req.body;
+
+    // Validate required fields
+    if (!club || !user || !amount)  {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Create the reimbursement
+    const newReimbursement = await Reimbursement.create({
+      club,
+      user,
+      amount,
+      status: 'Pending', // Optional; default will apply if omitted
+      description: req.body.description, // Optional
+    });
+
+    res.status(201).json(newReimbursement);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create reimbursement', message: error.message });
+  }
+};
+
 
 // request specific function templates
 exports.getAllRequests = (req, res) => {
@@ -13,6 +42,12 @@ exports.getAllRequests = (req, res) => {
 };
 
 exports.createRequest = (req, res) => {
+    const newRequest = req.body;
+    res.status(201).json({ message: "ur mom"});
+};
+
+
+exports.getAudits = (req, res) => {
     const newRequest = req.body;
     res.status(201).json({ message: "ur mom"});
 };

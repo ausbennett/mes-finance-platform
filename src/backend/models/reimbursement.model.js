@@ -31,6 +31,21 @@ const reimbursementSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  plaid: {
+    transactionId: {
+      type: String,
+    },
+    accountId: {
+      type: String,
+    },
+    transactionAmount: {
+      type: Number,
+    },
+    isReconciled: {
+      type: Boolean,
+      default: false,
+    }
+  },
 });
 
 module.exports = mongoose.model('Reimbursement', reimbursementSchema);

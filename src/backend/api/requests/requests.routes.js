@@ -30,7 +30,7 @@ router.get('/:id', requestsController.getRequestById);
 
 //get requests by ??
 
-router.get('/audit', null)
+router.get('/audit', requestsController.getAudits)
 
 router.post('/', requestsController.createRequest);
 
@@ -38,6 +38,7 @@ router.post('/', requestsController.createRequest);
 router.put('/:id', requestsController.editRequest )
 
 
+router.post('/reimbursement', requestsController.createReimbursement)
 
 
 // Plaid Specific Routes
@@ -53,7 +54,7 @@ router.post('/plaid/link-token', requestsController.plaidCreateLinkToken);
 
 /**
  * @route POST /api/requests/plaid/exchange-token
- * @desc Exchange a Public Token for an Access Token
+  * @desc Exchange a Public Token for an Access Token
  * @access Public
  * @body { publicToken: string } - The public token received from Plaid Link UI
  * @returns { access_token: string, item_id: string } - The access token and unique item ID for future API calls

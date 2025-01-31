@@ -3,6 +3,7 @@
  * The router uses this and passes data into the functions here
  * */
 
+const { json } = require('express');
 const PlaidService = require('../../services/plaid.service')
 
 // request specific function templates
@@ -23,8 +24,20 @@ exports.getRequestById = (req, res) => {
     });
 };
 
-// Plaid Functionality
+exports.editRequest = (req, res) => {
+  try {
+    const { id } = req.params; 
 
+    //access the database and fetch the request data
+  } catch (error) {
+    console.log('Error', error.data) 
+    res.status(500).json(error)
+  }
+  //return the new request
+  res.status(500).json({ message: "ur mom"})
+}
+
+// Plaid Functionality
 exports.plaidSandboxToken = async (req,res) => {
   try {
     const response = await PlaidService.client.sandboxPublicTokenCreate({
@@ -38,7 +51,6 @@ exports.plaidSandboxToken = async (req,res) => {
   }
 }
 
-//
 exports.plaidCreateLinkToken = async (req, res) => {
   try {
     const userId = req.body.userId; // Unique user identifier
@@ -73,90 +85,6 @@ exports.plaidGetTransactions = async (req, res) => {
 };
 
 
-// ========= RECONCILING DATA FUNCTION ====== 
-// SAVE THIS DATA FOR TESTCASES
-const reqsData = [
-  {
-    req_id: "r1",
-    date: "2025-01-14",
-    amount: 89.40, // Matches exactly with Plaid data
-    type: "reimbursement",
-    plaid_transaction: null,
-  },
-  {
-    req_id: "r2",
-    date: "2025-01-14",
-    amount: 10.0, // Matches exactly with Plaid data
-    type: "payment",
-    plaid_transaction: null,
-  },
-  {
-    req_id: "r3",
-    date: "2025-01-15",
-    amount: 50.0, // Near match (Plaid has 50.25)
-    type: "payment",
-    plaid_transaction: null,
-  },
-  {
-    req_id: "r4",
-    date: "2025-01-16",
-    amount: 25.0, // Missing in Plaid data
-    type: "reimbursement",
-    plaid_transaction: null,
-  },
-  {
-    req_id: "r5",
-    date: "2025-01-14",
-    amount: -200.0, // User error: marked as negative instead of positive
-    type: "payment",
-    plaid_transaction: null,
-  },
-];
-
-
-const plaidData = [
-  {
-    transaction_id: "txn1",
-    date: "2025-01-14",
-    amount: 89.40, // Matches exactly with a reimbursement
-    account_id: "acct1",
-    category: ["Office Supplies"],
-    pending: false,
-  },
-  {
-    transaction_id: "txn2",
-    date: "2025-01-14",
-    amount: 10.0, // Matches exactly with a payment
-    account_id: "acct2",
-    category: ["Miscellaneous"],
-    pending: false,
-  },
-  {
-    transaction_id: "txn3",
-    date: "2025-01-15",
-    amount: 50.25, // Near match (slightly higher than the request)
-    account_id: "acct1",
-    category: ["Food and Drink"],
-    pending: false,
-  },
-  {
-    transaction_id: "txn4",
-    date: "2025-01-14",
-    amount: 200.0, // Matches the absolute value of a request but with opposite sign
-    account_id: "acct2",
-    category: ["Payroll"],
-    pending: false,
-  },
-  {
-    transaction_id: "txn5",
-    date: "2025-01-17",
-    amount: 300.0, // Exists in Plaid but not in requests
-    account_id: "acct3",
-    category: ["Travel"],
-    pending: false,
-  },
-];
-
 /* DATA FLOW
  * TRIGGER: admin loads ledger page
  * RETURN CACHED, while we fetch updates
@@ -168,9 +96,46 @@ const plaidData = [
  * pushes updated data back into the database
  * notify frontend to refresh
  */
-reconcileData = () => {
-  console.log("HELLO");
-}
+exports.reconcileData = (plaidData, reqsData) => {
+
+    const groupByDateAndAmount = (data) => {
+        return data.reduce((acc, item) => {
+            const key = `${item.date}-${item.amount}`;
+            if (!acc[key]) {
+                acc[key] = [];
+            }
+            acc[key].push(item);
+            return acc;
+        }, {});
+    };
+
+    const plaidGrouped = groupByDateAndAmount(plaidData);
+    const reqsGrouped = groupByDateAndAmount(reqsData);
+
+    // Reconcile
+    Object.keys(reqsGrouped).forEach((key) => {
+
+        if (plaidGrouped[key] && plaidGrouped[key].length >= reqsGrouped[key].length) {
+            // Mark all requests in this group as reconciled
+            reqsGrouped[key].forEach((req) => {
+                req.status = 'Reconciled'; // Generic reconciliation marker
+                req.plaid_transaction = '??'
+            });
+
+            // Optionally, remove used transactions if one-to-one is needed later
+            // plaidGrouped[key].splice(0, reqsGrouped[key].length);
+
+        } else {
+            // Mark as unreconciled if not enough transactions
+            reqsGrouped[key].forEach((req) => {
+                req.plaid_transaction = null; // Not reconciled
+            });
+        }
+    });
+
+    // Flatten the reconciled request groups back into an array
+    return Object.values(reqsGrouped).flat();
+} 
 
 
-reconcileData()
+

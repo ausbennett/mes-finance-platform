@@ -1,0 +1,5 @@
+
+// GET
+// FOR ADMINS
+// FOR CLUBS
+// FOR STUDENTS

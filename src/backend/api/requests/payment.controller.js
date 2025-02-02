@@ -1,5 +1,5 @@
 
-const paymentServiced = require('./payment.service')
+const paymentService = require('./payment.service')
 
 
 const getPayments = async () => {}

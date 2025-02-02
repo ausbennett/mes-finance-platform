@@ -5,7 +5,7 @@
 
 const app = require('./app'); // Import the Express app from app.js
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Start the server
 app.listen(PORT, () => {

@@ -13,3 +13,4 @@ router.post('/', paymentController.createPayment)
 
 router.put('/:id', paymentController.editPayment)
 
+module.exports = router

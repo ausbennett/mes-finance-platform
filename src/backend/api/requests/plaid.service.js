@@ -1,5 +1,5 @@
 
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 const { Configuration, PlaidApi, PlaidEnvironments } = require('plaid');
 
 class PlaidService {

@@ -5,7 +5,9 @@ const reimbursementService = require('./reimbursement.service')
 // - handles based off RBAC via the JWT
 //
 const getReimbursements = async (req, res) => {
-  const user = req.user; // assuming user info is added in middleware (e.g., from JWT)
+  // const user = req.user; // assuming user info is added in middleware (e.g., from JWT)
+  const user = req.body.user
+
   const reimbursements = await reimbursementService.getReimbursements(user);
 
   if (reimbursements.message) {

@@ -1,5 +1,5 @@
 
-const Reimbursement = require('../models/reimbursement.model');
+const Reimbursement = require('../../models/reimbursement.model');
 
 // GET
 // FOR ADMINS
@@ -19,10 +19,10 @@ const getReimbursements = async (user) => {
         reimbursements = await Reimbursement.find({});
     } else if (role === "club_admin") {
         // Club admins can see reimbursements for their club
-        reimbursements = await Reimbursement.find({ clubId: clubId });
+        reimbursements = await Reimbursement.find({ club: clubId });
     } else if (role === "student") {
         // Students can only see their own requests
-        reimbursements = await Reimbursement.find({ studentId: id });
+        reimbursements = await Reimbursement.find({ user: id });
     } else {
         return { message: "Unauthorized" };
     }

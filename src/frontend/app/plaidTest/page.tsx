@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
+import React, { useState, useEffect } from "react";
+import { usePlaidLink } from "react-plaid-link";
 
-const API_BASE_URL = 'http://localhost:3001/api/plaid'; // Your backend
+const API_BASE_URL = "http://localhost:3001/api/plaid"; // Your backend
 
 const PlaidTestPage = () => {
   const [linkToken, setLinkToken] = useState<string | null>(null);
@@ -15,17 +15,17 @@ const PlaidTestPage = () => {
     const fetchLinkToken = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/link-token`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: 'test-user' }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: "test-user" }),
         });
         const data = await response.json();
-        console.log('Link Token:', data.linkToken); // Debug log
+        console.log("Link Token:", data.linkToken); // Debug log
         setLinkToken(data.linkToken);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching link token:', error);
-        setLoading(false)
+        console.error("Error fetching link token:", error);
+        setLoading(false);
       }
     };
 
@@ -33,27 +33,27 @@ const PlaidTestPage = () => {
   }, []);
 
   const onSuccess = async (publicToken: string) => {
-    console.log('✅ Public Token:', publicToken);
+    console.log("✅ Public Token:", publicToken);
 
     try {
       // Send publicToken to backend to exchange for an access_token
       const response = await fetch(`${API_BASE_URL}/exchange-token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ publicToken }),
       });
 
       const data = await response.json();
-      console.log('✅ Access Token Response:', data);
+      console.log("✅ Access Token Response:", data);
 
       setAccessToken(data.access_token); // Store access token in state
     } catch (error) {
-      console.error('❌ Error exchanging public token:', error);
+      console.error("❌ Error exchanging public token:", error);
     }
   };
 
   const { open, ready } = usePlaidLink({
-    token: linkToken || '',
+    token: linkToken || "",
     onSuccess,
   });
 
@@ -72,6 +72,5 @@ const PlaidTestPage = () => {
     </div>
   );
 };
-
 
 export default PlaidTestPage;

@@ -2,13 +2,15 @@ const mongoose = require('mongoose');
 
 const reimbursementSchema = new mongoose.Schema({
   club: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Club',
+    type: String,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Club',
     required: true,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'User',
+    type: String,
     required: true,
   },
   amount: {

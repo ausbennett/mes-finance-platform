@@ -13,6 +13,7 @@ const reimbursementRouter = require('./api/requests/reimbursement.routes')
 const paymentRouter = require('./api/requests/payment.routes')
 const plaidRouter = require('./api/requests/plaid.routes')
 const accountsRouter = require('./api/account-management/accounts.routes')
+const userRouter = require('./api/users/users.routes')
 
 
 // connectDB();
@@ -26,8 +27,8 @@ app.use(express.json());
 app.use('/api/requests/payment', paymentRouter);
 app.use('/api/requests/reimbursement', reimbursementRouter);
 app.use('/api/plaid', plaidRouter);
-
 app.use('/api/accounts', accountsRouter);
+app.use('/api/users', userRouter);
 
 // Base route
 app.get('/', (req, res) => {

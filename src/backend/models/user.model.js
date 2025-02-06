@@ -12,12 +12,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['Student', 'Admin', 'Approver'],
-    default: 'Student',
-  },
-  passwordHash: {
-    type: String,
-    required: true,
+    enum: ['student', 'admin', 'approver'],
+    default: 'student',
   },
   createdAt: {
     type: Date,

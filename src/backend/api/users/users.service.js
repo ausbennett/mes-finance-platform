@@ -3,7 +3,7 @@ const User = require('../../models/user.model');
 // GET all users (Admin only)
 const getUsers = async (user) => {
   try {
-    if (user.role !== 'Admin') {
+    if (user.role !== 'admin') {
       return { message: 'Unauthorized' };
     }
     return await User.find({});

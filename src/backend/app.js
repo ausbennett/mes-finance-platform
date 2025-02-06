@@ -6,6 +6,8 @@ const cors = require('cors');
 const express = require('express');
 const {connectMemoryDB} = require('./services/db')
 
+const { addUserData } = require('./services/testAuth') //test middleware function that intercepts a http request and appends some req.user info
+
 const app = express();
 
 //routers
@@ -24,8 +26,8 @@ app.use(cors());
 app.use(express.json());
 
 // Use the requests router for the /api/requests.routes path
-app.use('/api/requests/payment', paymentRouter);
-app.use('/api/requests/reimbursement', reimbursementRouter);
+app.use('/api/requests/payment', addUserData, paymentRouter);
+app.use('/api/requests/reimbursement', addUserData, reimbursementRouter);
 app.use('/api/plaid', plaidRouter);
 app.use('/api/accounts', accountsRouter);
 app.use('/api/users', userRouter);

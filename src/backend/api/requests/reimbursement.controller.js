@@ -12,7 +12,11 @@ const getReimbursements = async (req, res) => {
 
 // POST - Creates a new reimbursement
 const createReimbursement = async (req, res) => {
-  const reimbursementData = req.body; // assumes the body contains reimbursement data
+  const reimbursementData = {
+    user: req.user._id, 
+    ...req.body
+  }; 
+  console.log(reimbursementData)
   const reimbursement = await reimbursementService.createReimbursement(reimbursementData);
   return res.status(reimbursement.message ? 400 : 201).json(reimbursement);
 };

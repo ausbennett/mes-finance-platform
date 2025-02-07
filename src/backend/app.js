@@ -20,7 +20,6 @@ const accountsRouter = require('./api/account-management/accounts.routes')
 const userRouter = require('./api/users/users.routes')
 
 
-// connectDB();
 connectAtlasDB();
 
 // Middleware (if needed)
@@ -46,9 +45,9 @@ app.get('/health', async (req, res) => {
 app.use('/api/requests/', fakeAuth, requestRouter);
 app.use('/api/requests/payment', fakeAuth, paymentRouter);
 app.use('/api/requests/reimbursement', fakeAuth, reimbursementRouter);
-app.use('/api/plaid', plaidRouter);
-app.use('/api/accounts', accountsRouter);
-app.use('/api/users', userRouter);
+app.use('/api/plaid', fakeAuth, plaidRouter);
+app.use('/api/accounts', fakeAuth, accountsRouter);
+app.use('/api/users', fakeAuth, userRouter);
 
 // Export the app
 module.exports = app

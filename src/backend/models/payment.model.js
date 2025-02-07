@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
+// if I was a club entity who owed money i would need
+// who created the request
+// who we need to pay (do they need accounts not really)
+
 const paymentSchema = new mongoose.Schema({
-  reimbursement: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reimbursement',
+    ref: 'User',
     required: true,
   },
   amount: {

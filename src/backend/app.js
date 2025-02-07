@@ -4,7 +4,8 @@
 
 const cors = require('cors');
 const express = require('express');
-const {connectMemoryDB} = require('./services/db')
+const mongoose = require('mongoose')
+const connectAtlasDB = require('./services/db')
 
 const { addUserData, fakeAuth } = require('./services/testAuth') //test middleware function that intercepts a http request and appends some req.user info
 
@@ -19,11 +20,26 @@ const userRouter = require('./api/users/users.routes')
 
 
 // connectDB();
-connectMemoryDB();
+connectAtlasDB();
 
 // Middleware (if needed)
 app.use(cors());
 app.use(express.json());
+
+// Base route
+app.get('/', (req, res) => {
+    res.send('Welcome to the API!');
+});
+
+// Health check
+app.get('/health', async (req, res) => {
+    try {
+      await mongoose.connection.db.admin().ping();
+      res.status(200).json({ status: 'OK', database: 'Connected' });
+    } catch (err) {
+      res.status(500).json({ status: 'Error', error: err.message });
+    }
+  });
 
 // Use the requests router for the /api/requests.routes path
 app.use('/api/requests/payment', fakeAuth, paymentRouter);
@@ -31,11 +47,6 @@ app.use('/api/requests/reimbursement', fakeAuth, reimbursementRouter);
 app.use('/api/plaid', plaidRouter);
 app.use('/api/accounts', accountsRouter);
 app.use('/api/users', userRouter);
-
-// Base route
-app.get('/', (req, res) => {
-    res.send('Welcome to the API!');
-});
 
 // Export the app
 module.exports = app

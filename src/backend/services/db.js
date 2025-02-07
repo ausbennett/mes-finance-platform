@@ -1,38 +1,18 @@
-/* MONGODB CONNECTION SERVICE
- * Just abstracts data base connection code via mongoose
- */
+/* MONGODB CONNECTION SERVICE */
+const mongoose = require('mongoose');
 
-
-const mongoose = require('mongoose')
-
-// DEV ONLY - allows development without a mongodb instance actually running properly
-const { MongoMemoryServer } = require('mongodb-memory-server')
-
+// For MongoDB Atlas (Production/Development)
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGODB_URI, { // Rename MONGO_URI → MONGODB_URI
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`Connected to MongoDB Atlas: ${mongoose.connection.host}`);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1); // Exit on failure
+    console.error(`Atlas Connection Error: ${error.message}`);
+    process.exit(1);
   }
 };
 
-const connectMemoryDB = async () => {
-  const mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-
-  await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  console.log('Connected to in-memory MongoDB');
-
-  return mongoServer; // Store this if you need to stop the server later
-}
-
-module.exports = { connectDB, connectMemoryDB }
+module.exports = connectDB;

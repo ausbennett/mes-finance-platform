@@ -8,18 +8,19 @@ export default function UserDashboardPage() {
    const router = useRouter();
 
    const user: string = "Joe";
-
+   //make the cards less wide
    return (
       <>
          <div className="flex flex-col min-h-screen min-w-screen bg-gray-200">
             <NavBar />
-            <div className="ml-10 mt-5">
-               <p className="text-primary-text font-bold text-xl">
-                  Hello {user}, Welcome to the MES Finance Platform
-               </p>
-            </div>
-            <div className="flex flex-col space-y-10 m-10 flex-grow">
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 h-32 rounded-xl">
+
+            <div className="flex flex-col items-center justify-start space-y-10 flex-grow w-full py-10">
+               <div className="w-3/4">
+                  <p className="text-primary-text font-bold text-xl">
+                     Hello {user}, Welcome to the MES Finance Platform
+                  </p>
+               </div>
+               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
                   <div className="flex flex-none items-center justify-start h-full">
                      <Image
                         src="/document.png"
@@ -44,7 +45,7 @@ export default function UserDashboardPage() {
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 h-32 rounded-xl">
+               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
                   <div className="flex flex-none items-center justify-start h-full">
                      <Image
                         src="/box.png"
@@ -69,7 +70,7 @@ export default function UserDashboardPage() {
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 h-32 rounded-xl">
+               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
                   <div className="flex flex-none items-center justify-start h-full">
                      <Image
                         src="/audit.png"
@@ -94,7 +95,7 @@ export default function UserDashboardPage() {
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 h-32 rounded-xl">
+               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
                   <div className="flex flex-none items-center justify-start h-full">
                      <Image
                         src="/database.png"

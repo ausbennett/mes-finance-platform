@@ -1,27 +1,35 @@
 const mongoose = require('mongoose');
 
-// if I was a club entity who owed money i would need
-// who created the request
-// who we need to pay (do they need accounts not really)
-
 const paymentSchema = new mongoose.Schema({
-  user: {
+  requestor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+  },
+  club: {
+    type: String,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Club',
+    required: true,
+  },
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
   amount: {
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+  },
   paymentDate: {
     type: Date,
     default: Date.now,
   },
-  method: {
-    type: String,
-    enum: ['E-transfer', 'Cheque', 'Cash'],
-    default: 'E-transfer',
+  paymentDetails: {
+    accountNumber: { type: String }, 
+    method: { type: String, enum: ["direct_deposit", "e-transfer", "other"] }
   },
   createdAt: {
     type: Date,

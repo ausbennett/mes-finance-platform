@@ -1,25 +1,33 @@
 const mongoose = require('mongoose');
 
+//because a reimbursement request can contain multiple recipients
 const recipientSchema = new mongoose.Schema({
-  name: { type: String, required: true }, // Recipient name
-  email: { type: String, required: true }, // Optional for notifications
-  amount: { type: Number, required: true }, // Amount allocated to recipient
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  amount: { type: Number, required: true },
   status: { 
     type: String, 
     enum: ["pending", "approved", "reimbursed"], 
     default: "pending" 
   },
   paymentDetails: {
-    accountNumber: { type: String }, // Optional for direct reimbursements
+    accountNumber: { type: String }, 
     method: { type: String, enum: ["direct_deposit", "bank_transfer", "e-transfer", "other"] }
   }
-})
+}, { _id: false })
 
 const reimbursementSchema = new mongoose.Schema({
-  user: {
+  requestor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+  },
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
   club: {
     type: String,
@@ -28,7 +36,7 @@ const reimbursementSchema = new mongoose.Schema({
     required: true,
   },
   recipients: [recipientSchema],
-  amount: {
+  totalAmount: {
     type: Number,
     required: true,
   },

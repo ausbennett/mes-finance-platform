@@ -13,7 +13,7 @@ const getReimbursements = async (req, res) => {
 // POST - Creates a new reimbursement
 const createReimbursement = async (req, res) => {
   const reimbursementData = {
-    user: req.user._id, 
+    requestor: req.user._id, 
     ...req.body
   }; 
   console.log(reimbursementData)

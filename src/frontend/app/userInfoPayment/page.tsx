@@ -3,7 +3,18 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation'
 
 export default function UserInfoPaymentPage() {
+
     const router = useRouter();
+
+    const user: string = "admin"
+
+    const handleFinish = () => {
+        if (user == "admin") {
+            router.push("/adminDashboard")
+        } else {
+            router.push("/userDashboard")
+        }
+    }
 
     return (
         <div id="screenContainer" className="flex flex-col items-center justify-center min-h-screen min-w-screen space-y-5 bg-background py-5">
@@ -22,7 +33,7 @@ export default function UserInfoPaymentPage() {
                     <div className="label">
                         <span className="label-text">Payment Method *</span>
                     </div>
-                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                         defaultValue="">
                         <option disabled value="">Choose one</option>
                         <option>Interac E-Transfer</option>
@@ -43,7 +54,7 @@ export default function UserInfoPaymentPage() {
                 </label>
                 <div className="flex flex-col w-full space-y-3 pt-5">
                     <button className="bg-stone-400 text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg">Add payment method +</button>
-                    <button className="bg-primary text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg" onClick={() => router.push("/dashboard")}>Finish</button>
+                    <button className="bg-primary text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg" onClick={handleFinish}>Finish</button>
                 </div>
 
             </div>

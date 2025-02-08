@@ -22,7 +22,7 @@ export default function UserInfoClubPage() {
                     <div className="label">
                         <span className="label-text">Who are you? *</span>
                     </div>
-                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                         defaultValue="">
                         <option disabled value="">Choose one</option>
                         <option>test</option>
@@ -34,7 +34,7 @@ export default function UserInfoClubPage() {
                     <div className="label">
                         <span className="label-text">Club *</span>
                     </div>
-                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                         defaultValue="">
                         <option disabled value="">Choose one</option>
                         <option>test</option>
@@ -46,7 +46,7 @@ export default function UserInfoClubPage() {
                     <div className="label">
                         <span className="label-text">Role *</span>
                     </div>
-                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                    <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                         defaultValue="">
                         <option disabled value="">Choose one</option>
                         <option>test</option>

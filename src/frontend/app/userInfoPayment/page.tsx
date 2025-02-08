@@ -61,7 +61,7 @@ export default function UserInfoPaymentPage() {
                   <span className="label-text">E-transfer email *</span>
                </div>
                <input
-                  type="text"
+                  type="email"
                   placeholder="johnsmith@gmail.com"
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
                />
@@ -71,7 +71,7 @@ export default function UserInfoPaymentPage() {
                   <span className="label-text">E-transfer phone number *</span>
                </div>
                <input
-                  type="text"
+                  type="tel"
                   placeholder="123-456-7890"
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
                />

@@ -53,7 +53,7 @@ export default function UserInfoGeneralPage() {
                   <span className="label-text">Phone Number *</span>
                </div>
                <input
-                  type="text"
+                  type="tel"
                   placeholder="123-456-7890"
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
                />

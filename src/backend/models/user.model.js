@@ -1,12 +1,19 @@
 const mongoose = require('mongoose');
 
+//Helper Schemas
 const plaidAccessTokenSchema = new mongoose.Schema({
   "item_id": {type: String},
   "access_token": {type: String}
 }, { _id: false })
 
+
+//Main User Schema
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
@@ -15,10 +22,17 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  role: {
+  club: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Club'
+  },
+  clubRole: {
     type: String,
-    enum: ['student', 'admin', 'approver'],
-    default: 'student',
+    enum: ['member', 'president', 'vice-president', 'treasurer', 'secretary'], // Club-specific roles
+  },
+  payment:{
+    etransferEmail: {type: String},
+    etransferPhone: {type: String}
   },
   plaid: [ plaidAccessTokenSchema ],
   createdAt: {

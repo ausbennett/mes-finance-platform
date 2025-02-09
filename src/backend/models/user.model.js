@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const plaidAccessTokenSchema = new mongoose.Schema({
+  "item_id": {type: String},
+  "access_token": {type: String}
+}, { _id: false })
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,6 +20,7 @@ const userSchema = new mongoose.Schema({
     enum: ['student', 'admin', 'approver'],
     default: 'student',
   },
+  plaid: [ plaidAccessTokenSchema ],
   createdAt: {
     type: Date,
     default: Date.now,

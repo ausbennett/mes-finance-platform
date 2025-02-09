@@ -1,8 +1,24 @@
-module.exports = {
-    createClub: async (data) => ({ id: "123", ...data }),
-    getAllClubs: async () => [{ id: "123", name: "Placeholder Club" }],
-    getClubById: async (id) => ({ id, name: "Placeholder Club" }),
-    updateClub: async (id, data) => ({ id, ...data }),
-    deleteClub: async (id) => ({ message: "Club deleted successfully" }),
-  };
-  
+const Club = require('../../models/club.model');
+
+const getAllClubs = async () => {
+  return await Club.find({});
+};
+
+const getClubById = async (id) => {
+  return await Club.findById(id);
+};
+
+const createClub = async (data) => {
+  const club = new Club(data);
+  return await club.save();
+};
+
+const updateClub = async (id, data) => {
+  return await Club.findByIdAndUpdate(id, data, { new: true });
+};
+
+const deleteClub = async (id) => {
+  return await Club.findByIdAndDelete(id);
+};
+
+module.exports = { getAllClubs, getClubById, createClub, updateClub, deleteClub };

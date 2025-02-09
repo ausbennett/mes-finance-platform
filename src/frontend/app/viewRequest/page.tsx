@@ -1,7 +1,12 @@
+"use client";
+
 import NavBar from "../components/navbar";
+import { useRouter } from "next/navigation";
 
 export default function ViewRequestsPage() {
    const user: string = "Adam Podolak";
+
+   const router = useRouter();
 
    return (
       <>
@@ -48,7 +53,12 @@ export default function ViewRequestsPage() {
                         </p>
                      </div>
                      <div className="flex flex-col items-center justify-center pt-4">
-                        <button className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg">
+                        <button
+                           className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
+                           onClick={() => {
+                              router.push("/newRequest");
+                           }}
+                        >
                            View Request
                         </button>
                         <p className="text-sm">

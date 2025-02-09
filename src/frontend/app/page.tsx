@@ -7,6 +7,7 @@ import React, { useState } from "react";
 export default function LoginPage() {
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
+   const [authToken, setAuthToken] = useState<string>("");
    const router = useRouter();
 
    const validateEmail = (email: string) => {
@@ -22,6 +23,10 @@ export default function LoginPage() {
       }
 
       setError("");
+
+      if (authToken) {
+        sessionStorage.setItem("authToken", authToken)
+      }
 
       router.push("/userInfoGeneral");
    };
@@ -74,6 +79,21 @@ export default function LoginPage() {
                   >
                      Login
                   </button>
+               </div>
+
+              {/* Temporary Auth Token Dropdown */}
+               <div className="w-1/3 mt-4">
+                  <label className="text-secondary-text font-semibold text-sm">Select Auth Token:</label>
+                  <select
+                     className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                     value={authToken}
+                     onChange={(e) => setAuthToken(e.target.value)}
+                  >
+                     <option value="">Select Token</option>
+                     <option value="67a68ab9375bceb9bcada833">Admin Token</option>
+                     <option value="67a9109e9b49fd74280caf86">Student Token</option>
+                     <option value="token789">Token 789</option>
+                  </select>
                </div>
             </div>
          </div>

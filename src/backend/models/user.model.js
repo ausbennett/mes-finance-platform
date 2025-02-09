@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  whoAreYou: {
+    type: String,
+    enum: ['MES Position', 'Ratified Club, Team, Or Program Society', 'Student Projects and New Club Seed Funding', 'Intramurals Funding', 'Conference/Competition Delegate (Open or Affiliate)'], // Club-specific roles
+  },
   club: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Club'

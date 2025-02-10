@@ -70,6 +70,9 @@ const reimbursementSchema = new mongoose.Schema({
       default: false,
     }
   },
+  fileId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
 });
 
 module.exports = mongoose.model('Reimbursement', reimbursementSchema);

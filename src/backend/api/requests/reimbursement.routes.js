@@ -1,16 +1,17 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+const reimbursementController = require('./reimbursement.controller');
 
-const reimbursementController = require('./reimbursement.controller')
+// GET reimbursements
+router.get('/', reimbursementController.getReimbursements);
 
+// POST - include file upload middleware (expects field name "file")
+router.post('/', upload.single('file'), reimbursementController.createReimbursement);
 
-// RELATIVE TO `/api/requests/reimbursement/`
+// PUT - update reimbursement (optionally with a new file)
+router.put('/:id', upload.single('file'), reimbursementController.editReimbursement);
 
-// will use an authService middleware for JWT Role Based Access
-router.get('/', reimbursementController.getReimbursements)
-
-router.post('/', reimbursementController.createReimbursement)
-
-router.put('/:id', reimbursementController.editReimbursement)
-
-module.exports = router
+module.exports = router;

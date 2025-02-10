@@ -8,5 +8,9 @@ const requestController = require('./request.controller.js')
 //get both reimbursements & payements
 router.get('/', requestController.getAllRequests)
 
+
 router.put('/:id', requestController.updateRequestStatus);
+
+router.get('/:id', requestController.getRequestById);
+
 module.exports = router;

@@ -49,8 +49,18 @@ const editPayment = async (id, data) => {
   }
 };
 
+const getPaymentById = async (id) => {
+  try {
+    return await Payment.findById(id);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 module.exports = {
   getPayments,
   createPayment,
   editPayment,
+  getPaymentById,
 };

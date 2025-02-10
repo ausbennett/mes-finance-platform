@@ -1,9 +1,24 @@
 "use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useFormContext } from "@/context/UserFormContext";
+import { useState } from "react";
 
 export default function UserInfoClubPage() {
    const router = useRouter();
+
+   const { updateFormData } = useFormContext();
+
+   const [whoAreYou, setWhoAreYou] = useState<string>("");
+   const [club, setClub] = useState<string>("");
+   const [clubRole, setRole] = useState<string>("");
+
+   const handleNext = (e: React.FormEvent) => {
+      e.preventDefault();
+      updateFormData({ club: { whoAreYou, club, clubRole } });
+      router.push("/userInfoPayment");
+   };
 
    return (
       <div
@@ -35,6 +50,9 @@ export default function UserInfoClubPage() {
                <select
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                   defaultValue=""
+                  onChange={(e) => {
+                     setWhoAreYou(e.target.value);
+                  }}
                >
                   <option
                      disabled
@@ -42,9 +60,13 @@ export default function UserInfoClubPage() {
                   >
                      Choose one
                   </option>
-                  <option>test</option>
-                  <option>test</option>
-                  <option>test</option>
+                  <option>MES Position</option>
+                  <option>Ratified Club, Team, Or Program Society</option>
+                  <option>Student Projects and New Club Seed Funding</option>
+                  <option>Intramurals Funding</option>
+                  <option>
+                     Conference/Competition Delegate (Open or Affiliate)
+                  </option>
                </select>
             </label>
             <label className="form-control w-full">
@@ -54,6 +76,9 @@ export default function UserInfoClubPage() {
                <select
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                   defaultValue=""
+                  onChange={(e) => {
+                     setClub(e.target.value);
+                  }}
                >
                   <option
                      disabled
@@ -61,9 +86,10 @@ export default function UserInfoClubPage() {
                   >
                      Choose one
                   </option>
-                  <option>test</option>
-                  <option>test</option>
-                  <option>test</option>
+                  <option>Software Engineering Society</option>
+                  <option>DeltaHacks</option>
+                  <option>Engineers Without Borders</option>
+                  <option>Women in Engineering, McMaster</option>
                </select>
             </label>
             <label className="form-control w-full">
@@ -73,6 +99,9 @@ export default function UserInfoClubPage() {
                <select
                   className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer"
                   defaultValue=""
+                  onChange={(e) => {
+                     setRole(e.target.value);
+                  }}
                >
                   <option
                      disabled
@@ -80,15 +109,17 @@ export default function UserInfoClubPage() {
                   >
                      Choose one
                   </option>
-                  <option>test</option>
-                  <option>test</option>
-                  <option>test</option>
+                  <option>member</option>
+                  <option>president</option>
+                  <option>vice-president</option>
+                  <option>treasurer</option>
+                  <option>secretary</option>
                </select>
             </label>
             <div className="w-full  pt-5">
                <button
                   className="bg-primary text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg"
-                  onClick={() => router.push("/userInfoPayment")}
+                  onClick={handleNext}
                >
                   Next
                </button>

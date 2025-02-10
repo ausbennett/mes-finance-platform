@@ -1,11 +1,17 @@
 
-const {reconcileData, PlaidService} = require('./plaid.service')
+const {reconcileRequestsAndTransactions, PlaidService} = require('./plaid.service')
 
 
 const plaidService = new PlaidService()
 const userService = require('../users/users.service');
 
 
+/* PLAID SERVICE LOGIC
+ *
+ * provides a link token for UI auth
+ * accepts and exchanges a public token
+ * returns a access token
+ * */
 const getSandboxToken = async (req,res) => {
   try {
     const response = await plaidService.client.sandboxPublicTokenCreate({
@@ -58,6 +64,7 @@ const getTransactions = async (req, res) => {
   }
 };
 
+const reconcileRequestsAndTransactions = async (req, res) => {}
 
 
 
@@ -65,5 +72,6 @@ module.exports = {
   getSandboxToken,
   createLinkToken,
   getTransactions,
-  exchangePublicToken
+  exchangePublicToken,
+  reconcileRequestsAndTransactions
 }

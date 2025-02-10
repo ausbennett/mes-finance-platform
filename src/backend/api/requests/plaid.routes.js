@@ -33,5 +33,7 @@ router.get('/transactions', plaidController.getTransactions);
 //FOR TESTING ONLY!
 router.get('/sandbox/public-token', plaidController.getSandboxToken)
 
+router.get('/audit', plaidController.reconcileRequestsAndTransactions)
+
 
 module.exports = router;

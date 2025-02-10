@@ -22,7 +22,7 @@ const templates = {
     subject: 'Request Status Updated', // Subject is now part of the template
     html: `
       <h3>Your Payment/Reimbursement Request Status</h3>
-      <p>Dear ${requestDetails.name},</p>
+      <p>Dear ${requestDetails.firstName} ${requestDetails.lastName},</p>
       <p>We wanted to inform you about the status of your request.</p>
       <p><strong>Status:</strong> ${status}</p>
       <p><strong>Request Details:</strong></p>

@@ -41,12 +41,13 @@ const updateRequestStatus = async (req, res) => {
     // 2. Send email notification
     await sendEmail(
       user.email,
-      'notification', // Template type (no longer pass subject)
+      'notification',
       { 
         status: newStatus,
         requestDetails: {
           id: id,
-          name: user.name, // Ensure user.name exists!
+          firstName: user.firstName, // Changed
+          lastName: user.lastName,   // Changed
           amount: updatedRequest.totalAmount,
           submittedDate: updatedRequest.createdAt,
         }

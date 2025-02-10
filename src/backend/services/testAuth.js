@@ -15,10 +15,16 @@ const fakeAuth = async (req,res,next) => {
   const id = token //for now just use the userID as a token
 
   // call helper function to get the appropriate user information
-  const user = await User.findById(id) 
+  const user = await User.findById(id); 
   console.log("TOKEN AUTH'D USER:", user)
 
-  req.user = user //attach the user info to the request
+  req.user = {
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,   
+    email: user.email,
+    role: user.role,
+  };
   next();
 }
 

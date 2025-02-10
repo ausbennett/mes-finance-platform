@@ -1,34 +1,137 @@
 "use client";
 
+import axios from "axios";
 import NavBar from "../components/navbar";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AccountInfoPage() {
    const [editMode, setEditMode] = useState<boolean>(false);
 
    //these will be pull from db initially
    const [userInfo, setUserInfo] = useState({
-      firstName: "Joe",
-      lastName: "Shmo",
-      phoneNumber: "905-123-4567",
-      whoAreYou: "Club Member",
-      club: "Formula Electric",
-      role: "Technical Lead",
-      eTransferEmail: "123@gmail.com",
-      eTransferPhoneNumber: "905-123-4567",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      whoAreYou: "",
+      club: "",
+      role: "",
+      eTransferEmail: "",
+      eTransferPhoneNumber: "",
    });
 
    const [tempData, setTempData] = useState(userInfo);
+
+   useEffect(() => {
+      const token = sessionStorage.getItem("authToken");
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(
+               "http://localhost:3001/api/users/me",
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               }
+            );
+            console.log(response.data);
+
+            const fetchedData = response.data;
+
+            setUserInfo((prev) => ({
+               ...prev,
+               firstName: fetchedData.firstName || prev.firstName,
+               lastName: fetchedData.lastName || prev.lastName,
+               //this needs to be changed to an actual phone number not the etransfer one
+               phoneNumber:
+                  fetchedData.phoneNumber || prev.eTransferPhoneNumber,
+               whoAreYou: fetchedData.whoAreYou || prev.whoAreYou,
+               club: fetchedData.club || prev.club,
+               role: fetchedData.clubRole || prev.role,
+               eTransferEmail:
+                  fetchedData.payment.etransferEmail || prev.eTransferEmail,
+               eTransferPhoneNumber:
+                  fetchedData.payment.etransferPhone ||
+                  prev.eTransferPhoneNumber,
+            }));
+
+            setTempData((prev) => ({
+               ...prev,
+               firstName: fetchedData.firstName || prev.firstName,
+               lastName: fetchedData.lastName || prev.lastName,
+               phoneNumber:
+                  fetchedData.phoneNumber || prev.eTransferPhoneNumber,
+               whoAreYou: fetchedData.whoAreYou || prev.whoAreYou,
+               club: fetchedData.club || prev.club,
+               role: fetchedData.clubRole || prev.role,
+               eTransferEmail:
+                  fetchedData.payment.etransferEmail || prev.eTransferEmail,
+               eTransferPhoneNumber:
+                  fetchedData.payment.etransferPhone ||
+                  prev.eTransferPhoneNumber,
+            }));
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               console.error(
+                  "Axios error:",
+                  error.response?.data || error.message
+               );
+            } else {
+               console.error("Unexpected error:", error);
+            }
+         }
+      };
+
+      fetchData();
+   }, []);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setTempData((prev) => ({ ...prev, [name]: value }));
    };
 
-   const handleSave = () => {
-      setUserInfo(tempData);
-      setEditMode(false);
+   const handleSave = async () => {
+      const token = sessionStorage.getItem("authToken");
+      try {
+         const updatedData = {
+            firstName: tempData.firstName,
+            lastName: tempData.lastName,
+            phoneNumber: tempData.phoneNumber,
+            payment: {
+               etransferEmail: tempData.eTransferEmail,
+               etransferPhone: tempData.eTransferPhoneNumber,
+            },
+            whoAreYou: tempData.whoAreYou,
+            club: tempData.club,
+            clubRole: tempData.role,
+         };
+
+         const response = await axios.put(
+            `http://localhost:3001/api/users/${token}`,
+            updatedData,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+               },
+            }
+         );
+
+         console.log("Update Successful:", response.data);
+
+         // Update local state after successful API update
+         setUserInfo(tempData);
+         setEditMode(false);
+      } catch (error) {
+         if (axios.isAxiosError(error)) {
+            console.error(
+               "Axios error:",
+               error.response?.data || error.message
+            );
+         } else {
+            console.error("Unexpected error:", error);
+         }
+      }
    };
 
    return (

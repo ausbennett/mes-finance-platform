@@ -29,27 +29,8 @@ const fakeAuth = async (req,res,next) => {
 
     console.log("TOKEN AUTH'D USER:", user.id) 
 
-  req.user = {
-    id: user._id,
-    firstName: user.firstName,
-    lastName: user.lastName,   
-    email: user.email,
-    role: user.role,
-  };
+  req.user = user;
   next();
 }
 
-
-const addUserData = (req, res, next) => {
-  req.user = {
-      id: "123",
-      firstName: "Austin", // Changed
-      lastName: "Bennett",  // Changed
-      email: "bennea14@mcmaster.ca",
-      role: "admin",
-  };
-  console.log("Middleware executed: User data added to request");
-  next();
-};
-
-module.exports = { addUserData, fakeAuth }
+module.exports = { fakeAuth }

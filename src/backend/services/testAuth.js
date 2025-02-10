@@ -37,16 +37,4 @@ const fakeAuth = async (req, res, next) => {
    next();
 };
 
-const addUserData = (req, res, next) => {
-   req.user = {
-      id: "123",
-      firstName: "Austin", // Changed
-      lastName: "Benena", // Changed
-      email: "benena14@mcmaster.ca",
-      role: "admin",
-   };
-   console.log("Middleware executed: User data added to request");
-   next();
-};
-
-module.exports = { addUserData, fakeAuth };
+module.exports = { fakeAuth };

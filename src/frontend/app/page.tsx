@@ -90,7 +90,7 @@ export default function LoginPage() {
                      onChange={(e) => setAuthToken(e.target.value)}
                   >
                      <option value="">Select Token</option>
-                     <option value="67a68ab9375bceb9bcada833">Admin Token</option>
+                     <option value="67a773a08ffa46d4f4be2ae2">Admin Token</option>
                      <option value="67a9109e9b49fd74280caf86">Student Token</option>
                      <option value="token789">Token 789</option>
                   </select>

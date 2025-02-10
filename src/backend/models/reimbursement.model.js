@@ -13,10 +13,6 @@ const recipientSchema = new mongoose.Schema({
     enum: ["pending", "approved", "reimbursed"], 
     default: "pending" 
   },
-  paymentDetails: {
-    accountNumber: { type: String }, 
-    method: { type: String, enum: ["direct_deposit", "bank_transfer", "e-transfer", "other"] }
-  }
 }, { _id: false })
 
 const reimbursementSchema = new mongoose.Schema({

@@ -1,7 +1,7 @@
 /* APP
  * MAIN EXPRESS APP, highest, most abstract level of business logic
  * */
-
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose')
@@ -18,9 +18,10 @@ const requestRouter = require('./api/requests/request.routes')
 const plaidRouter = require('./api/requests/plaid.routes')
 const accountsRouter = require('./api/account-management/accounts.routes')
 const userRouter = require('./api/users/users.routes')
+const clubRouter = require('./api/clubs/clubs.routes')
+const fileRouter = require('./api/files/files.routes')
 
 
-// connectDB();
 connectAtlasDB();
 
 // Middleware (if needed)
@@ -46,9 +47,11 @@ app.get('/health', async (req, res) => {
 app.use('/api/requests/', fakeAuth, requestRouter);
 app.use('/api/requests/payment', fakeAuth, paymentRouter);
 app.use('/api/requests/reimbursement', fakeAuth, reimbursementRouter);
-app.use('/api/plaid', plaidRouter);
-app.use('/api/accounts', accountsRouter);
-app.use('/api/users', userRouter);
+app.use('/api/plaid', fakeAuth, plaidRouter);
+app.use('/api/accounts', fakeAuth, accountsRouter);
+app.use('/api/users', fakeAuth, userRouter);
+app.use('/api/clubs', fakeAuth, clubRouter)
+app.use('/api/files', fakeAuth, fileRouter)
 
 // Export the app
 module.exports = app

@@ -27,12 +27,6 @@ router.post('/exchange-token', plaidController.exchangePublicToken);
  * @access Private
  * @query { accessToken: string, startDate: string, endDate: string }
  * @returns { transactions: array } - List of transactions between the given dates
- *
- * reqs.body = {
- *    "accessToken" : "access-sandbox-095f8506-17d9-4351-8af6-11d6302b230c",
- *    "startDate": "2025-01-01",
- *    "endDate": "2025-02-01"
- * }
  */
 router.get('/transactions', plaidController.getTransactions);
 

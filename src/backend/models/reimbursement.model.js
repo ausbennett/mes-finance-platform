@@ -1,18 +1,37 @@
 const mongoose = require('mongoose');
 
-const reimbursementSchema = new mongoose.Schema({
-  club: {
-    type: String,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Club',
-    required: true,
-  },
+//because a reimbursement request can contain multiple recipients
+const recipientSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  amount: {
+  amount: { type: Number, required: true },
+  status: { 
+    type: String, 
+    enum: ["pending", "approved", "reimbursed"], 
+    default: "pending" 
+  },
+}, { _id: false })
+
+const reimbursementSchema = new mongoose.Schema({
+  requestor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  club: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Club',
+    required: true,
+  },
+  recipients: [recipientSchema],
+  totalAmount: {
     type: Number,
     required: true,
   },
@@ -47,21 +66,9 @@ const reimbursementSchema = new mongoose.Schema({
       default: false,
     }
   },
-});
-
-const recipientSchema = new mongoose.Schema({
-  name: { type: String, required: true }, // Recipient name
-  email: { type: String, required: true }, // Optional for notifications
-  amount: { type: Number, required: true }, // Amount allocated to recipient
-  status: { 
-    type: String, 
-    enum: ["pending", "approved", "reimbursed"], 
-    default: "pending" 
+  fileId: {
+    type: mongoose.Schema.Types.ObjectId,
   },
-  paymentDetails: {
-    accountNumber: { type: String }, // Optional for direct reimbursements
-    method: { type: String, enum: ["cash", "bank_transfer", "paypal", "other"] }
-  }
-})
+});
 
 module.exports = mongoose.model('Reimbursement', reimbursementSchema);

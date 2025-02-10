@@ -15,13 +15,8 @@ const getReimbursements = async (user) => {
 
     let reimbursements;
     if (role === "admin") {
-        // Admins can see everything
         reimbursements = await Reimbursement.find({});
-    } else if (role === "club_admin") {
-        // Club admins can see reimbursements for their club
-        reimbursements = await Reimbursement.find({ club: clubId });
-    } else if (role === "student") {
-        // Students can only see their own requests
+    } else if (role === "standard") {
         reimbursements = await Reimbursement.find({ user: id });
     } else {
         return { message: "Unauthorized" };

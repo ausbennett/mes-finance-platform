@@ -6,6 +6,12 @@ const getUsers = async (req, res) => {
   res.status(result.message ? 403 : 200).json(result);
 };
 
+const getMe = async (req, res) => {
+  console.log("REQ :", req)
+  const result = await userService.getUserById(req.user._id);
+  res.status(result.message ? 403 : 200).json(result);
+};
+
 // GET user by ID
 const getUserById = async (req, res) => {
   const result = await userService.getUserById(req.params.id);
@@ -30,4 +36,4 @@ const deleteUser = async (req, res) => {
   res.status(result ? 200 : 404).json(result || { message: 'User not found' });
 };
 
-module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser };
+module.exports = { getUsers, getMe, getUserById, createUser, updateUser, deleteUser };

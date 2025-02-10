@@ -16,7 +16,10 @@ const PlaidTestPage = () => {
       try {
         const response = await fetch(`${API_BASE_URL}/link-token`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer 67a68ab9375bceb9bcada833",
+          },
           body: JSON.stringify({ userId: "test-user" }),
         });
         const data = await response.json();
@@ -39,7 +42,10 @@ const PlaidTestPage = () => {
       // Send publicToken to backend to exchange for an access_token
       const response = await fetch(`${API_BASE_URL}/exchange-token`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer 67a68ab9375bceb9bcada833",
+        },
         body: JSON.stringify({ publicToken }),
       });
 

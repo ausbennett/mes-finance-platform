@@ -64,7 +64,7 @@ const getTransactions = async (req, res) => {
   }
 };
 
-const reconcileRequestsAndTransactions = async (req, res) => {}
+const reconcileRT = async (req, res) => {}
 
 
 

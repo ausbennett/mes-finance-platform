@@ -84,8 +84,63 @@ const getRequestById = async (req, res) => {
   }
 };
 
+const getRequestsByDateRange = async (req, res) => {
+  try {
+    const user = req.user;
+    const { start, end } = req.query;
+
+    if (!start || !end) {
+      return res.status(400).json({ error: "Start date and end date are required" });
+    }
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    endDate.setUTCHours(23, 59, 59, 999);
+  
+    console.log(startDate, endDate)
+
+
+    if (isNaN(startDate) || isNaN(endDate)) {
+      return res.status(400).json({ error: "Invalid date format" });
+    }
+
+    // Fetch all reimbursements and payments
+    const [reimbursements, payments] = await Promise.all([
+      reimbursementService.getReimbursements(user),
+      paymentService.getPayments(user),
+    ]);
+
+    // Handle errors
+    if (reimbursements.message || payments.message) {
+      return res.status(400).json({
+        error: "Error fetching requests",
+        reimbursementsError: reimbursements.message || null,
+        paymentsError: payments.message || null,
+      });
+    }
+
+    // Filter by date range
+    const filteredReimbursements = reimbursements.filter(r => {
+      if (!r.createdAt) return false;
+      const createdAt = new Date(r.createdAt);
+      return createdAt >= startDate && createdAt <= endDate;
+    });
+
+    const filteredPayments = payments.filter(p => {
+      if (!p.createdAt) return false;
+      const createdAt = new Date(p.createdAt);
+      return createdAt >= startDate && createdAt <= endDate;
+    });
+
+    return res.status(200).json({ reimbursements: filteredReimbursements, payments: filteredPayments });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+};
+
 module.exports = {
   getAllRequests,
   updateRequestStatus,
   getRequestById,
+  getRequestsByDateRange
 }

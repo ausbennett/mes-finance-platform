@@ -7,7 +7,7 @@ const requestController = require('./request.controller.js')
 
 //get both reimbursements & payements
 router.get('/', requestController.getAllRequests)
-
+router.get('/by-date', requestController.getRequestsByDateRange)
 
 router.put('/:id', requestController.updateRequestStatus);
 

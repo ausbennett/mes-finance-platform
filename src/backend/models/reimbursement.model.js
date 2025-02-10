@@ -13,10 +13,6 @@ const recipientSchema = new mongoose.Schema({
     enum: ["pending", "approved", "reimbursed"], 
     default: "pending" 
   },
-  paymentDetails: {
-    accountNumber: { type: String }, 
-    method: { type: String, enum: ["direct_deposit", "bank_transfer", "e-transfer", "other"] }
-  }
 }, { _id: false })
 
 const reimbursementSchema = new mongoose.Schema({
@@ -30,9 +26,8 @@ const reimbursementSchema = new mongoose.Schema({
     ref: 'User',
   },
   club: {
-    type: String,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Club',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Club',
     required: true,
   },
   recipients: [recipientSchema],
@@ -70,6 +65,9 @@ const reimbursementSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     }
+  },
+  fileId: {
+    type: mongoose.Schema.Types.ObjectId,
   },
 });
 

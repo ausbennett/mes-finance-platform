@@ -1,18 +1,118 @@
 "use client";
 
 import NavBar from "../components/navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import PaymentRequest from "./paymentRequest";
+import ReimbursementRequest from "./reimbursementRequest";
+
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001"; // Load from environment
 
 export default function NewRequestPage() {
-   const [radio, setRadio] = useState<string>("");
+  const [user,setUser] = useState(null)
+  const [radio, setRadio] = useState<string>("reimbursement");
+  const [authToken, setAuthToken] = useState<string>("67a92f773eaf8368041ae608");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reimbursementFormData, setReimbursementFormData] = useState({
+    requestor: "", 
+    club: "", 
+    recipients: [{ user: "", amount: "0.00", }],
+    totalAmount: "",
+    description: "",
+  });
 
-   const handleRadioSelect = (value: string) => {
-      if (radio == value) {
-         setRadio("");
-      } else {
-         setRadio(value);
+  const [paymentFormData, setPaymentFormData] = useState({
+    requestor: "", 
+    club: "", 
+    amount: "",
+    description: "",
+    paymentDate: new Date().toISOString().split("T")[0], // Default to today's date
+  });
+
+  // Get a token
+  useEffect(() => {
+      // if (typeof window !== "undefined") {
+      //   const storedToken = sessionStorage.getItem("authToken");
+      //   if (storedToken) {
+      //     setAuthToken(storedToken);
+      //   }
+      // }
+      
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+              }
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch user data");
+          }
+          const data = await response.json();
+          setUser(data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+    fetchUserData();
+    }, []);
+
+  
+  const handleRadioSelect = (value: string) => {
+    setRadio(radio === value ? "" : value);
+  };
+
+
+
+  useEffect(() => {
+    if (isSubmitting) {
+      console.log("latest reimbursementFormData:", reimbursementFormData);
+      console.log("latest paymentFormData:", paymentFormData);
+      setIsSubmitting(false);
+    }
+  }, [isSubmitting, reimbursementFormData, paymentFormData]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (!radio) {
+      alert("Please select a request type (Reimbursement or Payment).");
+      return;
+    }
+
+    const endpoint = radio === "reimbursement"
+      ? `${API_BASE_URL}/api/requests/reimbursement/`
+      : `${API_BASE_URL}/api/requests/payment/`;
+
+    const requestData = radio === "reimbursement" ? reimbursementFormData : paymentFormData;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit request");
       }
-   };
+
+      const result = await response.json();
+      console.log("Request submitted successfully!", result);
+      alert("Request submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting request:", error);
+      alert("Failed to submit request. Please try again.");
+    }
+  };
+
+
 
    return (
       <>
@@ -74,84 +174,19 @@ export default function NewRequestPage() {
                         </div>
                      </div>
 
+
                      {/* FORM START */}
                      <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-primary p-10 space-y-5">
-                        <p className="text-primary-text font-bold text-xl">
-                           Reimbursement Request
-                        </p>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">Recipient</span>
-                           </div>
 
-                           <input
-                              type="text"
-                              placeholder="should be autofilled"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-                           />
-                        </label>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">Payment Date</span>
-                           </div>
-
-                           <input
-                              type="date"
-                              placeholder="01/01/2025"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-                           />
-                        </label>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">
-                                 Description of Payment
-                              </span>
-                           </div>
-
-                           <input
-                              type="text"
-                              placeholder="description"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-                           />
-                        </label>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">Subtotal</span>
-                           </div>
-
-                           <input
-                              type="text"
-                              placeholder="19.99"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-                           />
-                        </label>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">HST</span>
-                           </div>
-
-                           <input
-                              type="text"
-                              placeholder="we should auto calculate this"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-                           />
-                        </label>
-                        <label className="form-control w-full">
-                           <div className="label">
-                              <span className="label-text">Receipts</span>
-                           </div>
-
-                           <input
-                              type="file"
-                              accept=".png, .jpg, .jpeg, .pdf"
-                              multiple
-                              placeholder=".png, .jpg, .jpeg, .pdf"
-                              className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md 
-                                         file:bg-primary file:rounded-md file:cursor-pointer"
-                           />
-                        </label>
+                        {radio === "payment" && (
+                          <PaymentRequest user={user} formData={paymentFormData} setFormData={setPaymentFormData} />
+                        )}
+                        {radio === "reimbursement" && (
+                          <ReimbursementRequest user={user} formData={reimbursementFormData} setFormData={setReimbursementFormData} />
+                        )}
+                
                         <div className="flex flex-row items-center justify-end">
-                           <button className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg">
+                           <button onClick={handleSubmit} className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg">
                               Submit
                            </button>
                         </div>

@@ -7,9 +7,8 @@ const paymentSchema = new mongoose.Schema({
     required: true,
   },
   club: {
-    type: String,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Club',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Club',
     required: true,
   },
   reviewer: {

@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     etransferEmail: {type: String},
     etransferPhone: {type: String}
   },
+  role: {
+    type: String,
+    enum: ['admin','standard']
+  },
   plaid: [ plaidAccessTokenSchema ],
   createdAt: {
     type: Date,

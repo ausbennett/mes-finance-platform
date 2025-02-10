@@ -30,9 +30,8 @@ const reimbursementSchema = new mongoose.Schema({
     ref: 'User',
   },
   club: {
-    type: String,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Club',
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Club',
     required: true,
   },
   recipients: [recipientSchema],

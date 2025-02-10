@@ -15,8 +15,24 @@ const fakeAuth = async (req,res,next) => {
   const id = token //for now just use the userID as a token
 
   // call helper function to get the appropriate user information
+<<<<<<< HEAD
   const user = await User.findById(id); 
   console.log("TOKEN AUTH'D USER:", user)
+=======
+    const user = await User.findById(id) 
+    if (!user){ //Return 404 if user not in DB
+      return res.status(404).json({ message: "404: User not found in database"})
+    }
+    ////TODO: Check for (un)confirmed email
+    /*
+    const confStatus = await user.someMethodToCheckIfEmailHasBeenConfirmed
+    if (!confStatus){
+      return res.status(400).json({ message: "400: User's email has not been confirmed"})
+    }
+    */
+
+    console.log("TOKEN AUTH'D USER:", user.id) 
+>>>>>>> 7504f6f6e477f0ad14a96ba28cfc860c1fd2833e
 
   req.user = {
     id: user._id,

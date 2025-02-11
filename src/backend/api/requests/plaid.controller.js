@@ -55,8 +55,8 @@ const exchangePublicToken = async (req, res) => {
 
 const getTransactions = async (req, res) => {
   try {
-    const { accessToken, startDate, endDate } = req.body;
-    const transactions = await plaidService.getTransactions(accessToken, startDate, endDate);
+    const { start, end, accessToken } = req.query;
+    const transactions = await plaidService.getTransactions(accessToken, start, end);
     res.status(200).json(transactions);
   } catch (error) {
     console.error('Error fetching transactions:', error);

@@ -58,6 +58,11 @@ export default function EditRequestPage() {
     fetchRequestData();
   }, []);
 
+  const handleSaveChanges = () => {
+    // Add your save functionality here, e.g., send data to the server
+    console.log("Saving changes...");
+  };
+
   return (
     <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10">
       <NavBar />
@@ -73,7 +78,7 @@ export default function EditRequestPage() {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md cursor-pointer hover:bg-blue-600"
+              className="bg-red-900 text-white px-4 py-2 rounded-md shadow-md cursor-pointer hover:bg-red-800"
             >
               <option value="Approved">Approved</option>
               <option value="Denied">Denied</option>
@@ -92,6 +97,16 @@ export default function EditRequestPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Save Changes Button */}
+      <div className="fixed bottom-10 right-10">
+        <button
+          onClick={handleSaveChanges}
+          className="bg-red-900 text-white px-6 py-3 rounded-full shadow-md hover:bg-red-800"
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   );

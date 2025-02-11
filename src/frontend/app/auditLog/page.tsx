@@ -137,7 +137,7 @@ export default function AuditPage() {
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-300 p-2">Date</th>
-            <th className="border border-gray-300 p-2">Requests & Payments</th>
+            <th className="border border-gray-300 p-2">Reimbursements & Payments</th>
             <th className="border border-gray-300 p-2">Plaid Transactions</th>
           </tr>
         </thead>
@@ -151,6 +151,7 @@ export default function AuditPage() {
                     [...entry.reimbursements, ...entry.payments].map((req, idx) => (
                       <div key={idx} className="p-2 bg-gray-100 rounded mb-2">
                         <p><strong>{req.totalAmount ? "REIMBURSEMENT" : "PAYMENT"}</strong></p>
+                        {req.description && <p>{req.description}</p>}
                         <p>Amount: {req.totalAmount || req.amount}</p>
                         <p className={`status-badge ${req.status?.toLowerCase() || "unknown"}`}>{req.status || "Unknown"}</p>
                         <button className="btn bg-primary text-white font-semilbold btn-xs btn-secondary">View {req.totalAmount ? "Reimbursement" : "Payment"}</button>

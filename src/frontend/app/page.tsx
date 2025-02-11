@@ -1,101 +1,116 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import React, { useState, useEffect } from "react";
+import { useFormContext } from "@/context/UserFormContext";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+export default function LoginPage() {
+   const { updateFormData } = useFormContext();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs (hello)
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+   const [email, setEmail] = useState<string>("");
+   const [error, setError] = useState<string>("");
+   const [authToken, setAuthToken] = useState<string>("");
+   const router = useRouter();
+
+   const validateEmail = (email: string) => {
+      return email.endsWith("@mcmaster.ca");
+   };
+
+   const handleSubmit = (event: React.FormEvent) => {
+      event.preventDefault();
+      if (!validateEmail(email)) {
+         setError("Please enter a valid McMaster email address");
+         return;
+      }
+      setError("");
+      if (authToken) {
+         sessionStorage.setItem("authToken", authToken);
+      }
+      updateFormData({ email: { email } });
+      router.push("/userInfoGeneral");
+   };
+    
+    //dynamically set session storage auth token
+    useEffect(()=>{
+      sessionStorage.setItem("authToken",authToken)
+      console.log("SESSION TOKEN:", authToken)
+    },[authToken])
+
+   return (
+      <>
+         <div
+            id="loginScreenContainer"
+            className="flex flex-row min-h-screen min-w-screen bg-background"
+         >
+            <div
+               id="loginScreenLeftContainer"
+               className="bg-stone-800 min-h-screen w-2/5"
+            ></div>
+            <div
+               id="loginScreenFormContainer"
+               className="flex flex-col items-center justify-center h-screen w-3/5 bg-transparent space-y-5"
+            >
+               <Image
+                  src="/mesLogo.png"
+                  alt="MES Logo"
+                  width={150}
+                  height={150}
+               ></Image>
+
+               <div className="flex flex-row w-full items-center justify-center px-5 text-center">
+                  <p className="text-primary-text font-bold text-lg">
+                     Welcome to the McMaster Engineering Society Reimbursement
+                     Platform
+                  </p>
+               </div>
+
+               <p className="text-secondary-text font-semibold text-sm">
+                  Enter your McMaster email to continue
+               </p>
+
+               <input
+                  type="email"
+                  className="bg-foreground px-3 py-2 rounded-md w-1/3 border-white drop-shadow-md"
+                  placeholder="johnsmith@mcmaster.ca"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onClick={() => setError("")}
+               ></input>
+
+               {error && <p className="text-red-500 text-sm">{error}</p>}
+
+               <div className="w-1/3">
+                  <button
+                     onClick={handleSubmit}
+                     className="bg-primary text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg"
+                  >
+                     Login
+                  </button>
+               </div>
+
+               {/* Temporary Auth Token Dropdown */}
+               <div className="w-1/3 mt-4">
+                  <label className="text-secondary-text font-semibold text-sm">
+                     Select Auth Token:
+                  </label>
+                  <select
+                     className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                     value={authToken}
+                     onChange={(e) => setAuthToken(e.target.value)}
+                  >
+                     <option value="">Select Token</option>
+                     <option value="67aa7568a95f30c1a91f8a0a">
+                        Admin Token
+                     </option>
+                     <option value="67a9109e9b49fd74280caf86">
+                        Student Token
+                     </option>
+                     <option value="67aa7568a95f30c1a91f8a0a">Evan Admin ****8a0a</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </>
+   );
 }

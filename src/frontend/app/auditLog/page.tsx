@@ -2,55 +2,29 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePlaidLink } from "react-plaid-link";
 import axios from "axios";
-
-/*
- * I need states for the list of plaid transactions, payments, and reimbursements
- * the axios getters will set these states
- * I can also pass these states onto the reconciler function to reconcile
- * the reconciler will update the current state 
- *
- * I need 
- * */
-
 
 export default function AuditPage() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [reqsData, setReqsData] = useState<{ reimbursements: any[]; payments: any[] }>({ reimbursements: [], payments: []});
-  const [plaidData, setPlaidData] = useState<any[]>([
-    // {
-    //   account_id: "G5rqqgZd8VslvrLqkgGVUkWzMprDWxh6xK9We",
-    //   account_owner: null,
-    //   amount: 6.33,
-    //   authorized_date: "2025-01-31",
-    //   authorized_datetime: null,
-    //   category: ["Travel", "Taxi"],
-    //   category_id: "22016000",
-    //   date: "2025-02-01",
-    //   logo_url: "https://plaid-merchant-logos.plaid.com/uber_1060.png",
-    //   merchant_name: "Uber",
-    //   name: "Uber 072515 SF**POOL**",
-    //   payment_channel: "online",
-    //   pending: false,
-    //   transaction_id: "8kn77dKZaoS9bWKqQgBnfN5r5a5lzKFW49BzK",
-    //   transaction_type: "special",
-    //   website: "uber.com"
-    // }
-  ]);
+  const [plaidData, setPlaidData] = useState<any[]>([]);
 
   const [user, setUser] = useState<any>(null);
   const [plaidAccessToken, setPlaidAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Get token from session storage
-  const authToken = "67aa7568a95f30c1a91f8a0a"
-  // const authToken = sessionStorage.getItem("authToken");
+  const [linkToken, setLinkToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [plaidLoading, setPlaidLoading] = useState(true);
+
+  const authToken = sessionStorage.getItem("authToken") || "67aa7568a95f30c1a91f8a0a" ;
 
   // Define a global Axios instance within the component
   const apiClient = axios.create({
-    baseURL: "http://localhost:3001", // Replace with your actual base URL
+    baseURL: "http://localhost:3001", 
     headers: {
       "Content-Type": "application/json",
       Authorization: authToken ? `Bearer ${authToken}` : "",
@@ -71,7 +45,21 @@ export default function AuditPage() {
         console.error("Failed to fetch user data", err);
       }
     };
+
+    const fetchLinkToken = async () => {
+      try {
+        const response = await apiClient.post("/api/plaid/link-token", { userID: "test-user"})
+        const data = response.data
+        console.log("Link Token:", data.linkToken); 
+        setLinkToken(data.linkToken);
+        setPlaidLoading(false);
+      } catch (error) {
+        console.error("Error fetching link token:", error);
+        setPlaidLoading(false);
+      }
+    }
     
+    fetchLinkToken();
     fetchUserData();
   }, []);
 
@@ -94,7 +82,6 @@ export default function AuditPage() {
       setLoading(false);
     }
   };
-
   
   const combinedData = Array.from(
     new Set([
@@ -109,14 +96,35 @@ export default function AuditPage() {
     transactions: (plaidData || []).filter(txn => txn.date === date)
   }));
 
+  //Plaid Link Stuff
+  const onSuccess = async (publicToken: string) => {
+    console.log("✅ Public Token:", publicToken);
+    try {
+      const response = await apiClient.post("/api/plaid/exchange-token", { publicToken }) 
+      const { access_token, item_id } = response.data
+      console.log("✅ Access Token Response:", access_token);
+      setAccessToken(access_token); 
+    } catch (error) {
+      console.error("❌ Error exchanging public token:", error);
+    }
+  };
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken || "",
+    onSuccess,
+  });
+
+
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
       <div className="flex gap-4 mb-4">
-        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-100 input-bordered" />
-        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-100 input-bordered" />
+        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-300 input-bordered" />
+        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-300 input-bordered" />
         <button className="btn bg-primary text-white font-semilbold p-2 rounded-lg drop-shadow-lg" onClick={fetchData}>Fetch Data</button>
-        <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button>
+        {/* <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button> */}
+        {!plaidLoading && <button className="btn btn-accent font-semibold" onClick={() => open()}>Link Bank with Plaid</button>}
       </div>
       {error && <p className="text-red-500">{error}</p>}
       {loading && <p>Loading...</p>}
@@ -168,7 +176,7 @@ export default function AuditPage() {
             ))
           ) : (
             <tr>
-              <td colSpan={3} className="text-center p-4">No data available.</td>
+              <td colSpan={3} className="text-center p-4">No data available, try fetching data.</td>
             </tr>
           )}
         </tbody>

@@ -44,7 +44,7 @@ const PlaidTestPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer 67a68ab9375bceb9bcada833",
+          Authorization: "Bearer 67aa7568a95f30c1a91f8a0a",
         },
         body: JSON.stringify({ publicToken }),
       });

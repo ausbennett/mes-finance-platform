@@ -113,14 +113,15 @@ export default function AuditPage() {
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
       <div className="flex gap-4 mb-4">
-        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input input-bordered" />
-        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input input-bordered" />
-        <button className="btn btn-primary" onClick={fetchData}>Fetch Data</button>
-        <button className="btn btn-accent" onClick={() => alert("Audit functionality TBD")}>Audit</button>
+        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-100 input-bordered" />
+        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-100 input-bordered" />
+        <button className="btn bg-primary text-white font-semilbold p-2 rounded-lg drop-shadow-lg" onClick={fetchData}>Fetch Data</button>
+        <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       {loading && <p>Loading...</p>}
       
+
       <table className="table-auto w-full border-collapse border border-gray-300 mt-4">
         <thead>
           <tr className="bg-gray-100">
@@ -141,7 +142,7 @@ export default function AuditPage() {
                         <p><strong>{req.totalAmount ? "REIMBURSEMENT" : "PAYMENT"}</strong></p>
                         <p>Amount: {req.totalAmount || req.amount}</p>
                         <p className={`status-badge ${req.status?.toLowerCase() || "unknown"}`}>{req.status || "Unknown"}</p>
-                        <button className="btn btn-xs btn-secondary">View {req.totalAmount ? "Reimbursement" : "Payment"}</button>
+                        <button className="btn bg-primary text-white font-semilbold btn-xs btn-secondary">View {req.totalAmount ? "Reimbursement" : "Payment"}</button>
                       </div>
                     ))
                   ) : (

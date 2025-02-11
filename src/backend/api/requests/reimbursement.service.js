@@ -51,10 +51,20 @@ const editReimbursement = async (id, data) => {
   }
 };
 
+const getReimbursementById = async (id) => {
+  try {
+    return await Reimbursement.findById(id);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 module.exports = {
   getReimbursements,
   createReimbursement,
   editReimbursement,
+  getReimbursementById,
 };
 
  

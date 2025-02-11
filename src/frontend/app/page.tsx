@@ -3,8 +3,11 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useFormContext } from "@/context/UserFormContext";
 
 export default function LoginPage() {
+   const { updateFormData } = useFormContext();
+
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
    const [authToken, setAuthToken] = useState<string>("");
@@ -25,8 +28,10 @@ export default function LoginPage() {
       setError("");
 
       if (authToken) {
-        sessionStorage.setItem("authToken", authToken)
+         sessionStorage.setItem("authToken", authToken);
       }
+
+      updateFormData({ email: { email } });
 
       router.push("/userInfoGeneral");
    };
@@ -52,10 +57,12 @@ export default function LoginPage() {
                   height={150}
                ></Image>
 
-               <p className="text-primary-text font-bold text-lg">
-                  Welcome to the McMaster Engineering Society Reimbursement
-                  Platform
-               </p>
+               <div className="flex flex-row w-full items-center justify-center px-5 text-center">
+                  <p className="text-primary-text font-bold text-lg">
+                     Welcome to the McMaster Engineering Society Reimbursement
+                     Platform
+                  </p>
+               </div>
 
                <p className="text-secondary-text font-semibold text-sm">
                   Enter your McMaster email to continue
@@ -81,17 +88,23 @@ export default function LoginPage() {
                   </button>
                </div>
 
-              {/* Temporary Auth Token Dropdown */}
+               {/* Temporary Auth Token Dropdown */}
                <div className="w-1/3 mt-4">
-                  <label className="text-secondary-text font-semibold text-sm">Select Auth Token:</label>
+                  <label className="text-secondary-text font-semibold text-sm">
+                     Select Auth Token:
+                  </label>
                   <select
                      className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
                      value={authToken}
                      onChange={(e) => setAuthToken(e.target.value)}
                   >
                      <option value="">Select Token</option>
-                     <option value="67a773a08ffa46d4f4be2ae2">Admin Token</option>
-                     <option value="67a9109e9b49fd74280caf86">Student Token</option>
+                     <option value="67aa7568a95f30c1a91f8a0a">
+                        Admin Token
+                     </option>
+                     <option value="67a9109e9b49fd74280caf86">
+                        Student Token
+                     </option>
                      <option value="token789">Token 789</option>
                   </select>
                </div>

@@ -66,4 +66,4 @@ const addUserData = (req, res, next) => {
     next(); // Call next() to move to the next middleware or route handler
 };
 
-module.exports = { addUserData, fakeAuth }
+module.exports = { fakeAuth };

@@ -41,12 +41,13 @@ const updateRequestStatus = async (req, res) => {
     // 2. Send email notification
     await sendEmail(
       user.email,
-      'notification', // Template type (no longer pass subject)
+      'notification',
       { 
         status: newStatus,
         requestDetails: {
           id: id,
-          name: user.name, // Ensure user.name exists!
+          firstName: user.firstName, // Changed
+          lastName: user.lastName,   // Changed
           amount: updatedRequest.totalAmount,
           submittedDate: updatedRequest.createdAt,
         }
@@ -59,7 +60,32 @@ const updateRequestStatus = async (req, res) => {
   }
 };
 
+const getRequestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Check both reimbursements and payments
+    const reimbursement = await reimbursementService.getReimbursementById(id);
+    const payment = await paymentService.getPaymentById(id);
+
+    if (!reimbursement && !payment) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+
+    return res.status(200).json({
+      request: reimbursement || payment
+    });
+    
+  } catch (error) {
+    return res.status(500).json({ 
+      error: "Internal server error", 
+      details: error.message 
+    });
+  }
+};
+
 module.exports = {
   getAllRequests,
-  updateRequestStatus
+  updateRequestStatus,
+  getRequestById,
 }

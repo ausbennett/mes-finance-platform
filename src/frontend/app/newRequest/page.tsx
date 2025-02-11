@@ -12,8 +12,12 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:300
 export default function NewRequestPage() {
   const [user,setUser] = useState(null)
   const [radio, setRadio] = useState<string>("reimbursement");
-  const [authToken, setAuthToken] = useState<string>("67a92f773eaf8368041ae608");
+  const [authToken, setAuthToken] = useState<string>("67aa7568a95f30c1a91f8a0a");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // for dev
+  const [selectedToken, setSelectedToken] = useState("");
+
   const [reimbursementFormData, setReimbursementFormData] = useState({
     requestor: "", 
     club: "", 
@@ -21,7 +25,6 @@ export default function NewRequestPage() {
     totalAmount: "",
     description: "",
   });
-
   const [paymentFormData, setPaymentFormData] = useState({
     requestor: "", 
     club: "", 
@@ -51,13 +54,14 @@ export default function NewRequestPage() {
             throw new Error("Failed to fetch user data");
           }
           const data = await response.json();
+          console.log("FETCH'D USER:",data)
           setUser(data);
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
       };
     fetchUserData();
-    }, []);
+    }, [authToken]);
 
   
   const handleRadioSelect = (value: string) => {
@@ -113,6 +117,11 @@ export default function NewRequestPage() {
   };
 
 
+    //dynamically set session storage auth token
+    useEffect(()=>{
+      sessionStorage.setItem("authToken",authToken)
+      console.log("SESSION TOKEN:", authToken)
+    },[authToken])
 
    return (
       <>
@@ -185,12 +194,38 @@ export default function NewRequestPage() {
                           <ReimbursementRequest user={user} formData={reimbursementFormData} setFormData={setReimbursementFormData} />
                         )}
                 
+
+
                         <div className="flex flex-row items-center justify-end">
                            <button onClick={handleSubmit} className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg">
                               Submit
                            </button>
                         </div>
                      </div>
+
+                        {/* temp */}
+                         <div className="w-1/3 mt-4">
+                            <label className="text-secondary-text font-semibold text-sm">
+                               (DEV) Select Auth Token:
+                            </label>
+                            <select
+                               className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
+                               value={authToken}
+                               onChange={(e) => setSelectedToken(e.target.value)}
+                            >
+                               <option value="">Select Token</option>
+                               <option value="67aa7568a95f30c1a91f8a0a">Evan ****8a0a</option>
+                               <option value="67aa7323662dbc47dbed52ff">Adam ****52ff</option>
+                            </select>
+                          <button
+                            className="mt-2 px-4 py-2 bg-primary text-white text-sm rounded-md hover:bg-primary-text"
+                            onClick={() => setAuthToken(selectedToken)}
+                          >
+                            Set Auth Token
+                          </button>
+                         </div>
+                        {/* temp */}
+
                   </div>
                </div>
             </div>

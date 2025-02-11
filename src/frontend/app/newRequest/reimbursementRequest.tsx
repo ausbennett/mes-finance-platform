@@ -106,7 +106,8 @@ const ReimbursementRequest: React.FC<Props> = ({ user, formData, setFormData }) 
             <span className="label-text">Recipient {index + 1}</span>
             <input
               type="text"
-            className="input bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
+              className="input bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
+              placeholder="User ID"
               value={recipient.user}
               onChange={(e) => handleRecipientChange(index, "user", e.target.value)}
             />

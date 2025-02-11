@@ -16,6 +16,8 @@ const fakeAuth = async (req, res, next) => {
    const id = token; //for now just use the userID as a token
 
    // call helper function to get the appropriate user information
+   
+   console.log("testAUTH: looking for user with id: ", id)
    const user = await User.findById(id);
    if (!user) {
       //Return 404 if user not in DB
@@ -31,7 +33,7 @@ const fakeAuth = async (req, res, next) => {
     }
     */
 
-   console.log("TOKEN AUTH'D USER:", user.id);
+   console.log("testAUTH: TOKEN AUTH'D USER:", user.id);
 
    req.user = user;
    next();

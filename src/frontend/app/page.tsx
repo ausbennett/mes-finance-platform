@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormContext } from "@/context/UserFormContext";
 
 export default function LoginPage() {
@@ -19,22 +19,23 @@ export default function LoginPage() {
 
    const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();
-
       if (!validateEmail(email)) {
          setError("Please enter a valid McMaster email address");
          return;
       }
-
       setError("");
-
       if (authToken) {
          sessionStorage.setItem("authToken", authToken);
       }
-
       updateFormData({ email: { email } });
-
       router.push("/userInfoGeneral");
    };
+    
+    //dynamically set session storage auth token
+    useEffect(()=>{
+      sessionStorage.setItem("authToken",authToken)
+      console.log("SESSION TOKEN:", authToken)
+    },[authToken])
 
    return (
       <>
@@ -105,7 +106,7 @@ export default function LoginPage() {
                      <option value="67a9109e9b49fd74280caf86">
                         Student Token
                      </option>
-                     <option value="token789">Token 789</option>
+                     <option value="67aa7568a95f30c1a91f8a0a">Evan Admin ****8a0a</option>
                   </select>
                </div>
             </div>

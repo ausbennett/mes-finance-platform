@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
+import NavBar from "../components/navbar";
 import axios from "axios";
 
 export default function AuditPage() {
@@ -117,6 +118,8 @@ export default function AuditPage() {
 
 
   return (
+    <div>
+      <NavBar />
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
       <div className="flex gap-4 mb-4">
@@ -181,6 +184,7 @@ export default function AuditPage() {
           )}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }

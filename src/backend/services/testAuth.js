@@ -4,6 +4,16 @@ const User = require("../models/user.model");
 
 //simulate some of the JWT token workflow for development purposes
 const fakeAuth = async (req, res, next) => {
+
+    if (process.env.NODE_ENV === 'test') {
+      if (req.headers['test-user']) {
+        req.user = JSON.parse(req.headers['test-user']);
+        return next();
+      }
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+
    // get the token
    const token = req.headers.authorization?.split(" ")[1]; // Expecting 'Bearer <token>'
    if (!token) {

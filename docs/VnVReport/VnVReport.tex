@@ -98,39 +98,38 @@ The configuration for the CI/CD automation can be found at \url{}
 and the test pipeline can be viewed at \url{}.
 		
 \section{Trace to Requirements}
-\begin{table}[ht]
-  \caption{Trace from Test to Requirements}
-  \centering
-  \begin{tabular}{c c}
-    \hline
-    Test Suite & Requirement(s) \\
-    \hline
-    emailer.test.js & FR1.5, FR3.2 \\
-    reconciler.test.js & FR1.1, FR1.4, FR1.6, FR1.9, INR1, SPLR1-3 \\
-    requests.test.js & FR1.2, FR1.3, FR1.8, PVR1 \\ 
-    Account management test suite (TBD) & FR1.7, FR3.1, FR3.2
-    Usability testing (via checklist) & APR1, APR2, STYR1, STYR2, EUR1-3, PIR1, LER2, UAPR1, ACSR1, SCR1-5, CLTR1 \\
-    Static analysis (via checklist) & POAR1, LOR1, WR1, RLR1, ACSR2, MR2, SR1, LR1, LR2, STR1 \\
-    Load testing & CPR1-3, SER2 \\
-    \hline
-  \end{tabular}
+
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
+\toprule {\bf Test Suite} & {\bf Functional Requirement}\\
+\midrule 
+emailer.test.js & FR1.5, FR3.2\\
+reconciler.test.js & FR1.1, FR1.4, FR1.6, FR1.9, INR1, SPLR1-3\\
+requests.test.js & FR1.2, FR1.3, FR1.8, PVR1\\ 
+Account management test suite (TBD) & FR1.7, FR3.1, FR3.2\\
+Usability testing (via checklist) & APR1, APR2, STYR1, STYR2, EUR1-3, PIR1, LER2, UAPR1, ACSR1, SCR1-5, CLTR1\\
+Static analysis (via checklist) & POAR1, LOR1, WR1, RLR1, ACSR2, MR2, SR1, LR1, LR2, STR1\\
+Load testing & CPR1-3, SER2\\
+\bottomrule
+\end{tabularx}
+\caption{Mapping between test suites and requirements}
 \end{table}
-		
-\section{Trace to Modules}		
-\begin{table}[ht]
-  \caption{Trace from Test to Modules}
-  \centering
-  \begin{tabular}{c c}
-    \hline
-    Test Suite & Module(s) \\
-    \hline
-    emailer.test.js & Notification Module (M4), Authentication Module (M6), Emailer API (M7) \\
-    reconciler.test.js & Clubs, User, Request Database(M10-12) \\
-    requests.test.js & Requests Module(M3), Requests Controller (M9) \\
-    Account management test suite (TBD) & Account Management Module (M2), User Dashboard Module (M5), Account Management Controller (M8) \\
-    Usability testing (via checklist) & Graphical User Interface (M13) \\    
-    
-  \end{tabular}
+
+\section{Trace to Modules}
+
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
+\toprule {\bf Test Suite} & {\bf Module}\\
+\midrule 
+emailer.test.js & Notification Module (M4), Authentication Module (M6), Emailer API (M7)\\
+reconciler.test.js & Clubs, User, Request Database(M10-12)\\
+requests.test.js & Requests Module(M3), Requests Controller (M9)\\
+Account management test suite (TBD) & Account Management Module (M2), User Dashboard Module (M5), Account Management Controller (M8)\\
+Usability testing (via checklist) & Graphical User Interface (M13)\\
+\bottomrule
+\end{tabularx}
+\caption{Mapping between test suites and modules}
+\end{table}
 
 \section{Code Coverage Metrics}
 

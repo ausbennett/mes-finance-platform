@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{float}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -94,11 +95,16 @@ should be highlighted.}
 \section{Automated Testing}
 
 The tests were set up to automatically run in GitHub Actions whenever a commit was pushed to the $\mathtt{main}$ branch.
-The configuration for the CI/CD automation can be found at \url{}
-and the test pipeline can be viewed at \url{}.
+The configuration for the CI/CD automation can be found at \url{https://github.com/ausbennett/mes-finance-platform/blob/main/.github/workflows/test.yml}
+and the test pipeline can be viewed at \url{https://github.com/ausbennett/mes-finance-platform/actions/workflows/test.yml}.
 		
 \section{Trace to Requirements}
+<<<<<<< HEAD
 \begin{table}[!h]
+=======
+\subsection{Trace table}
+\begin{table}[H]
+>>>>>>> 6f42cd61f74e8758dba05304d932754215a29572
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf Test Suite} & {\bf Functional Requirement}\\
   emailer.test.js & FR1.5, FR3.2\\
@@ -114,7 +120,7 @@ and the test pipeline can be viewed at \url{}.
 
 
 \section{Trace to Modules}
-\begin{table}[!h]
+\begin{table}[H]
 \begin{tabularx}{\textwidth}{p{5cm}p{5cm}}
 \toprule {\bf Test Suite} & {\bf Module}\\
 \midrule 
@@ -161,11 +167,26 @@ graduate attribute of Reflection.
 \input{../Reflection.tex}
 
 \begin{enumerate}
+<<<<<<< HEAD
   \item What went well while writing this deliverable? 
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+=======
+  \item What went well while writing this deliverable?\\
+\\
+In this deliverable, leveraging tools like GitHub Actions for automated testing helped us streamline validation. Additionally, having already incorporated feedback from the V\&V Plan, it made the process of creating the V\&V Report much easier. From delegating roles to having pre-made checklists for usability testing, using the V\&V Plan made our lives much easier.\\
+
+  \item What pain points did you experience during this deliverable, and how
+    did you resolve them?\\
+\\
+A significant challenge was designing a test suite that remains relevant as the project evolves. Since some core features are still in development, early tests risked becoming obsolete as APIs and interfaces changed. To address this, we prioritized testing isolated modules (e.g., database schemas, utility functions) with stable contracts and used mocking for incomplete subsystems. We also adopted a CI/CD-driven iterative approach, updating tests incrementally alongside implementation sprints to ensure alignment while preserving test value.\\
+
+>>>>>>> 6f42cd61f74e8758dba05304d932754215a29572
   \item Which parts of this document stemmed from speaking to your client(s) or
-  a proxy (e.g. your peers)? Which ones were not, and why?
+  a proxy (e.g. your peers)? Which ones were not, and why?\\
+\\
+The usability testing checklist was shaped by stakeholders as our supervisor has been vocal about which features should have a bigger focus on usability rather than expanding the functionality. Other things, such as our automated testing strategy, were internally designed. From the testing we did before the Rev0 demo, we are already aware of which areas require more rigorous testing compared to other features.\\
+  
   \item In what ways was the Verification and Validation (VnV) Plan different
   from the activities that were actually conducted for VnV?  If there were
   differences, what changes required the modification in the plan?  Why did
@@ -173,9 +194,13 @@ graduate attribute of Reflection.
   projects?  If there weren't any differences, how was your team able to clearly
   predict a feasible amount of effort and the right tasks needed to build the
   evidence that demonstrates the required quality?  (It is expected that most
+<<<<<<< HEAD
   teams will have had to deviate from their original VnV Plan.)
   \\The main difference between the plan and the report was the scale of the testing. The plan was more ambitious than what was probably doable in the time frame, and we had pages and pages of tests for NFRs that would have required external stakeholders to execute, some of whom may be hard to get a hold of. As we moved forward it became clear we needed to focus our energy toward a smaller suite that makes more use of automated testing and usability testing with Luke to cover our bases. It is definitely possible in future projects to foresee this kind of an issue. However, timing can be a difficult thing to predict and one often doesn't know how things will pan out until they actually happen.
   %How many subquestions were they trying to stuff into this last one?? What kind of society are we living in
+=======
+  teams will have had to deviate from their original VnV Plan.)\\
+>>>>>>> 6f42cd61f74e8758dba05304d932754215a29572
 \end{enumerate}
 
 \end{document}

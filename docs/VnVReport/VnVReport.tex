@@ -136,11 +136,232 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
+\subsection{Look and Feel (NFR10)}  
+\label{nfr10}
 
-\subsection{etc.}
+\begin{itemize}
+    \item \textbf{Appearance (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.1.1:} UI renders properly on desktops (1024x768) – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.1.2:} UI renders properly on mobile devices – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.1.3:} All elements aligned on all devices – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.1.4:} Fonts, colors, spacing consistent – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.1.5:} Branding aligns with MES guidelines – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.1.8:} Key information displayed prominently – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Style (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.1.6:} Icons intuitive – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.1.7:} Tooltips for unclear icons – \textbf{Passed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Notes}  
+\begin{itemize}
+    \item \textbf{Failures in Appearance T1:}  
+    \begin{itemize}
+        \item Mobile rendering exhibited layout inconsistencies on screens smaller than 5.5 inches (Checklist 6.1.1.2).  
+        \item Elements misaligned on mobile devices during form submissions (Checklist 6.1.1.3).  
+    \end{itemize}
+    \item \textbf{Successes in Style T1:} Users recognized all icons intuitively, and tooltips were provided for ambiguous symbols (Checklist 6.1.1.6–7).  
+\end{itemize}
+
+\subsection{Usability and Humanity (NFR11)}  
+\label{nfr11}
+
+\begin{itemize}
+    \item \textbf{Ease of Use (Tests T1, T2):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.2.1:} Navigate to primary functions in ≤3 clicks – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.2:} Form validation messages correct – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.3:} Complete tasks in ≤2 minutes – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.4:} Edit profile in ≤3 clicks – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.5:} Personalization changes reflected immediately – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.6:} Tutorial video accessible – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.2.7:} Instructions free of jargon – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.8:} Button labels clear – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Accessibility (Test T1, T2):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.2.9:} Keyboard navigation equivalent to mouse – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.2.10:} Text font size ≥12pt – \textbf{Passed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Notes}  
+\begin{itemize}
+    \item \textbf{Failure in Ease of Use (Checklist 6.1.2.6):} The tutorial video was not easily accessible from the home page.  
+    \item \textbf{Testing Context:} Results for NFR10 and NFR11 were conducted within the group. Further testing will involve the supervisor and potential users.  
+\end{itemize}
+
+\subsection{Performance (NFR12)}  
+\label{nfr12}
+
+\begin{itemize}
+    \item \textbf{Speed and Latency (Tests T1, T2, T3):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.1:} 95\% of tasks completed in <1s – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.3.2:} Large files processed in ≤30s – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.3:} System recovers from crash without data loss – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.3.4:} Backups stored and verified – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.5:} Handles 20 simultaneous users – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.6:} Processes 10 years of dummy data – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Safety-Critical (Test T1, T2):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.7:} Credit card numbers masked – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.8:} Unauthorized access prevented – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Precision and Accuracy (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.9:} Monetary calculations rounded to 2 decimal places – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Robustness or Fault-Tolerance (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.10:} Daily backups verified – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Capacity (Tests T1, T2, T3):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.11:} Handles large request volume – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.12:} Handles simultaneous requests – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.13:} Stores 10 years of dummy data – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Scalability or Extensibility (Tests T1, T2):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.14:} Handles stress tests until failure – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.15:} Third-party endpoints return JSON – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Longevity (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.3.16:} Code components adaptable for future maintenance – \textbf{Passed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Notes}  
+\begin{itemize}
+    \item \textbf{Failures in Development Environment:} Many failed test cases (e.g., capacity, simultaneous users, backups) are attributed to the system being in development rather than production.
+\end{itemize}
+
+\subsection{Operational and Environmental (NFR13)}  
+\label{nfr13}
+
+\begin{itemize}
+    \item \textbf{Expected Physical Environment (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.1:} Compatibility with Windows 10 and Intuit QuickBooks specs – \textbf{Deferred}.  
+    \end{itemize}
+    
+    \item \textbf{Wider Environment (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.2:} Compliance with Canadian financial institution standards – \textbf{Deferred}.  
+    \end{itemize}
+    
+    \item \textbf{Interfacing with Adjacent Systems (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.3:} Integration with major Canadian banks – \textbf{Deferred}.  
+    \end{itemize}
+    
+    \item \textbf{Production (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.4:} User training material clarity – \textbf{Deferred}.  
+    \end{itemize}
+    
+    \item \textbf{Release (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.5:} Feasibility of biannual releases – \textbf{Deferred}.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Notes}  
+\begin{itemize}
+    \item \textbf{Deferred Testing:} Tests for NFR13 will align with the system’s progression to production readiness. Current development constraints (e.g., incomplete integrations, non-finalized environments) prevent accurate assessment.  
+    \item \textbf{Next Steps:} These tests will be prioritized during later development phases, including post-deployment monitoring and stakeholder reviews.  
+\end{itemize}
+
+\subsection{Maintainability and Support (NFR14)}  
+\label{nfr14}
+
+\begin{itemize}
+    \item \textbf{Maintenance (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.1:} Coding standards followed – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.4.2:} No critical errors in build tools – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.4.3:} Documentation up to date – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.4.4:} Updates tested and documented – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Supportability (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.5:} Documentation updated with releases – \textbf{Passed}.  
+    \end{itemize}
+    
+    \item \textbf{Adaptability (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.4.6:} Regression tests performed regularly – \textbf{Failed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsection{Security (NFR15)}  
+\label{nfr15}
+
+\begin{itemize}
+    \item \textbf{Access (Tests T1, T2):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.5.1:} Unauthorized access prevented – \textbf{Passed}.  
+        \item \textbf{Checklist 6.1.5.2:} Multi-factor authentication enforced – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Integrity/Audit (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.5.3:} Audit logs maintained – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Privacy (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.5.4:} Sensitive data encrypted – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Immunity (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.5.5:} System recovers from attacks within 4 hours – \textbf{Failed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsection{Cultural (NFR16)}  
+\label{nfr16}
+
+\begin{itemize}
+    \item \textbf{Testing Status:} Cultural compliance testing (e.g., internationalization, accessibility for non-English speakers) will be conducted during future development phases.  
+\end{itemize}
+
+\subsection{Compliance (NFR17)}  
+\label{nfr17}
+
+\begin{itemize}
+    \item \textbf{Legal (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.6.1:} Adheres to data protection policies – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.6.2:} Compliant with Canadian financial regulations – \textbf{Failed}.  
+    \end{itemize}
+    
+    \item \textbf{Standard Compliance (Test T1):}  
+    \begin{itemize}
+        \item \textbf{Checklist 6.1.6.3:} Follows web security standards – \textbf{Failed}.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Notes}  
+\begin{itemize}
+    \item \textbf{Deferred Fixes:} Compliance failures (data protection, financial regulations, web security) will be prioritized during Rev 1 development.  
+\end{itemize}
 	
 \section{Comparison to Existing Implementation}	
 

@@ -13,7 +13,7 @@
 \usepackage{xfrac}
 \usepackage{tabularx}
 \usepackage{float}
-%\usepackage{siunitx}
+%\usepackage{siunitx} this shit is both breaking and not doing anything so im taking spencers stuff out of here 
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage[section]{placeins}
@@ -55,7 +55,7 @@ urlcolor=cyan          % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 Jan 17 2025 & 1.0 & All Sections\\
-% Date 2 & 1.1 & Notes\\
+Mar 24 2025 & 2.0 & Updated Authentication, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/4cef88de4d7c2a664fa8e2395804251c0a6baeb4}{4cef88d}\\
 \bottomrule
 \end{tabularx}
 
@@ -136,7 +136,7 @@ The following table is taken directly from the Module Guide document for this pr
 & Requests Module\\
 & Notification Module\\
 & User Dashboard Module\\
-& Authentication Module\\ 
+& \st{Authentication Module}\\ 
 & Email Module\\
 & Account Management Controller Module\\
 & Requests Controller Module\\
@@ -357,7 +357,7 @@ None
 \section{MIS of User Dashboard Module} \label{UserDashboard} \subsection{Module} User Dashboard
 
 \subsection{Uses}
-Requests Module, Account Management API, Authentication Module
+Requests Module, Account Management API, \st{Authentication Module}
 
 \subsection{Syntax}
 

@@ -369,7 +369,7 @@ The following sections will cover system tests for functional and non-functional
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-The subsections below cover tests relating to functional requirements for the reimbursement request feature. The tests below cover requirements FR1.1 - FR1.9 in section 9.1.1 of the \href{https://shorturl.at/FdAgR}{SRS}. 
+The subsections below cover tests relating to functional requirements for the reimbursement request feature. The tests below cover requirements FR1.1 - FR1.9 in section 9.1.1 of the \href{https://shorturl.at/FdAgR}{SRS} (Functional Requirements for Reimbursement and Payment Request feature). Please see the "Test Case Derivation" section on each case for specific details.
 		
 \paragraph{FR1.1 - Successful Submissions of reimbursement request}
 
@@ -397,7 +397,7 @@ Output:
     \item Request status reads "Submitted"
 \end{itemize}
 
-Test Case Derivation: This test case verifies that the users can successfully submit a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS}. Successfully submitted requests will be given status "Submitted".
+Test Case Derivation: This test case, with FR1.1-TC2, verifies that the users can successfully submit a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS} by supplying valid receipts, documents, and payment info. Successfully submitted requests will be given status "Submitted".
 					
 How test will be performed:
 \begin{itemize}
@@ -430,7 +430,7 @@ Output:
     \item Error message is displayed - "Improper image format. Images must be JPEG or PNG)
 \end{itemize}
 
-Test Case Derivation: This test case enforces proper input of required fields to allow for the successful submission of a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS}. Improper input file type should result in the system not allowing a user to submit their request.
+Test Case Derivation: This test case, with FR1.1-TC1, enforces proper input of required fields to allow for the successful submission of a reimbursement request as per FR1.1 in the \href{https://shorturl.at/FdAgR}{SRS} by ensuring input data follows the correct format. Improper input file type should result in the system not allowing a user to submit their request.
 
 How test will be performed: 
 \begin{itemize}
@@ -471,7 +471,7 @@ How test will be performed:
         \item The user who submitted the reimbursement request receives a notification about the approval (Covered in FR1.5 tests)
     \end{itemize}
     
-    Test Case Derivation: This test case verifies that admins can review and approve submitted reimbursement requests as per FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This test case, along with FR1.2-TC2, verifies FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS} by verifying that a system containing unresolved requests can be viewed and approved by a user that is logged in as an Administrator. FR1.2-TC2 verifies rejections.
     
     How test will be performed:
     \begin{itemize}
@@ -509,7 +509,7 @@ How test will be performed:
         \item reason for rejection is stored with the associated request
     \end{itemize}
     
-    Test Case Derivation: This test case verifies that admins can review and reject submitted reimbursement requests as per FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This test case, along with FR1.2-TC1, verifies FR1.2 in the \href{https://shorturl.at/FdAgR}{SRS} by verifying that users with Admin access can review and reject pending requests in the system. FR1.2-TC1 verifies approvals.
     
     How test will be performed:
     \begin{itemize}
@@ -531,8 +531,8 @@ How test will be performed:
     
     Initial State:
     \begin{itemize}
-        \item User is authenticated and logged into the system
-        \item User's submitted reimbursement request has status "Requires Attention" because of an unclear image of a purchase receipt
+        \item User (with or without Admin privileges) is authenticated and logged into the system
+        \item A User's submitted reimbursement request has status "Requires Attention" because of an unclear image of a purchase receipt
     \end{itemize}
     
     Inputs: 
@@ -549,7 +549,7 @@ How test will be performed:
         \item Action is recorded in the audit log
     \end{itemize}
     
-    Test Case Derivation: This test verifies users and admins can edit a submitted reimbursement request as per FR1.3 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This test verifies users and admins can edit a submitted reimbursement request as per FR1.3 in the \href{https://shorturl.at/FdAgR}{SRS} , provided there is a request in the system with the "Requires Attention" status.
     
     How test will be performed:
     \begin{itemize}
@@ -591,14 +591,16 @@ How test will be performed:
         \item System reflects this change of status in DB
     \end{itemize}
     
-    Test Case Derivation: This test verifies that the system can track the status of each request as per FR1.4 in the \href{https://shorturl.at/FdAgR}{SRS}. If an admin sets a request's status to "Under Review" the status of the request should be changed to "Under Review".
+    Test Case Derivation: This test verifies that the system can track the status of each request as outlined FR1.4 in the \href{https://shorturl.at/FdAgR}{SRS} and that this status will persist and be presented in the UI.
     
     How test will be performed:
     \begin{itemize}
-        \item Logged in as an admin, change a request's status from "Submitted" to "Under Review"
+        \item Logged in as an admin, select the option on a pending request to change its status from "Submitted"
+        \item Verify that several status options are possible (according to current requirements, these would be "Under Review", "Approved", "Rejected", "Requires Attention")
+        \item Select "Under Review"
         \item Verify that the status is changed to "Under Review" in the UI
         \item Verify using Postman that the correct PATCH request is made and the status is reflected in the DB
-        \item Repeat the above actions with various status values (Approved, Rejected).
+        \item Repeat the above actions with the remaining status values.
     \end{itemize}
 \end{enumerate}
 
@@ -664,7 +666,7 @@ How test will be performed:
         \item Request object is given budget category attribute "Office supplies"
     \end{itemize}
     
-    Test Case Derivation: This test verifies that the system will store and categorize reimbursement requests based on budget categories for ledger tracking as per FR1.6 in the \href{https://shorturl.at/FdAgR}{SRS}.
+    Test Case Derivation: This test verifies that the system will store and categorize reimbursement requests based on budget categories for ledger tracking as per FR1.6 in the \href{https://shorturl.at/FdAgR}{SRS}, and that this request is assigned to an appropriate budget category.
     
     How test will be performed:
     \begin{itemize}
@@ -683,7 +685,7 @@ How test will be performed:
     
     Initial State:
     \begin{itemize}
-        \item User X and User Y have submitted reimbursement requests.
+        \item Two non-Admin users (User X and User Y) have submitted reimbursement requests. Tester is logged in as a general user.
     \end{itemize}
     
     Inputs: 
@@ -696,7 +698,7 @@ How test will be performed:
         \item The system denies access and displays an error message - "You do not have access"
     \end{itemize}
     
-    Test Case Derivation: This verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. General users should only have access to view requests that they have submitted.
+    Test Case Derivation: This test, with FR1.7-TC2 verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. General users should only have access to view requests that they have submitted. TC2 verifies the workflow for Admin users.
     
     How test will be performed:
     \begin{itemize}
@@ -713,7 +715,7 @@ How test will be performed:
     
     Initial State:
     \begin{itemize}
-        \item User X and User Y have submitted reimbursement requests.
+        \item Two users, User X and User Y, have submitted reimbursement requests. Tester is logged in as an Admin.
     \end{itemize}
     
     Inputs: 
@@ -726,7 +728,7 @@ How test will be performed:
         \item The system responds with all submitted reimbursement requests. Admin can view User X's requests and User Y's requests
     \end{itemize}
     
-    Test Case Derivation: This verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. Admin users should have access to view all submitted requests.
+    Test Case Derivation: This case, with FR1.7-TC1, verifies that the system can restrict access to view sensitive financial information submitted by users as per FR1.7 in the \href{https://shorturl.at/FdAgR}{SRS}. Admin users should have access to view all submitted requests. TC1 covers the workflow for non-Admin (general) users.
     
     How test will be performed:
     \begin{itemize}
@@ -799,7 +801,7 @@ How test will be performed:
         \item The system records the action with details: request ID, action type (status change), user (name, email), timestamp
     \end{itemize}
     
-    Test Case Derivation: This test verifies that the system can track and store all actions performed concerning a single reimbursement request as per FR1.9 in the \href{https://shorturl.at/FdAgR}{SRS}. 
+    Test Case Derivation: This test verifies that the system can track and store all actions performed concerning a single reimbursement request as per FR1.9 in the \href{https://shorturl.at/FdAgR}{SRS}. Different requests should not be created, but updates should persist for an existing request.
     
     How test will be performed:
     \begin{itemize}
@@ -814,6 +816,8 @@ How test will be performed:
 \textit{Note: These system tests have been omitted for this deliverable, as this feature may become a stretch goal depending on the progression of the project. If time permits, the system tests for this section will be included in the Revision 1 VnV Report}
 
 \subsubsection{Tests for Functional Requirements 9.1.3 - General Functional Requirements}
+
+The subsections below cover tests relating to functional requirements for the reimbursement request feature. The tests below cover requirements FR3.1 - FR3.3 in section 9.1.1 of the \href{https://shorturl.at/FdAgR}{SRS} (General Functional Requirements). Please see the "Test Case Derivation" section on each case for specific details.
 
 \textit{Note: the below tests for requirements FR3.1-FR3.3 are subject to change as a concrete authentication method has not yet been established. This will likely be established in the detailed design document. The system will either use a classic authentication method (username and password login/signup), or authentication using tokens sent to the user's McMaster email address.}
 
@@ -878,7 +882,7 @@ How test will be performed:
         \item The user is authenticated successfully
     \end{itemize}
     
-    Test Case Derivation: This test ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This test, with FR3.2-TC2, ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS}. TC2 covers the inverse case (invalid user).
     
     How test will be performed:
     \begin{itemize}
@@ -907,7 +911,7 @@ How test will be performed:
         \item The user receives an error message: "Authentication failed. You must be a registered McMaster University student to access this system."
     \end{itemize}
     
-    Test Case Derivation: This test ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This test, with FR3.2-TC1, ensures that only registered McMaster University students can access the system as per FR3.2 in the \href{https://shorturl.at/FdAgR}{SRS} by checking that the opposite (login with external users) is impossible. TC1 covers the inverse case.
     
     How test will be performed:
     \begin{itemize}
@@ -945,9 +949,10 @@ How test will be performed:
         \item The system displays the updated information in the UI
         \item The updated data is successfully stored in the DB
         \item A confirmation message is displayed: "Profile information updated successfully"
+        \item On accessing the profile page again, the update persists.
     \end{itemize}
     
-    Test Case Derivation: This verifies that users can update their profile information as per FR3.3 in the \href{https://shorturl.at/FdAgR}{SRS}
+    Test Case Derivation: This verifies that users can update their profile information as per FR3.3 in the \href{https://shorturl.at/FdAgR}{SRS} and that the change persists in the system.
     
     How test will be performed:
     \begin{itemize}
@@ -984,6 +989,9 @@ be involved? Be specific.}
 
 \hypertarget{nfr10}{}
 \subsubsection{NFR10 - Look and Feel}
+
+The subsections below cover tests relating to sections 10.1 and 10.2 in the \href{https://shorturl.at/FdAgR}{SRS}.
+
 \paragraph{Appearance}
 \begin{enumerate}
 \item {T1\\}\\
@@ -994,9 +1002,9 @@ Initial State: System is loaded on two different types of devices (desktop, tabl
 
 Input/Condition: NA
 
-Output: Completed \hyperlink{checklist-nfr10}{checklist}, indicating whether the requirement is satisfied
+Output: Completed \hyperlink{checklist-nfr10}{checklist}, indicating whether the requirement is satisfied by the UI being responsive and following MES branding.
 
-How Test Will Be Performed: The user will navigate through the program to complete a checklist that determines whether the interface is sufficiently and uniformly responsive across different types of devices
+How Test Will Be Performed: The user will navigate through the program to complete a checklist that determines whether the interface is sufficiently and uniformly responsive across different types of devices. This verifies APR1 and APR2.
 \end{enumerate}
 \paragraph{Style}
 \begin{enumerate}
@@ -1010,11 +1018,14 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr10}{checklist}, indicating whether the user is familiar with all icons that appear in the program without further descriptions
 
-How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means intuitively.
+How Test Will Be Performed: The user will complete a checklist filled with symbols from the system, and they are asked to note whether they know what the symbol means intuitively to verify STYR1.
 \end{enumerate}
 
 \hypertarget{nfr11}{}
 \subsubsection{NFR11 - Usability and Humanity}
+
+The subsections below cover tests relating to sections 11.1 to 11.5 in the \href{https://shorturl.at/FdAgR}{SRS}.
+
 \paragraph{Ease of Use}
 \begin{enumerate}
 \item {T1\\}\\
@@ -1027,7 +1038,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr11}{checklist}, indicating the ease of use of the system
 
-How Test Will Be Performed: The user will given a task and asked to complete a checklist documenting how easy it was to complete the specified task and how long it took them to locate the relevant information. Completion time and time between steps would be monitored.
+How Test Will Be Performed: The user will given a task and asked to complete a checklist documenting how easy it was to complete the specified task and how long it took them to locate the relevant information. Completion time and time between steps would be monitored. This verifies EUR1 and EUR3.
 \item {T2\\}\\
 \hypertarget{NFR11.1-TC2}{}
 Type: Static
@@ -1038,7 +1049,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr11}{checklist}, evalutating the ease of use of the system
 
-How Test Will Be Performed: The user will be asked to complete a specific task while purposefully giving input errors. They will then fill out a checklist to evaluate whether the system includes relevant error messages that both help the user understand the mistakes and correct them.
+How Test Will Be Performed: The user will be asked to complete a specific task while purposefully giving input errors. They will then fill out a checklist to evaluate whether the system includes relevant error messages that both help the user understand the mistakes and correct them. This verifies EUR2.
 \end{enumerate}
 \paragraph{Personalization and Internationalization}
 \begin{enumerate}
@@ -1050,7 +1061,7 @@ Initial State: System is loaded at the user's account information screen
 
 Input/Condition: NA
 
-Output: Completed \hyperlink{checklist-nfr11}{checklist}, evaluating the ease of access of the personalization features and their usefulness to the user (how much their experience improved due to personalization) on a scale from 1-10.
+Output: Completed \hyperlink{checklist-nfr11}{checklist}, evaluating the ease of access of the personalization features and their usefulness to the user (how much their experience improved due to personalization) on a scale from 1-10. This verifies PIR1 and PIR2.
 
 How Test Will Be Performed: The user will be asked to edit their profile and complete a checklist that documents how many clicks it takes, how long it takes for the changes to be reflected, and the usefulness of the changes.
 \end{enumerate}
@@ -1066,7 +1077,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr11}{checklist}, indicating the ease of learnability of the system
 
-How Test Will Be Performed: The user will be asked to complete a task with only the aid of the system's learning materials. They will then fill in a checklist to evaluate how easy it was to access relevant information and how helpful the info was for completing the task.
+How Test Will Be Performed: The user will be asked to complete a task with only the aid of the system's learning materials. They will then fill in a checklist to evaluate how easy it was to access relevant information and how helpful the info was for completing the task. This verifies LER1 and LER2.
 \end{enumerate}
 \paragraph{Understandability and Politeness}
 \begin{enumerate}
@@ -1080,7 +1091,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr11}{checklist}, indicating the understandability of the system
 
-How Test Will Be Performed: The user will be given a list of text and instructions that appear when navigating the system. They will then fill out a checklist evaluating if they believe the instructions are written in plain language or use technical jargon, evaluating readability. Users should have little or no technical expertise so as to not recognize any jargon.
+How Test Will Be Performed: The user will be given a list of text and instructions that appear when navigating the system. They will then fill out a checklist evaluating if they believe the instructions are written in plain language or use technical jargon, evaluating readability. Users should have little or no technical expertise so as to not recognize any jargon. This verifies UAPR1.
 \end{enumerate}
 \paragraph{Accessibility}
 \begin{enumerate}
@@ -1094,7 +1105,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr11}{checklist}, indicating the accessibility of the system
 
-How Test Will Be Performed: The user will be asked to complete a task only using their keyboard and they will complete a checklist evaluating how easy it was to navigate with keyboard only compared to using the mouse as well.
+How Test Will Be Performed: The user will be asked to complete a task only using their keyboard and they will complete a checklist evaluating how easy it was to navigate with keyboard only compared to using the mouse as well. This verifies ACSR1.
 \item {T2\\}\\
 \hypertarget{NFR11.5-TC2}{}
 Type: Automatic
@@ -1105,11 +1116,13 @@ Input/Condition: The URL of the system
 
 Output: Pass Or Fail
 
-How Test Will Be Performed: Run a python script that locates all text elements on a page and determines the displayed font size. Test shall pass if all text is at least 12 font size.
+How Test Will Be Performed: Run a python script that locates all text elements on a page and determines the displayed font size. Test shall pass if all text is at least 12 font size. This verifies ACSR2.
 \end{enumerate}
 
 \hypertarget{nfr12}{}
 \subsubsection{NFR12 - Performance}
+
+The subsections below cover tests relating to sections 12.1 to 12.7 in the \href{https://shorturl.at/FdAgR}{SRS}.
 		
 \paragraph{Speed and Latency}
 
@@ -1126,7 +1139,7 @@ Input/Condition: A dummy/QA payment request form
 
 Output: Success/Failure/Error message following processing of the request
 
-How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time. This verifies SPLR1.
  
 					
 \item{T2\\}
@@ -1140,7 +1153,7 @@ Input/Condition: A dummy invoice generation request
 
 Output: Newly generated invoice or appropriate failure/error message
 
-How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time. This verifies SPLR2.
 
 \item{T3\\}
 \hypertarget{NFR12.1-TC3}{}
@@ -1153,7 +1166,7 @@ Input/Condition: A dummy/QA reimbursement request form
 
 Output: Success/Failure/Error message following processing of the request
 
-How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time.
+How test will be performed: Timer module will record time between sending of the input and receipt of the output to empirically determine processing time. This verifies SPLR3.
 
 \end{enumerate}
 
@@ -1172,7 +1185,7 @@ Input: A dummy/QA reimbursement request form
 
 Output: Success/Failure/Error message
 
-How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits.
+How test will be performed: Verify the UI, upon completion of the request, displays the credit card number used for the request is masked, with * in place of all but the first 4 digits. This verifies SFCR1.
 
 \item{T2\\}
 \hypertarget{NFR12.2-TC2}{}
@@ -1184,7 +1197,7 @@ Input: Request for data from an MES admin account
 
 Output: Failure/Error message
 
-How test will be performed: System should not display information to non-authorized user but instead display an appropriate message explaining why the request was denied.
+How test will be performed: System should not display information to non-authorized user but instead display an appropriate message explaining why the request was denied. This verifies SFCR2.
 \end{enumerate}
 
 \paragraph{Precision and Accuracy}
@@ -1201,7 +1214,7 @@ Input: N/A
 
 Output: Checklist evaluating each individual module's conformance to our 2-decimal number system.
 
-How test will be performed: Static analysis of code modules to ensure all monetary calculations are rounded to 2 decimal places.
+How test will be performed: Static analysis of code modules to ensure all monetary calculations are rounded to 2 decimal places. This verifies POAR1.
 \end{enumerate}
 
 \paragraph{Robustness or Fault-Tolerance}
@@ -1219,7 +1232,7 @@ Input: N/A
 
 Output: Backed up data is moved to the other database
 
-How test will be performed: Module will automatically compare the entries added to the backup database with those added to the main database on that day and raise an exception for any mismatch.
+How test will be performed: Module will automatically compare the entries added to the backup database with those added to the main database on that day and raise an exception for any mismatch. This verifies RFT1.
 
 \end{enumerate}
 
@@ -1237,7 +1250,7 @@ Input: Large number of reimbursement, invoice, or payment requests (ie, from a l
 
 Output: Success messages for all requests
 
-How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity \hyperlink{checklist-nfr12}{requirements} without failing.
+How test will be performed: System should be able to handle up to a certain number of requests per day as defined in the capacity \hyperlink{checklist-nfr12}{requirements} without failing to verify CPR1.
 
 \item{T2\\}
 \hypertarget{NFR12.5-TC2}{}
@@ -1250,7 +1263,7 @@ Input: Large number of simultaneous reimbursement, invoice, or payment requests
 
 Output: Success messages for all requests
 
-How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity \hyperlink{checklist-nfr12}{requirements} without failing.
+How test will be performed: System should be able to handle up to a certain number of simultaneous requests as defined in the capacity \hyperlink{checklist-nfr12}{requirements} without failing. This verifies CPR2.
 
 \item{T3\\}
 \hypertarget{NFR12.5-TC3}{}
@@ -1263,7 +1276,7 @@ Input: 10 years’ worth of dummy data
 
 Output: Successful data storage
 
-How test will be performed: 10 years’ worth of dummy data will be added to the backup database to ensure that it can store all data for 10 years as per \hyperlink{checklist-nfr12}{requirements}.
+How test will be performed: 10 years’ worth of dummy data will be added to the backup database to ensure that it can store all data for 10 years as per \hyperlink{checklist-nfr12}{requirements}. This verifies CPR3.
 
 \end{enumerate}
 
@@ -1281,7 +1294,7 @@ Input: Increasingly large numbers of payment requests to stress test (ie, from a
 
 Output: Eventual system failure; system metrics provided by testing application or profiling tools
 
-How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability.
+How test will be performed: System will undergo stress tests until failure. After, developers will review code and use profiling tools to identify bottlenecks and assess current scalability. This verifies SER2.
 
 \item{T2\\}
 \hypertarget{NFR12.6-TC2}{}
@@ -1294,7 +1307,7 @@ Input: Dummy API requests (eg, from Postman) that mimic real third party request
 
 Output: 200 Success and success body with proper format
 
-How test will be performed: Endpoints that will be open to third-party integrations provide success messages for basic requests (GET, POST) and return the message body in JSON format.
+How test will be performed: Endpoints that will be open to third-party integrations provide success messages for basic requests (GET, POST) and return the message body in JSON format. This verifies SER1.
 
 \end{enumerate}
 
@@ -1313,11 +1326,13 @@ Input: N/A
 
 Output: Checklist of recommendations and comments
 
-How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and adaptability. They will also review documentation to assess if future developers will have the necessary support to maintain the system without difficulties.
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and adaptability. They will also review documentation to assess if future developers will have the necessary support to maintain the system without difficulties. This verifies LOR1.
 
 \end{enumerate}
 
 \subsubsection{NFR13 - Operational and Environmental}
+
+The subsections below cover tests relating to sections 13.1 to 13.5 in the \href{https://shorturl.at/FdAgR}{SRS}.
 
 \paragraph{Expected Physical Environment}
 
@@ -1334,7 +1349,7 @@ Input: Several payment requests
 
 Output: Success messages for all requests
 
-How test will be performed: This test will be performed on a machine with Windows 10 and matching or similar specs to Intuit Quickbooks’ minimum requirements. The test is successful if no requests fail and are delivered within maximum time requirements (as outlined in 12.1 of our SRS document).
+How test will be performed: This test will be performed on a machine with Windows 10 and matching or similar specs to Intuit Quickbooks’ minimum requirements. The test is successful if no requests fail and are delivered within maximum time requirements (as outlined in 12.1 of our SRS document, specifically OR1).
   
 \end{enumerate}
 
@@ -1352,7 +1367,7 @@ Input: N/A
 
 Output: Checklist 
 
-How test will be performed: Static analysis of code, using a checklist, to ensure that the implemented processes conform to the industry standard for Canadian financial institutions
+How test will be performed: Static analysis of code, using a checklist, to ensure that the implemented processes conform to the industry standard for Canadian financial institutions. This verifies WR1.
   
 \end{enumerate}
 
@@ -1371,7 +1386,7 @@ Input: Mock payment request forms for users of all major Canadian banks (BMO, CI
 
 Output: Success message
 
-How test will be performed: Valid request forms should be processed with a success message for all major Canadian financial institutions.
+How test will be performed: Valid request forms should be processed with a success message for all major Canadian financial institutions. This verifies IAR1.
 
 \end{enumerate}
 
@@ -1390,7 +1405,7 @@ Input: N/A
 
 Output: Peer-review checklist
 
-How test will be performed: Users will be given training materials and fill out a checklist review of how easy they and the system are to understand.
+How test will be performed: Users will be given training materials and fill out a checklist review of how easy they and the system are to understand. This verifies PRD5 and PRD6.
 
 \end{enumerate}
 
@@ -1409,12 +1424,14 @@ Input: N/A
 
 Output: Checklist of recommendations, and comments
 
-How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 2 releases per year is doable and appropriate.
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 2 releases per year is doable and appropriate. This verifies RLR1.
 
 \end{enumerate}
 
 \hypertarget{nfr14}{}
 \subsubsection{NFR14 - Maintainability and Support}
+
+The subsections below cover tests relating to sections 14.1 and 14.3 in the \href{https://shorturl.at/FdAgR}{SRS}.
 
 \paragraph{Maintenance}
 
@@ -1431,7 +1448,7 @@ Input: N/A
 
 Output: Checklist of recommendations, and comments
 
-How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 10 percent of each year is sufficient downtime to keep the software efficient, working, and scalable.
+How test will be performed: Developers and outside reviewers will perform static analysis of major code components to assess design choices and advise if 10 percent of each year is sufficient downtime to keep the software efficient, working, and scalable. This verifies MR1-3.
 
 \end{itemize}
 
@@ -1450,7 +1467,7 @@ Input: N/A
 
 Output: Checklist
 
-How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software.
+How test will be performed: Reviewer will review user and team documentation upon each development release and provide feedback (in the form of a checklist) if the update to documentation sufficiently keeps track of the changes to software. This verifies SR1.
 :
 \end{itemize}
 
@@ -1469,12 +1486,15 @@ Input: Valid dummy payment requests
 
 Output: Success message
 
-How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software.
+How test will be performed: Automated regression testing, using previously valid input data, will be performed regularly on modules that integrate with external sources (eg, financial institutions) to check for external changes that affect our software. This verifies AR1.
 
 \end{itemize}
 
 \hypertarget{nfr15}{}
 \subsubsection{NFR15 - Security}
+
+The subsections below cover tests relating to sections 15.1 to 15.5 in the \href{https://shorturl.at/FdAgR}{SRS}.
+
 \paragraph{Access}
 \begin{enumerate}
 \item {T1\\}\\
@@ -1487,7 +1507,7 @@ Input/Condition: NA
 
 Output: Completed checklist, indicating whether the user has access to the correct features
 
-How Test Will Be Performed: The user will complete a checklist determining which features they have access to, test will be done across a student level and an admin level.
+How Test Will Be Performed: The user will complete a checklist determining which features they have access to, test will be done across a student level and an admin level. This verifies SCR1.
 
 \item {T2\\}\\
 \hypertarget{NFR15.1-TC2}{}
@@ -1500,7 +1520,7 @@ Input/Condition: NA
 
 Output: Completed checklist, indicating whether the login portal meets all functional requirements.
 
-How Test Will Be Performed: The user will complete a checklist to determine the security of the login portal. They will be asked to rate the performance of multi-factor authentication, password strengths and how inactive users are handled.
+How Test Will Be Performed: The user will complete a checklist to determine the security of the login portal. They will be asked to rate the performance of multi-factor authentication, password strengths and how inactive users are handled. This verifies SCR2-5.
 \end{enumerate}
 \paragraph{Integrity/Audit}
 \begin{enumerate}
@@ -1515,7 +1535,7 @@ Input/Condition: NA
 
 Output: Completed checklist, indicating whether the system has data integrity
 
-How Test Will Be Performed: The user will be given a list of financial transaction that should be logged, and will verify that they are correctly logged by querying the logs/database as necessary
+How Test Will Be Performed: The user will be given a list of financial transaction that should be logged, and will verify that they are correctly logged by querying the logs/database as necessary. This verifies INR1.
 \end{enumerate}
 \paragraph{Privacy}
 \begin{enumerate}
@@ -1530,7 +1550,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checklist-nfr15}{checklist}, indicating whether the privacy requirements are met
 
-How Test Will Be Performed: The user will complete a checklist determining whether the sensitive information is encrypted and anonymous
+How Test Will Be Performed: The user will complete a checklist determining whether the sensitive information is encrypted and anonymous. This verifies PVR1 and PVR2.
 \end{enumerate}
 \paragraph{Immunity}
 \begin{enumerate}
@@ -1545,9 +1565,12 @@ Input/Condition: Corrupting a file and initiating recovery procedures
 
 Output: Time it took the successfully recover the data
 
-How Test Will Be Performed: Simulate a data corruption event and time how long it takes to successfully recover the data, ensure that it is under 4 hours
+How Test Will Be Performed: Simulate a data corruption event and time how long it takes to successfully recover the data, ensure that it is under 4 hours. This verifies IMM1.
 \end{enumerate}
 \subsubsection{NFR16 - Cultural}
+
+The subsections below cover tests relating to sections 16.1 in the \href{https://shorturl.at/FdAgR}{SRS}.
+
 \paragraph{Cultural}
 \begin{enumerate}
 \item {T1\\}\\
@@ -1561,11 +1584,14 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checlist-nfr16}{checklist}, indicating whether the user can understand the system
 
-How Test Will Be Performed: The user will complete a checklist determining whether they can understand the system instructions and how the system performs. This test will be done by a diverse group including international students or students who do not speak English as their first language.
+How Test Will Be Performed: The user will complete a checklist determining whether they can understand the system instructions and how the system performs. This test will be done by a diverse group including international students or students who do not speak English as their first language. This verifies CLTR1.
 \end{enumerate}
 
 \hypertarget{nfr17}{}
 \subsubsection{NFR17 - Compliance}
+
+The subsections below cover tests relating to sections 17.1 and 17.2 in the \href{https://shorturl.at/FdAgR}{SRS}.
+
 \paragraph{Legal}
 \begin{enumerate}
 \item {T1\\}\\
@@ -1579,7 +1605,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checlist-nfr17}{checklist}, indicating whether the system meets legal requirements
 
-How Test Will Be Performed: The user will be given a list of relevant laws and regulations and will complete a checklist determining whether the system complies
+How Test Will Be Performed: The user will be given a list of relevant laws and regulations and will complete a checklist determining whether the system complies. This verifies LR1 and LR2.
 \end{enumerate}
 \paragraph{Standard Compliance}
 \begin{enumerate}
@@ -1594,7 +1620,7 @@ Input/Condition: NA
 
 Output: Completed \hyperlink{checlist-nfr17}{checklist}, indicating whether the system meets web security standards
 
-How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines
+How Test Will Be Performed: The user will be given a list of relevant compliance standards and will complete a checklist determining whether the system adheres to the guidelines. This verifies STR1.1-1.7.
 \end{enumerate}
 
 \subsubsection{Non-Functional Checklist Summary}

@@ -13,10 +13,32 @@ export default function UserInfoGeneralPage() {
    const [firstName, setFirstName] = useState<string>("");
    const [lastName, setLastName] = useState<string>("");
    const [phoneNumber, setPhoneNumber] = useState<string>("");
+   const [user, setUser] = useState({
+       id: "",
+       firstName: "",
+       lastName: "",
+       email: "",
+       role: "",
+   });
+
+    //fetch session storage and update local user info
+    useEffect(()=>{
+      sessionStorage.setItem("user", JSON.stringify(user));
+      console.log("session storage has user", user)
+    },[user])
 
    const handleNext = (e: React.FormEvent) => {
       e.preventDefault();
+
+      
+      setUser(prevUser => ({
+          ...prevUser,       // Copy all existing fields
+          firstName: firstName,
+          lastName: lastName
+        }));
+
       updateFormData({ general: { firstName, lastName, phoneNumber } });
+
       router.push("/userInfoClub");
    };
 

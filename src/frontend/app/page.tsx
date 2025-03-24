@@ -10,7 +10,6 @@ export default function LoginPage() {
 
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
-   const [authToken, setAuthToken] = useState<string>("");
    const router = useRouter();
 
    const validateEmail = (email: string) => {
@@ -23,19 +22,19 @@ export default function LoginPage() {
          setError("Please enter a valid McMaster email address");
          return;
       }
-      setError("");
-      if (authToken) {
-         sessionStorage.setItem("authToken", authToken);
-      }
+      // setError("");
+      // if (authToken) {
+      //    sessionStorage.setItem("authToken", authToken);
+      // }
       updateFormData({ email: { email } });
       router.push("/userInfoGeneral");
    };
-    
-    //dynamically set session storage auth token
-    useEffect(()=>{
-      sessionStorage.setItem("authToken",authToken)
-      console.log("SESSION TOKEN:", authToken)
-    },[authToken])
+
+   //dynamically set session storage auth token
+   // useEffect(() => {
+   //    sessionStorage.setItem("authToken", authToken);
+   //    console.log("SESSION TOKEN:", authToken);
+   // }, [authToken]);
 
    return (
       <>
@@ -90,7 +89,7 @@ export default function LoginPage() {
                </div>
 
                {/* Temporary Auth Token Dropdown */}
-               <div className="w-1/3 mt-4">
+               {/* <div className="w-1/3 mt-4">
                   <label className="text-secondary-text font-semibold text-sm">
                      Select Auth Token:
                   </label>
@@ -108,7 +107,7 @@ export default function LoginPage() {
                      </option>
                      <option value="67aa7568a95f30c1a91f8a0a">Evan Admin ****8a0a</option>
                   </select>
-               </div>
+               </div> */}
             </div>
          </div>
       </>

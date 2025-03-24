@@ -4,9 +4,12 @@ import axios from "axios";
 import NavBar from "../components/navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useFormContext } from "@/context/UserFormContext";
 
 export default function AccountInfoPage() {
    const [editMode, setEditMode] = useState<boolean>(false);
+
+   const { formData } = useFormContext();
 
    //these will be pull from db initially
    const [userInfo, setUserInfo] = useState({
@@ -20,6 +23,8 @@ export default function AccountInfoPage() {
       eTransferPhoneNumber: "",
    });
 
+   const [userId, setUserId] = useState("");
+
    const [tempData, setTempData] = useState(userInfo);
 
    useEffect(() => {
@@ -27,16 +32,23 @@ export default function AccountInfoPage() {
       const fetchData = async () => {
          try {
             const response = await axios.get(
-               "http://localhost:3001/api/users/me",
-               {
-                  headers: {
-                     Authorization: `Bearer ${token}`,
-                  },
-               }
+               "http://localhost:3002/api/users/"
             );
             console.log(response.data);
 
-            const fetchedData = response.data;
+            //hard coded placeholder
+            console.log(formData);
+            const targetEmail = formData.email;
+
+            console.log(targetEmail);
+
+            const fetchedData = response.data.find(
+               (user: { email: string }) => user.email === targetEmail?.email
+            );
+
+            console.log(fetchedData);
+
+            setUserId(fetchedData._id);
 
             setUserInfo((prev) => ({
                ...prev,
@@ -107,7 +119,7 @@ export default function AccountInfoPage() {
          };
 
          const response = await axios.put(
-            `http://localhost:3001/api/users/${token}`,
+            `http://localhost:3002/api/users/${userId}`,
             updatedData,
             {
                headers: {

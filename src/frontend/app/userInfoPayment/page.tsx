@@ -36,21 +36,15 @@ export default function UserInfoPaymentPage() {
 
       try {
          const response = await axios.post(
-            "http://localhost:3001/api/users/",
-            payload,
-            {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-               },
-            }
+            "http://localhost:3002/api/users/",
+            payload
          );
 
          console.log("Form submitted successfully:", response.data);
 
          sessionStorage.setItem("authToken", response.data._id);
 
-         clearFormData();
+         //clearFormData();
 
          router.push("/userDashboard");
       } catch (error) {

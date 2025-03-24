@@ -43,14 +43,14 @@ app.get("/health", async (req, res) => {
 });
 
 // Use the requests router for the /api/requests.routes path
-app.use("/api/requests/", fakeAuth, requestRouter);
-app.use("/api/requests/payment", fakeAuth, paymentRouter);
-app.use("/api/requests/reimbursement", fakeAuth, reimbursementRouter);
-app.use("/api/plaid", fakeAuth, plaidRouter);
-app.use("/api/accounts", fakeAuth, accountsRouter);
-app.use("/api/users", fakeAuth, userRouter);
-app.use("/api/clubs", fakeAuth, clubRouter);
-app.use("/api/files", fakeAuth, fileRouter);
+app.use("/api/requests/", addUserData , requestRouter);
+app.use("/api/requests/payment", addUserData, paymentRouter);
+app.use("/api/requests/reimbursement", addUserData, reimbursementRouter);
+app.use("/api/plaid", addUserData, plaidRouter);
+app.use("/api/accounts", addUserData, accountsRouter);
+app.use("/api/users", addUserData, userRouter);
+app.use("/api/clubs", addUserData, clubRouter);
+app.use("/api/files", addUserData, fileRouter);
 
 // Export the app
 module.exports = app;

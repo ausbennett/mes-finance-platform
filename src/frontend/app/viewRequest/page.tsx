@@ -123,6 +123,49 @@ export default function ViewRequestsPage() {
                   ))}
                </div>
             </div>
+            {requests.map((request) => (
+               <div
+                  key={request._id}
+                  className="flex flex-row items-center justify-between bg-foreground rounded-lg shadow-md w-full h-24 px-5 space-x-10"
+               >
+                  <div className="flex flex-1 flex-col">
+                     <p className="text-lg">
+                        <b>Requester: {request.requestor}</b> -{" "}
+                        {request.club || "General Request"}
+                     </p>
+                     <p className="text-md">
+                        <b>Amount:</b> ${request.totalAmount || request.amount}
+                     </p>
+                     <p className="text-sm">
+                        <b>Submitted:</b> {formatDate(request.createdAt)}
+                     </p>
+                  </div>
+                  <div className="flex flex-col items-end">
+                     <p className="text-lg">
+                        <b>Reviewer:</b> {request.reviewer || "Unassigned"}
+                     </p>
+                     <p className="text-md">
+                        <b>Budget Line:</b> {request.club ? "Clubs" : "General"}
+                     </p>
+                     <p className="text-sm">
+                        <b>Status:</b> {request.status}
+                     </p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center pt-4">
+                     <button
+                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
+                        onClick={() => {
+                           router.push(`/editRequest/${request._id}`);
+                        }}
+                     >
+                        View Request
+                     </button>
+                     <p className="text-sm">
+                        <b>ID:</b> {request._id.slice(-4)}
+                     </p>
+                  </div>
+               </div>
+            ))}
          </div>
       </>
    );

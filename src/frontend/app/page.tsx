@@ -10,6 +10,14 @@ export default function LoginPage() {
 
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
+   const [user, setUser] = useState({
+      id: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      role: "",
+   });
+
    const router = useRouter();
 
    const validateEmail = (email: string) => {
@@ -22,19 +30,24 @@ export default function LoginPage() {
          setError("Please enter a valid McMaster email address");
          return;
       }
-      // setError("");
-      // if (authToken) {
-      //    sessionStorage.setItem("authToken", authToken);
-      // }
+
+      setUser((prevUser) => ({
+         ...prevUser, // Copy all existing fields
+         email: email, // Override lastName
+      }));
+
+      sessionStorage.setItem("user", JSON.stringify(user));
+      console.log("session storage has user", user);
+
       updateFormData({ email: { email } });
       router.push("/userInfoGeneral");
    };
 
    //dynamically set session storage auth token
-   // useEffect(() => {
-   //    sessionStorage.setItem("authToken", authToken);
-   //    console.log("SESSION TOKEN:", authToken);
-   // }, [authToken]);
+   useEffect(() => {
+      sessionStorage.setItem("user", JSON.stringify(user));
+      console.log("session storage has user", user);
+   }, [user]);
 
    return (
       <>
@@ -87,27 +100,6 @@ export default function LoginPage() {
                      Login
                   </button>
                </div>
-
-               {/* Temporary Auth Token Dropdown */}
-               {/* <div className="w-1/3 mt-4">
-                  <label className="text-secondary-text font-semibold text-sm">
-                     Select Auth Token:
-                  </label>
-                  <select
-                     className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md"
-                     value={authToken}
-                     onChange={(e) => setAuthToken(e.target.value)}
-                  >
-                     <option value="">Select Token</option>
-                     <option value="67aa7568a95f30c1a91f8a0a">
-                        Admin Token
-                     </option>
-                     <option value="67a9109e9b49fd74280caf86">
-                        Student Token
-                     </option>
-                     <option value="67aa7568a95f30c1a91f8a0a">Evan Admin ****8a0a</option>
-                  </select>
-               </div> */}
             </div>
          </div>
       </>

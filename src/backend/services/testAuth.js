@@ -1,18 +1,10 @@
 // if the req has a jwt token attache to it?
 
 const User = require("../models/user.model");
+const userService = require("../api/users/users.service");
 
 //simulate some of the JWT token workflow for development purposes
 const fakeAuth = async (req, res, next) => {
-
-    if (process.env.NODE_ENV === 'test') {
-      if (req.headers['test-user']) {
-        req.user = JSON.parse(req.headers['test-user']);
-        return next();
-      }
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
 
    // get the token
    const token = req.headers.authorization?.split(" ")[1]; // Expecting 'Bearer <token>'
@@ -49,16 +41,28 @@ const fakeAuth = async (req, res, next) => {
    next();
 };
 
-const addUserData = (req, res, next) => {
-   req.user = {
-      id: "123",
-      firstName: "Austin", // Changed
-      lastName: "Benena", // Changed
-      email: "benena14@mcmaster.ca",
+const addUserData = async (req, res, next) => {
+  const email = req.headers.email
+  try {
+    const user = await userService.getUserByEmail(email) 
+    console.log("testAuth.js - GOT USER BY EMAIL! - user id: ", user._id )
+    req.user = user
+    next();
+
+  } catch (error) {
+     // return res.status(500).json({ error: "Failed to get user details. Ensure that email is specified in the header.", details: error.message });
+
+     // Fail Gracefully for DEV
+     const user = {
+      firstName: "Austin",
+      lastName: "Bennett",
+      email: "benna14@mcmaster.ca",
       role: "admin",
-   };
-   console.log("Middleware executed: User data added to request");
-   next();
+    };
+    console.log("testAuth.js - FAILED to Fetch user by email defaulting to admin account ->: ", user)
+    req.user = user
+    next();
+  }
 };
 
 module.exports = { addUserData, fakeAuth };

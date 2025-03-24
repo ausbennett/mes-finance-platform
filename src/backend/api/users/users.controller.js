@@ -18,6 +18,11 @@ const getUserById = async (req, res) => {
    res.status(result ? 200 : 404).json(result || { message: "User not found" });
 };
 
+const getUserByEmail = async (req, res) => {
+   const result = await userService.getUserByEmail(req.params.email);
+   res.status(result ? 200 : 404).json(result || { message: "User not found" });
+};
+
 // CREATE user
 const createUser = async (req, res) => {
    const result = await userService.createUser(req.body);
@@ -40,6 +45,7 @@ module.exports = {
    getUsers,
    getMe,
    getUserById,
+   getUserByEmail,
    createUser,
    updateUser,
    deleteUser,

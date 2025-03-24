@@ -13,6 +13,16 @@ const getUsers = async (user) => {
   }
 };
 
+//GET a user by email
+const getUserByEmail = async (email) => {
+  try {
+    return await User.findOne({email: email})
+  } catch (error) {
+    console.error(error);
+    return { message: error.message };
+  }
+}
+
 // GET a user by ID
 const getUserById = async (id) => {
   try {
@@ -59,6 +69,7 @@ const deleteUser = async (id) => {
 module.exports = {
   getUsers,
   getUserById,
+  getUserByEmail,
   createUser,
   updateUser,
   deleteUser,

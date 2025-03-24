@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{soul}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -198,7 +199,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mBH2}:] Requests Module
 \item [\refstepcounter{mnum} \mthemnum \label{mBH3}:] Notification Module
 \item [\refstepcounter{mnum} \mthemnum \label{mBH4}:] User Dashboard Module
-\item [\refstepcounter{mnum} \mthemnum \label{mBH5}:] Authentication Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBH5}:] \st{Authentication Module}
 \item [\refstepcounter{mnum} \mthemnum \label{mBH6}:] Email Module
 \item [\refstepcounter{mnum} \mthemnum \label{mBH7}:] Account Management Controller Module
 \item [\refstepcounter{mnum} \mthemnum \label{mBH8}:] Requests Controller Module
@@ -331,12 +332,12 @@ to be implemented.
 \end{description}
 
 \subsubsection{Authentication Module (\mref{mBH5})}
-
+\textit{This was deemed out of scope. Authentication will be done through integrating with MES' existing authentication process.}
 \begin{description}
-\item[Secrets:] Validation processes, and session management details.
-\item[Services:] Handles user login, logout, and session management. It ensures secure authentication using encrypted credentials. The module integrates with the account management module to verify user identities and enforce access control.
-\item[Implemented By:] MRM
-\item[Type of Module:] Abstract Data Type
+\item[Secrets:] \st{Validation processes, and session management details.}
+\item[Services:] \st{Handles user login, logout, and session management. It ensures secure authentication using encrypted credentials. The module integrates with the account management module to verify user identities and enforce access control.}
+\item[Implemented By:] \st{MRM}
+\item[Type of Module:] \st{Abstract Data Type} 
 \end{description}
 
 \subsubsection{Emailer API (\mref{mBH6})}

@@ -4,6 +4,7 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{soul}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -72,7 +73,7 @@ The functional requirements can be referenced from the \href{https://github.com/
     \item M3: Requests Module
     \item M4: Notification Module
     \item M5: User Dashboard Module
-    \item M6: Authentication Module
+    \item M6: \st{Authentication Module}
     \item M7: Email Module
     \item M8: Account Management Controller Module
     \item M9: Requests Controller Module
@@ -88,8 +89,8 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
     \item FR1.3: UI components and pages are implemented to allow users and admins to edit submitted requests, however, work must now be done to connect backend to frontend UI to allow for changes to be reflected in the database.
     \item FR1.5: The system does not currently notify users of changes to the status of their reimbursement request, however, the email notification service/module is set up and can be executed in an isolated environment. Work must now be done ensure the email service can dynamically email users with updates for their submitted requests.
     \item FR1.6: UI is implemented to allow users to select a budget category. Budget categories need to be dynamically pulled from a database collection. Work must be done to connect backend service (Plaid API) to frontend UI to allow budget categories to be linked to requests and reflected in the database.
-    \item FR1.7: Due to the fact that authentication is not completely implemented, this requirement cannot be satisfied. We do have page routing and UI implemented to distinguish admin page views and user page views.
-    \item FR3.2: Authentication is not fully set up. Currently, we are manually setting user browser tokens when creating a user and logging in, work must be done to either dynamically assign user browser token, or adjust the authentication process to user vanilla username (email) and password for the login process.
+    \item \st{FR1.7: Due to the fact that authentication is not completely implemented, this requirement cannot be satisfied. We do have page routing and UI implemented to distinguish admin page views and user page views.} \textit{Note: it has been decided we will integrate into the existing MES authentication, which shall satisfy this requirement.}
+    \item \st{FR3.2: Authentication is not fully set up. Currently, we are manually setting user browser tokens when creating a user and logging in, work must be done to either dynamically assign user browser token, or adjust the authentication process to user vanilla username (email) and password for the login process.} \textit{See note above.}
 \end{itemize}
 
 \begin{table}[ht]

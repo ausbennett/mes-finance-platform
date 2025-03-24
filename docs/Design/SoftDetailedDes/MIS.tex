@@ -19,6 +19,7 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+\usepackage{soul}
 
 \hypersetup{
 bookmarks=true,     % show bookmarks bar?
@@ -135,7 +136,7 @@ The following table is taken directly from the Module Guide document for this pr
 & Requests Module\\
 & Notification Module\\
 & User Dashboard Module\\
-& Authentication Module\\ 
+& \st{Authentication Module}\\ 
 & Email Module\\
 & Account Management Controller Module\\
 & Requests Controller Module\\
@@ -356,7 +357,7 @@ None
 \section{MIS of User Dashboard Module} \label{UserDashboard} \subsection{Module} User Dashboard
 
 \subsection{Uses}
-Requests Module, Account Management API, Authentication Module
+Requests Module, Account Management API, \st{Authentication Module}
 
 \subsection{Syntax}
 
@@ -399,6 +400,8 @@ None
 None
 
 \section{MIS of Authentication Module} \label{AuthenticationModule}
+
+\textit{Authentication Module was deemed out of scope. It has been decided that we will instead integrate with the existing authentication service.}
 
 \subsection{Module}
 Authentication

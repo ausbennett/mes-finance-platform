@@ -5,6 +5,7 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{array}
+\usepackage{soul}
 \usepackage[table]{xcolor}
 \definecolor{lightgray}{gray}{0.9}
 
@@ -83,7 +84,7 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
   \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
   \item \textbf{Notification Module:} A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
-  \item \textbf{Authentication Module:} A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.
+  \item \textbf{\st{Authentication Module:}} \st{A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.} \textit{Note: this module is no longer considered to be in scope. We plan to instead integrate with the current MES authentication.}
   \item \textbf{Stripe API:} External API for streamlining future integration with other MES services or even third parties.
 \end{itemize}
 

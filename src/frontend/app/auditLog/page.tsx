@@ -12,23 +12,24 @@ export default function AuditPage() {
   const [reqsData, setReqsData] = useState<{ reimbursements: any[]; payments: any[] }>({ reimbursements: [], payments: []});
   const [plaidData, setPlaidData] = useState<any[]>([]);
 
-  const [user, setUser] = useState<any>(null);
-  const [plaidAccessToken, setPlaidAccessToken] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null)
+  const [email, setEmail] = sessionStorage.getItem('email')|| useState<string>("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const [linkToken, setLinkToken] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
+
   const [plaidLoading, setPlaidLoading] = useState(true);
 
-  const authToken = sessionStorage.getItem("authToken") || "67aa7568a95f30c1a91f8a0a" ;
 
   // Define a global Axios instance within the component
   const apiClient = axios.create({
     baseURL: "http://localhost:3001", 
     headers: {
       "Content-Type": "application/json",
-      Authorization: authToken ? `Bearer ${authToken}` : "",
+      "email": `${email}`,
     },
   });
 
@@ -38,10 +39,10 @@ export default function AuditPage() {
       try {
         const response = await apiClient.get("/api/users/me");
         setUser(response.data);
-        
         const accessToken = response.data?.plaid?.[0]?.access_token || null;
-        setPlaidAccessToken(accessToken);
-        console.log("ACCESSTOKEN", plaidAccessToken)
+        accessToken ? setAccessToken(accessToken) : console.log("No existing access token");
+
+        console.log("ACCESSTOKEN", accessToken)
       } catch (err) {
         console.error("Failed to fetch user data", err);
       }
@@ -74,7 +75,7 @@ export default function AuditPage() {
 
     try {
       const reqsResponse = await apiClient.get(`/api/requests/by-date?start=${startDate}&end=${endDate}`)
-      const plaidResponse = await apiClient.get(`/api/plaid/transactions?start=${startDate}&end=${endDate}&accessToken=${plaidAccessToken}`)
+      const plaidResponse = await apiClient.get(`/api/plaid/transactions?start=${startDate}&end=${endDate}&accessToken=${accessToken}`)
       setReqsData(reqsResponse.data || { reimbursements: [], payments: [] });
       setPlaidData(plaidResponse.data || []);
     } catch (err) {

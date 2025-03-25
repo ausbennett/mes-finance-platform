@@ -7,17 +7,8 @@ import { useFormContext } from "@/context/UserFormContext";
 
 export default function LoginPage() {
    const { updateFormData } = useFormContext();
-
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
-   const [user, setUser] = useState({
-      id: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      role: "",
-   });
-
    const router = useRouter();
 
    const validateEmail = (email: string) => {
@@ -30,24 +21,11 @@ export default function LoginPage() {
          setError("Please enter a valid McMaster email address");
          return;
       }
-
-      setUser((prevUser) => ({
-         ...prevUser, // Copy all existing fields
-         email: email, // Override lastName
-      }));
-
-      sessionStorage.setItem("user", JSON.stringify(user));
-      console.log("session storage has user", user);
-
+      sessionStorage.setItem("email", email );
+      console.log("session storage has stored email", email);
       updateFormData({ email: { email } });
       router.push("/userInfoGeneral");
    };
-
-   //dynamically set session storage auth token
-   useEffect(() => {
-      sessionStorage.setItem("user", JSON.stringify(user));
-      console.log("session storage has user", user);
-   }, [user]);
 
    return (
       <>

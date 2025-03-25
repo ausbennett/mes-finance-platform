@@ -44,8 +44,8 @@ app.get("/health", async (req, res) => {
 
 // Use the requests router for the /api/requests.routes path
 app.use("/api/requests/", addUserData , requestRouter);
-app.use("/api/requests/payment", addUserData, paymentRouter);
-app.use("/api/requests/reimbursement", addUserData, reimbursementRouter);
+app.use("/api/requests/payments", addUserData, paymentRouter);
+app.use("/api/requests/reimbursements", addUserData, reimbursementRouter);
 app.use("/api/plaid", addUserData, plaidRouter);
 app.use("/api/accounts", addUserData, accountsRouter);
 app.use("/api/users", addUserData, userRouter);

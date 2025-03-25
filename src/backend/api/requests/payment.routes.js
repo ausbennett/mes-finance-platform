@@ -11,6 +11,6 @@ router.get('/', paymentController.getPayments)
 
 router.post('/', paymentController.createPayment)
 
-router.put('/:id', paymentController.editPayment)
+router.put('/id/:id', paymentController.editPayment)
 
 module.exports = router

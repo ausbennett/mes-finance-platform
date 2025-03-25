@@ -12,6 +12,6 @@ router.get('/', reimbursementController.getReimbursements);
 router.post('/', upload.single('file'), reimbursementController.createReimbursement);
 
 // PUT - update reimbursement (optionally with a new file)
-router.put('/:id', upload.single('file'), reimbursementController.editReimbursement);
+router.put('/id/:id', upload.single('file'), reimbursementController.editReimbursement);
 
 module.exports = router;

@@ -9,13 +9,14 @@ export default function ViewRequestsPage() {
    const [requests, setRequests] = useState<any[]>([]); // Use `any[]` temporarily
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const [email, setEmail] = useState<string>("");
 
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await fetch("http://localhost:3002/api/requests", {
+            const response = await fetch("http://localhost:3001/api/requests", {
                headers: {
-                  Authorization: `Bearer 67aa7568a95f30c1a91f8a0a`, // Add the token here
+                  email: email
                },
             });
             if (!response.ok) throw new Error("Failed to fetch requests");
@@ -33,6 +34,7 @@ export default function ViewRequestsPage() {
          }
       };
 
+      setEmail(sessionStorage.getItem(("email")) || "")
       fetchData();
    }, []);
 

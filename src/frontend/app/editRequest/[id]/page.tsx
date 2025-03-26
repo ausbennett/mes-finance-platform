@@ -7,7 +7,7 @@ import ReimbursementRequest from "../../newRequest/reimbursementRequest";
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
 type User = {
   _id: string;
@@ -74,33 +74,61 @@ export default function EditRequestPage() {
     };
   };
 
-  const handleSaveChanges = async () => {
-    try {
-      const isPayment = radio === "payment";
-      const endpoint = `${API_BASE_URL}/api/requests/${id}`;
-      const requestData = isPayment ? paymentFormData : reimbursementFormData;
+// In page.tsx (EditRequestPage), update the handleSaveChanges function:
 
-      const response = await fetch(endpoint, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify({
-          ...requestData,
-          type: radio,
-          status: status
-        }),
-      });
+const handleSaveChanges = async () => {
+  try {
+    const isPayment = radio === "payment";
+    const endpoint = `${API_BASE_URL}/api/requests/${id}`;
+    const hardcodedToken = "67aa7568a95f30c1a91f8a0a"; 
 
-      if (!response.ok) throw new Error("Failed to save changes");
-      
+    // Include 'status' in the payload
+    const payload = isPayment
+      ? {
+          ...paymentFormData,
+          amount: Number(paymentFormData.amount),
+          paymentDate: new Date(paymentFormData.paymentDate).toISOString(),
+          status: status, // Add current status
+        }
+      : {
+          ...reimbursementFormData,
+          totalAmount: Number(reimbursementFormData.totalAmount),
+          recipients: reimbursementFormData.recipients.map(r => ({
+            user: r.user,
+            amount: Number(r.amount),
+          })),
+          status: status, // Add current status
+        };
+
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${hardcodedToken}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) throw new Error("Save failed");
+    alert("Changes saved!");
+  } catch (error) {
+    alert(`Error: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
+};
+  
+  // Helper function to avoid duplication
+  const sendRequest = async (endpoint: string, payload: any, authToken: string) => {
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
       const result = await response.json();
-      console.log("Changes saved successfully:", result);
-      alert("Changes saved successfully!");
-    } catch (error) {
-      console.error("Error saving changes:", error);
-      alert("Failed to save changes. Please try again.");
+      throw new Error(result.message || "Update failed");
     }
   };
 

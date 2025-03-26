@@ -32,29 +32,41 @@ const getAllRequests = async (req,res) => {
 const updateRequestStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = req.body; // Now handles full request updates, not just status
-    const adminId = req.headers.authorization?.split(' ')[1]; // Get admin ID from bearer token
+    const updateData = req.body;
 
-    if (!adminId) return res.status(401).json({ error: "Unauthorized" });
+    // 1. First get the request (payment or reimbursement)
+    const request = await reimbursementService.getReimbursementById(id) || 
+                   await paymentService.getPaymentById(id);
+    
+    if (!request) {
+      return res.status(404).json({ error: "Request not found" });
+    }
 
-    // 1. Update request (using your existing services)
-    const updatedRequest = await reimbursementService.editReimbursement(id, { 
-      ...updateData, 
-      reviewer: adminId 
-    }) || await paymentService.editPayment(id, { 
-      ...updateData, 
-      reviewer: adminId 
-    });
+    // 2. Get the requestor's user document
+    const requestor = await User.findById(request.requestor);
+    if (!requestor || !requestor.email) {
+      return res.status(400).json({ error: "Requestor email not found" });
+    }
 
-    if (!updatedRequest) return res.status(404).json({ error: "Request not found" });
+    // 3. Proceed with update
+    const isPayment = updateData.amount !== undefined;
+    const service = isPayment ? paymentService : reimbursementService;
 
-    // 2. Get original requestor's details from User model
-    const requestor = await User.findById(updatedRequest.requestor);
-    if (!requestor) throw new Error("Requestor not found");
+    const updatedRequest = isPayment 
+    ? await paymentService.editPayment(id, {
+        ...updateData,
+        reviewer: req.user?.id,
+        lastUpdated: new Date()
+      })
+    : await reimbursementService.editReimbursement(id, {
+        ...updateData,
+        reviewer: req.user?.id,
+        lastUpdated: new Date()
+      });
 
-    // 3. Send email to the REQUESTOR (not admin)
+    // 4. Send email to requestor
     await sendEmail(
-      requestor.email, // From User document
+      requestor.email, // Use the email from the user document
       'notification',
       {
         status: updatedRequest.status,
@@ -63,14 +75,19 @@ const updateRequestStatus = async (req, res) => {
           firstName: requestor.firstName,
           lastName: requestor.lastName,
           amount: updatedRequest.totalAmount || updatedRequest.amount,
-          submittedDate: updatedRequest.createdAt
+          submittedDate: updatedRequest.createdAt,
+          reviewer: req.user?.email
         }
       }
     );
 
-    res.status(200).json(updatedRequest);
+    return res.status(200).json(updatedRequest);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(`Update failed:`, error);
+    return res.status(500).json({ 
+      error: "Internal server error",
+      details: error.message 
+    });
   }
 };
 

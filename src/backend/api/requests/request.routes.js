@@ -6,7 +6,6 @@ const requestController = require('./request.controller.js')
 router.get('/', requestController.getAllRequests)
 router.get('/by-date', requestController.getRequestsByDateRange)
 router.put('/id/:id', requestController.updateRequestStatus);
-router.put('/:id', requestController.updateRequestStatus);
 router.get('/id/:id', requestController.getRequestById);
 
 module.exports = router;

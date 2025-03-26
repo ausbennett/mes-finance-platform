@@ -6,6 +6,7 @@ import PaymentRequest from "../../newRequest/paymentRequest";
 import ReimbursementRequest from "../../newRequest/reimbursementRequest";
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { log } from "console";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
@@ -26,6 +27,7 @@ export default function EditRequestPage() {
   const { id } = useParams();
   const [radio, setRadio] = useState<"reimbursement" | "payment">("reimbursement");
   const [authToken] = useState<string>("67aa7568a95f30c1a91f8a0a");
+  const [email, setEmail] = useState<string>("");
   const [status, setStatus] = useState<string>("Pending");
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
@@ -79,7 +81,7 @@ export default function EditRequestPage() {
 const handleSaveChanges = async () => {
   try {
     const isPayment = radio === "payment";
-    const endpoint = `${API_BASE_URL}/api/requests/${id}`;
+    const endpoint = `${API_BASE_URL}/api/requests/id/${id}`;
     const hardcodedToken = "67aa7568a95f30c1a91f8a0a"; 
 
     // Include 'status' in the payload
@@ -100,11 +102,13 @@ const handleSaveChanges = async () => {
           status: status, // Add current status
         };
 
+    
+
     const response = await fetch(endpoint, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${hardcodedToken}`,
+        "email": email
       },
       body: JSON.stringify(payload),
     });
@@ -122,7 +126,7 @@ const handleSaveChanges = async () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
+        email: 'adam@mcmaster.ca'
       },
       body: JSON.stringify(payload),
     });
@@ -133,8 +137,11 @@ const handleSaveChanges = async () => {
   };
 
   useEffect(() => {
+
     const fetchRequestData = async () => {
       try {
+        const userEmail = sessionStorage.getItem("email") || "";
+        setEmail(userEmail);
         const [requestRes, usersRes, clubsRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/requests/id/${id}`, {
             headers: { Authorization: `Bearer ${authToken}` },

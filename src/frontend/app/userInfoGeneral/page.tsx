@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useFormContext } from "@/context/UserFormContext";
 import { useEffect, useState } from "react";
 
 export default function UserInfoGeneralPage() {
    const router = useRouter();
-
-   const { updateFormData } = useFormContext();
 
    const [firstName, setFirstName] = useState<string>("");
    const [lastName, setLastName] = useState<string>("");
@@ -17,7 +14,9 @@ export default function UserInfoGeneralPage() {
    const handleNext = (e: React.FormEvent) => {
       e.preventDefault();
 
-      updateFormData({ general: { firstName, lastName, phoneNumber } });
+      sessionStorage.setItem("firstName", firstName);
+      sessionStorage.setItem("lastName", lastName);
+      sessionStorage.setItem("phoneNumber", phoneNumber);
 
       router.push("/userInfoClub");
    };

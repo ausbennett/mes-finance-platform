@@ -2,14 +2,12 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useFormContext } from "@/context/UserFormContext";
 import { useState } from "react";
 import axios from "axios";
+import { PhoneNumber } from "react-phone-number-input";
 
 export default function UserInfoPaymentPage() {
    const router = useRouter();
-
-   const { formData, updateFormData, clearFormData } = useFormContext();
 
    const [etransferEmail, setETransferEmail] = useState<string>("");
    const [etransferPhone, setETransferPhone] = useState<string>("");
@@ -17,18 +15,18 @@ export default function UserInfoPaymentPage() {
    const [responseID, setReponseID] = useState<string>("");
 
    const handleFinish = async () => {
-      updateFormData({ payment: { etransferEmail, etransferPhone } });
-
-      const token = sessionStorage.getItem("authToken");
-
       const payload = {
-         ...formData.email,
-         ...formData.general,
-         ...formData.club,
          payment: {
-            etransferEmail,
-            etransferPhone,
+            etransferEmail: etransferEmail,
+            etransferPhone: etransferPhone,
          },
+         firstName: sessionStorage.getItem("firstName"),
+         lastName: sessionStorage.getItem("lastName"),
+         email: sessionStorage.getItem("email"),
+         phoneNumber: sessionStorage.getItem("phoneNumber"),
+         whoAreYou: sessionStorage.getItem("whoAreYou"),
+         club: sessionStorage.getItem("club"),
+         clubRole: sessionStorage.getItem("clubRole"),
          role: "admin",
       };
 
@@ -36,15 +34,11 @@ export default function UserInfoPaymentPage() {
 
       try {
          const response = await axios.post(
-            "http://localhost:3002/api/users/",
+            "http://localhost:3001/api/users/",
             payload
          );
 
          console.log("Form submitted successfully:", response.data);
-
-         sessionStorage.setItem("authToken", response.data._id);
-
-         //clearFormData();
 
          router.push("/userDashboard");
       } catch (error) {

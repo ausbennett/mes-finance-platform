@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useFormContext } from "@/context/UserFormContext";
 import { useState } from "react";
 
 export default function UserInfoClubPage() {
    const router = useRouter();
-
-   const { updateFormData } = useFormContext();
 
    const [whoAreYou, setWhoAreYou] = useState<string>("");
    const [club, setClub] = useState<string>("");
@@ -16,7 +13,10 @@ export default function UserInfoClubPage() {
 
    const handleNext = (e: React.FormEvent) => {
       e.preventDefault();
-      updateFormData({ club: { whoAreYou, club, clubRole } });
+
+      sessionStorage.setItem("whoAreYou", whoAreYou);
+      sessionStorage.setItem("club", club);
+      sessionStorage.setItem("clubRole", clubRole);
       router.push("/userInfoPayment");
    };
 

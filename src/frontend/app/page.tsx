@@ -3,10 +3,8 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "@/context/UserFormContext";
 
 export default function LoginPage() {
-   const { updateFormData } = useFormContext();
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
    const router = useRouter();
@@ -21,9 +19,8 @@ export default function LoginPage() {
          setError("Please enter a valid McMaster email address");
          return;
       }
-      sessionStorage.setItem("email", email );
+      sessionStorage.setItem("email", email);
       console.log("session storage has stored email", email);
-      updateFormData({ email: { email } });
       router.push("/userInfoGeneral");
    };
 

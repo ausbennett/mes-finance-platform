@@ -4,12 +4,9 @@ import axios from "axios";
 import NavBar from "../components/navbar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useFormContext } from "@/context/UserFormContext";
 
 export default function AccountInfoPage() {
    const [editMode, setEditMode] = useState<boolean>(false);
-
-   const { formData } = useFormContext();
 
    //these will be pull from db initially
    const [userInfo, setUserInfo] = useState({
@@ -32,18 +29,13 @@ export default function AccountInfoPage() {
       const fetchData = async () => {
          try {
             const response = await axios.get(
-               "http://localhost:3002/api/users/"
+               "http://localhost:3001/api/users/"
             );
-            console.log(response.data);
 
-            //hard coded placeholder
-            console.log(formData);
-            const targetEmail = formData.email;
-
-            console.log(targetEmail);
+            const targetEmail = sessionStorage.getItem("email");
 
             const fetchedData = response.data.find(
-               (user: { email: string }) => user.email === targetEmail?.email
+               (user: { email: string }) => user.email === targetEmail
             );
 
             console.log(fetchedData);
@@ -119,7 +111,7 @@ export default function AccountInfoPage() {
          };
 
          const response = await axios.put(
-            `http://localhost:3002/api/users/${userId}`,
+            `http://localhost:3001/api/users/${userId}`,
             updatedData,
             {
                headers: {

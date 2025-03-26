@@ -9,12 +9,17 @@ import { useMemo } from 'react';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
 
-type MinimalUser = {
+type User = {
   _id: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  club?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  club: string;
+};
+
+type Club = {
+  _id: string;
+  name: string;
 };
 
 export default function EditRequestPage() {
@@ -23,8 +28,10 @@ export default function EditRequestPage() {
   const [authToken] = useState<string>("67aa7568a95f30c1a91f8a0a");
   const [status, setStatus] = useState<string>("Pending");
   const [isLoading, setIsLoading] = useState(true);
+  const [users, setUsers] = useState<User[]>([]);
+  const [clubs, setClubs] = useState<Club[]>([]);
 
-  // Update state types to match component expectations
+  // Add the missing state declarations
   const [reimbursementFormData, setReimbursementFormData] = useState({
     requestor: "",
     club: "",
@@ -43,13 +50,29 @@ export default function EditRequestPage() {
     paymentDate: new Date().toISOString().split("T")[0],
   });
 
-  const formatUserData = (requestorId: string, clubId: string): MinimalUser => ({
-    _id: requestorId,
-    firstName: "Loading...",
-    lastName: "User",
-    email: "user@example.com",
-    club: clubId
-  });
+  // Memoized maps for quick lookups
+  const usersById = useMemo(() => 
+    new Map(users.map(user => [user._id, user])),
+    [users]
+  );
+
+  const clubsById = useMemo(() =>
+    new Map(clubs.map(club => [club._id, club])),
+    [clubs]
+  );
+
+  const formatUserData = (requestorId: string, clubId: string): User => {
+    const user = usersById.get(requestorId);
+    const club = clubsById.get(clubId);
+    
+    return {
+      _id: requestorId,
+      firstName: user?.firstName || "Unknown",
+      lastName: user?.lastName || "User",
+      email: user?.email || "unknown@example.com",
+      club: club?.name || "Unknown Club"
+    };
+  };
 
   const handleSaveChanges = async () => {
     try {
@@ -84,27 +107,35 @@ export default function EditRequestPage() {
   useEffect(() => {
     const fetchRequestData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/requests/id/${id}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-  
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
-        console.log("API Response:", data);
-  
-        // Handle nested request object structure
+        const [requestRes, usersRes, clubsRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/api/requests/id/${id}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }),
+          fetch(`${API_BASE_URL}/api/users`),
+          fetch(`${API_BASE_URL}/api/clubs`)
+        ]);
+
+        if (!requestRes.ok) throw new Error(`HTTP error! Status: ${requestRes.status}`);
+        if (!usersRes.ok) throw new Error("Failed to fetch users");
+        if (!clubsRes.ok) throw new Error("Failed to fetch clubs");
+
+        const data = await requestRes.json();
+        const usersData = await usersRes.json();
+        const clubsData = await clubsRes.json();
+
+        setUsers(usersData);
+        setClubs(clubsData);
+
         const request = data.request || data;
         if (!request._id) throw new Error("Invalid request format");
-  
-        // Determine type based on presence of totalAmount field
+
         const requestType = request.totalAmount !== undefined ? "reimbursement" : "payment";
-  
         setRadio(requestType);
         setStatus(request.status);
-  
+
         if (requestType === "reimbursement") {
           setReimbursementFormData({
+            ...reimbursementFormData,
             requestor: request.requestor,
             club: request.club || "",
             recipients: (request.recipients || []).map((r: any) => ({
@@ -114,11 +145,11 @@ export default function EditRequestPage() {
             })),
             totalAmount: request.totalAmount?.toString() || "",
             description: request.description || "",
-            receipts: null,
             status: request.status
           });
         } else {
           setPaymentFormData({
+            ...paymentFormData,
             requestor: request.requestor,
             club: request.club || "",
             amount: request.amount?.toString() || "",
@@ -126,7 +157,7 @@ export default function EditRequestPage() {
             paymentDate: request.paymentDate?.split('T')[0] || new Date().toISOString().split("T")[0]
           });
         }
-  
+
       } catch (error) {
         console.error("Error loading request:", error);
         alert(`Failed to load request: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -134,25 +165,19 @@ export default function EditRequestPage() {
         setIsLoading(false);
       }
     };
-  
+
     if (id) fetchRequestData();
-  }, [id]); // Keep id as the only dependency
-  
-  const reimbursementUser = useMemo(() => ({
-    _id: reimbursementFormData.requestor,
-    firstName: "First",
-    lastName: "Last",
-    email: "user@example.com",
-    club: reimbursementFormData.club
-  }), [reimbursementFormData.requestor, reimbursementFormData.club]);
-  
-  const paymentUser = useMemo(() => ({
-    _id: paymentFormData.requestor,
-    firstName: "First",
-    lastName: "Last",
-    email: "user@example.com",
-    club: paymentFormData.club
-  }), [paymentFormData.requestor, paymentFormData.club]);
+  }, [id]);
+
+  const reimbursementUser = useMemo(() =>
+    formatUserData(reimbursementFormData.requestor, reimbursementFormData.club),
+    [reimbursementFormData.requestor, reimbursementFormData.club, users, clubs]
+  );
+
+  const paymentUser = useMemo(() =>
+    formatUserData(paymentFormData.requestor, paymentFormData.club),
+    [paymentFormData.requestor, paymentFormData.club, users, clubs]
+  );
 
   if (isLoading) return <div className="flex justify-center mt-10">Loading...</div>;
 
@@ -177,19 +202,19 @@ export default function EditRequestPage() {
           </div>
 
           <div className="flex flex-col bg-white p-10 rounded-xl shadow-md space-y-5">
-          {radio === "payment" ? (
-  <PaymentRequest 
-    user={paymentUser}
-    formData={paymentFormData} 
-    setFormData={setPaymentFormData} 
-  />
-) : (
-  <ReimbursementRequest 
-    user={reimbursementUser}
-    formData={reimbursementFormData} 
-    setFormData={setReimbursementFormData} 
-  />
-)}
+            {radio === "payment" ? (
+              <PaymentRequest 
+                user={paymentUser}
+                formData={paymentFormData} 
+                setFormData={setPaymentFormData} 
+              />
+            ) : (
+              <ReimbursementRequest 
+                user={reimbursementUser}
+                formData={reimbursementFormData} 
+                setFormData={setReimbursementFormData} 
+              />
+            )}
           </div>
         </div>
       </div>

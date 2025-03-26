@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
-import { PhoneNumber } from "react-phone-number-input";
 
 export default function UserInfoPaymentPage() {
    const router = useRouter();

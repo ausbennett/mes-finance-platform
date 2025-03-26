@@ -3,11 +3,56 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function LoginPage() {
    const [email, setEmail] = useState<string>("");
    const [error, setError] = useState<string>("");
+   const [users, setUsers] = useState<User[]>([]);
    const router = useRouter();
+
+   interface User {
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      phoneNumber: string;
+      whoAreYou: string;
+      club: string;
+      clubRole: string;
+      role: string;
+      plaid: any[]; // Replace `any` with the actual structure if you know it
+      payment: {
+         etransferEmail: string;
+         etransferPhone: string;
+      };
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+   }
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(
+               "http://localhost:3001/api/users/"
+            );
+
+            setUsers(response.data);
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               console.error(
+                  "Axios error:",
+                  error.response?.data || error.message
+               );
+            } else {
+               console.error("Unexpected error:", error);
+            }
+         }
+      };
+
+      fetchData();
+   }, []);
 
    const validateEmail = (email: string) => {
       return email.endsWith("@mcmaster.ca");
@@ -20,8 +65,16 @@ export default function LoginPage() {
          return;
       }
       sessionStorage.setItem("email", email);
+
       console.log("session storage has stored email", email);
-      router.push("/userInfoGeneral");
+
+      const isUser = users.some((user) => user.email === email);
+
+      if (isUser) {
+         router.push("/userDashboard");
+      } else {
+         router.push("/userInfoGeneral");
+      }
    };
 
    return (

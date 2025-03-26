@@ -1,5 +1,6 @@
 const reimbursementService = require('./reimbursement.service')
 const paymentService = require('./payment.service')
+const User = require('../../models/user.model'); // Add this line
 const { sendEmail } = require('../emailer/emailer'); // Add this
 
 const getAllRequests = async (req,res) => {
@@ -30,31 +31,44 @@ const getAllRequests = async (req,res) => {
 
 const updateRequestStatus = async (req, res) => {
   try {
-    const { id } = req.params
-    const { newStatus } = req.body;
-    const user = req.user;
+    const { id } = req.params;
+    const updateData = req.body; // Now handles full request updates, not just status
+    const adminId = req.headers.authorization?.split(' ')[1]; // Get admin ID from bearer token
 
-    // 1. Update request status in the database (pseudo-code)
-    const updatedRequest = await reimbursementService.editReimbursement(id, newStatus);
-    console.log(updatedRequest)
+    if (!adminId) return res.status(401).json({ error: "Unauthorized" });
 
-    // 2. Send email notification
+    // 1. Update request (using your existing services)
+    const updatedRequest = await reimbursementService.editReimbursement(id, { 
+      ...updateData, 
+      reviewer: adminId 
+    }) || await paymentService.editPayment(id, { 
+      ...updateData, 
+      reviewer: adminId 
+    });
+
+    if (!updatedRequest) return res.status(404).json({ error: "Request not found" });
+
+    // 2. Get original requestor's details from User model
+    const requestor = await User.findById(updatedRequest.requestor);
+    if (!requestor) throw new Error("Requestor not found");
+
+    // 3. Send email to the REQUESTOR (not admin)
     await sendEmail(
-      user.email,
+      requestor.email, // From User document
       'notification',
-      { 
-        status: newStatus,
+      {
+        status: updatedRequest.status,
         requestDetails: {
           id: id,
-          firstName: user.firstName, // Changed
-          lastName: user.lastName,   // Changed
-          amount: updatedRequest.totalAmount,
-          submittedDate: updatedRequest.createdAt,
+          firstName: requestor.firstName,
+          lastName: requestor.lastName,
+          amount: updatedRequest.totalAmount || updatedRequest.amount,
+          submittedDate: updatedRequest.createdAt
         }
       }
     );
 
-    res.status(200).json({ message: "Status updated and email sent" });
+    res.status(200).json(updatedRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

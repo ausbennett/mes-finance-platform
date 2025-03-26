@@ -35,19 +35,6 @@ const templates = {
       <p>Best regards,<br/>MES Finance Platform Team</p>
     `,
   }),
-
-  // Authentication Email (Ready for future use)
-  authentication: ({ authLink }) => ({
-    subject: 'Authenticate Your Account', // Subject is part of the template
-    html: `
-      <h3>Authentication Required</h3>
-      <p>Dear User,</p>
-      <p>We received a request to authorize your login. Click below to authenticate:</p>
-      <p><a href="${authLink}">Authenticate Now</a></p>
-      <p>If you did not request this, please ignore this email.</p>
-      <p>Best regards,<br/>MES Finance Platform Team</p>
-    `,
-  }),
 };
 
 // ======================

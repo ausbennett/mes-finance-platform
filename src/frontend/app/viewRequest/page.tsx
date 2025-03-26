@@ -112,7 +112,7 @@ export default function ViewRequestsPage() {
                            <button
                               className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
                               onClick={() => {
-                                 router.push(`/editRequest/`);
+                                 router.push(`/editRequest/${request._id}`);
                               }}
                            >
                               View Request

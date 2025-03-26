@@ -84,7 +84,7 @@ export default function EditRequestPage() {
   useEffect(() => {
     const fetchRequestData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/requests/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/requests/id/${id}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
   

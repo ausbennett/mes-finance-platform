@@ -69,9 +69,16 @@ export default function LoginPage() {
       console.log("session storage has stored email", email);
 
       const isUser = users.some((user) => user.email === email);
+      const currentUser = users.find((user) => user.email === email);
+      const isAdmin = currentUser?.role === "admin";
+      sessionStorage.setItem("userRole", isAdmin ? "admin" : "user");
 
       if (isUser) {
-         router.push("/userDashboard");
+         if (isAdmin) {
+            router.push("/adminDashboard");
+         } else {
+            router.push("/userDashboard");
+         }
       } else {
          router.push("/userInfoGeneral");
       }

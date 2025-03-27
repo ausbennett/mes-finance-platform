@@ -8,7 +8,7 @@ export default function NavBar() {
 
    const currPage = usePathname();
 
-   const user: string = "user";
+   const user: string | null = sessionStorage.getItem("userRole");
 
    const handleDashNav = () => {
       if (user == "admin") {

@@ -113,7 +113,7 @@ export default function UserDashboardPage() {
                      <button
                         className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
                         onClick={() => {
-                           router.push("/newRequest");
+                           router.push("/updateClubs");
                         }}
                      >
                         Update info

@@ -12,8 +12,11 @@ export default function AuditPage() {
   const [reqsData, setReqsData] = useState<{ reimbursements: any[]; payments: any[] }>({ reimbursements: [], payments: []});
   const [plaidData, setPlaidData] = useState<any[]>([]);
 
+  const [activeTab, setActiveTab] = useState<'requests' | 'need-action'>('requests');
+  const [draggedItem, setDraggedItem] = useState<any>(null);
+
   const [user, setUser] = useState<any>(null)
-  const [email, setEmail] = sessionStorage.getItem('email')|| useState<string>("");
+  const [email, setEmail] = "adam@mcmaster.ca"
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -75,9 +78,10 @@ export default function AuditPage() {
 
     try {
       const reqsResponse = await apiClient.get(`/api/requests/by-date?start=${startDate}&end=${endDate}`)
-      const plaidResponse = await apiClient.get(`/api/plaid/transactions?start=${startDate}&end=${endDate}&accessToken=${accessToken}`)
+      const plaidResponse = await apiClient.get(`/api/plaid/live-transactions?start=${startDate}&end=${endDate}&accessToken=${accessToken}`)
       setReqsData(reqsResponse.data || { reimbursements: [], payments: [] });
       setPlaidData(plaidResponse.data || []);
+      console.log(plaidResponse.data)
     } catch (err) {
       setError("Failed to fetch data. Please try again.");
     } finally {
@@ -116,77 +120,216 @@ export default function AuditPage() {
     onSuccess,
   });
 
+  const handleDragStart = (e: React.DragEvent, item: any) => {
+    setDraggedItem(item);
+    e.dataTransfer.setData('text/plain', item._id);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    const transactionId = e.dataTransfer.getData('text/plain');
+    
+    // Implement your reconciliation logic here
+    try {
+      await apiClient.post('/api/reconcile', {
+        requestId: draggedItem._id,
+        transactionId: transactionId
+      });
+      // Update local state or refetch data
+    } catch (err) {
+      console.error('Reconciliation failed:', err);
+    }
+  };
 
 
   return (
     <div>
       <NavBar />
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
-      <div className="flex gap-4 mb-4">
-        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-300 input-bordered" />
-        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-300 input-bordered" />
-        <button className="btn bg-primary text-white font-semilbold p-2 rounded-lg drop-shadow-lg" onClick={fetchData}>Fetch Data</button>
-        {/* <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button> */}
-        {!plaidLoading && <button className="btn btn-accent font-semibold" onClick={() => open()}>Link Bank with Plaid</button>}
-      </div>
-      {error && <p className="text-red-500">{error}</p>}
-      {loading && <p>Loading...</p>}
-      
+      <div className="container mx-auto p-6">
+        <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
 
-      <table className="table-auto w-full border-collapse border border-gray-300 mt-4">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">Date</th>
-            <th className="border border-gray-300 p-2">Reimbursements & Payments</th>
-            <th className="border border-gray-300 p-2">Plaid Transactions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {combinedData.length > 0 ? (
-            combinedData.map((entry, index) => (
-              <tr key={index} className="border border-gray-300">
-                <td className="border border-gray-300 p-2">{entry.date}</td>
-                <td className="border border-gray-300 p-2">
-                  {[...entry.reimbursements, ...entry.payments].length > 0 ? (
-                    [...entry.reimbursements, ...entry.payments].map((req, idx) => (
-                      <div key={idx} className="p-2 bg-gray-100 rounded mb-2">
-                        <p><strong>{req.totalAmount ? "REIMBURSEMENT" : "PAYMENT"}</strong></p>
-                        {req.description && <p>{req.description}</p>}
-                        <p>Amount: {req.totalAmount || req.amount}</p>
-                        <p className={`status-badge ${req.status?.toLowerCase() || "unknown"}`}>{req.status || "Unknown"}</p>
-                        <button className="btn bg-primary text-white font-semilbold btn-xs btn-secondary">View {req.totalAmount ? "Reimbursement" : "Payment"}</button>
+
+        <div className="flex gap-4 mb-4">
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-300 input-bordered" />
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-300 input-bordered" />
+          <button className="btn bg-primary text-white font-semilbold p-2 rounded-lg drop-shadow-lg" onClick={fetchData}>Fetch Data</button>
+          {/* <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button> */}
+          {!plaidLoading && <button className="btn btn-accent font-semibold" onClick={() => open()}>Link Bank with Plaid</button>}
+        </div>
+        {error && <p className="text-red-500">{error}</p>}
+        {loading && <p>Loading...</p>}
+
+        <div className="tabs">
+            <button 
+              className={`tab tab-lifted ${activeTab === 'requests' && 'tab-active'}`} 
+              onClick={() => setActiveTab('requests')}
+            >
+              Requests
+            </button>
+            <button 
+              className={`tab tab-lifted ${activeTab === 'need-action' && 'tab-active'}`}
+              onClick={() => setActiveTab('need-action')}
+            >
+              Needs Action 
+              <span className="badge badge-sm badge-warning ml-2">
+                {reqsData.reimbursements.filter(r => !r.plaid?.isReconciled).length + 
+                 reqsData.payments.filter(p => !p.plaid?.isReconciled).length}
+              </span>
+            </button>
+          </div>
+
+     {activeTab === 'requests' && (
+        <div className="space-y-8">
+          {Object.entries(
+            // Group by date
+            [...reqsData.reimbursements, ...reqsData.payments].reduce((acc, item) => {
+              const date = new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0];
+              if (!acc[date]) acc[date] = [];
+              acc[date].push(item);
+              return acc;
+            }, {} as Record<string, any[]>)
+          )
+          .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime()) // Reverse chronological order
+          .map(([date, items]) => (
+            <div key={date} className="space-y-4">
+              {/* Date Header */}
+              <div className="flex items-center gap-4">
+                <h2 className="text-xl font-semibold">
+                  {new Date(date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </h2>
+                <div className="flex-1 h-px bg-gray-300" />
+              </div>
+
+                {/* Requests List */}
+                <div className="space-y-3">
+                  {items.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`card shadow-lg border-l-4 ${
+                        item.plaid?.isReconciled
+                          ? 'border-success hover:border-success-focus'
+                          : 'border-error hover:border-error-focus'
+                      }`}
+                    >
+                      <div className="card-body py-4">
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-bold">
+                                {item.totalAmount ? 'Reimbursement' : 'Payment'}
+                              </h3>
+                              <span className={`badge ${
+                                item.status === 'Approved' ? 'badge-success' : 
+                                item.status === 'Pending' ? 'badge-warning' : 'badge-error'
+                              }`}>
+                                {item.status}
+                              </span>
+                            </div>
+                            {item.description && (
+                              <p className="text-sm opacity-80">{item.description}</p>
+                            )}
+                            <div className="flex items-center gap-2 text-xs">
+                              <span className="font-medium">Requestor:</span>
+                              <span className="badge badge-outline">
+                                {item.requestor?.slice(-8)}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="text-right">
+                            <p className="text-xl font-bold">
+                              ${item.totalAmount || item.amount}
+                            </p>
+                            <p className="text-xs opacity-70">
+                              {new Date(item.createdAt || item.paymentDate).toLocaleTimeString()}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <p>No Requests or Payments</p>
-                  )}
-                </td>
-                <td className="border border-gray-300 p-2">
-                  {entry.transactions.length > 0 ? (
-                    entry.transactions.map((txn, idx) => (
-                      <div key={idx} className="p-2 bg-gray-100 rounded mb-2">
-                        <p>Account ID: ****{txn.account_id.slice(-8)} </p>
-                        <p>Transaction ID: ****{txn.transaction_id.slice(-8)} </p>
-                        <p>Amount: {txn.amount}</p>
-                        <p>Category: {txn.category?.join(", ") || "Unknown"}</p>
-                        <p>Status: {txn.pending ? "Pending" : "Completed"}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'need-action' && (
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {/* Unreconciled Requests */}
+            <div className="col-span-1">
+              <h3 className="text-lg font-semibold mb-2">Unreconciled Requests</h3>
+              <div className="space-y-2">
+                {[...reqsData.reimbursements, ...reqsData.payments]
+                  .filter(item => !item.plaid?.isReconciled)
+                  .map((item, index) => (
+                    <div 
+                      key={index}
+                      className="card bg-base-100 shadow cursor-move"
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, item)}
+                    >
+                      <div className="card-body p-4">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <h4 className="font-semibold">
+                              {item.totalAmount ? 'Reimbursement' : 'Payment'}
+                            </h4>
+                            <p className="text-sm">${item.totalAmount || item.amount}</p>
+                          </div>
+                          <span className="badge badge-error badge-sm">
+                            Unreconciled
+                          </span>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <p>No Transactions</p>
-                  )}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={3} className="text-center p-4">No data available, try fetching data.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            {/* Plaid Transactions */}
+            <div className="col-span-1">
+              <h3 className="text-lg font-semibold mb-2">Plaid Transactions</h3>
+              <div 
+                className="space-y-2"
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+              >
+                {plaidData.map((txn, index) => (
+                  <div
+                    key={index}
+                    className="card bg-base-100 shadow p-4 droppable"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="font-medium">${txn.amount}</p>
+                        <p className="text-sm">{txn.category?.join(', ')}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs">{txn.date}</p>
+                        <span className="badge badge-info badge-sm">
+                          {txn.pending ? 'Pending' : 'Completed'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+
+      </div>
     </div>
   );
 }

@@ -1,10 +1,11 @@
-
 require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
 const { Configuration, PlaidApi, PlaidEnvironments } = require('plaid');
-
 const reimbursementService = require('./reimbursement.service')
 const paymentService = require('./payment.service');
+
+const plaidTransaction = require('../../models/plaid.model');
+
 
 class PlaidService {
   constructor() {
@@ -19,7 +20,7 @@ class PlaidService {
       },
     });
     this.client = new PlaidApi(configuration);
-  }
+}
 
   async createLinkToken(userId) {
     try {
@@ -47,20 +48,101 @@ class PlaidService {
     }
   }
 
-  async getTransactions(accessToken, startDate, endDate) {
+  async getLiveTransactions(accessToken, startDate, endDate) {
     try {
       const response = await this.client.transactionsGet({
         access_token: accessToken,
         start_date: startDate,
         end_date: endDate,
       });
-      return response.data.transactions;
+
+      const transactions = response.data.transactions
+
+      for (const trx of transactions) {
+        await addTransaction(trx);
+        console.log("plaid.service: processed", trx);
+      }
+      return transactions;
     } catch (error) {
       console.error('Error fetching transactions:', error);
       throw error;
     }
   }
+
+  async getCachedTransactions(startDate, endDate){
+    try {
+      const transactions = await plaidTransaction.find({
+        date: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      });
+
+    return transactions;
+    } catch (error) {
+      console.error(error);
+      return { message: error.message };
+    }
+  }
+
 }
+
+
+
+//  -------------------------------------------------------
+//  Plaid Transaction Cache 
+//  -------------------------------------------------------
+
+/**
+ * Get transactions with role-based access control
+ * @param {Object} user - User object with role, id, and other properties
+ * @returns {Promise<Array>} Array of transactions or error message
+ */
+const getAll = async (user) => {
+  try {
+    const { role } = user;
+
+    let transactions;
+    if (role === "admin") {
+      transactions = await plaidTransaction.find({});
+    } else {
+      return { message: "Unauthorized" };
+    }
+    return transactions;
+  } catch (error) {
+    console.error(error);
+    return { message: error.message };
+  }
+};
+
+/**
+ * Create a new transaction
+ * @param {Object} data - Transaction data to create
+ * @returns {Promise<Object>} The created transaction or error message
+ */
+const addTransaction = async (data) => {
+  try {
+
+    const existing = await plaidTransaction.findOne({
+      transaction_id: data.transaction_id,
+    });
+
+    if (existing) {
+      return { message: "Already Exists!" };
+    }
+
+    const transaction = new plaidTransaction(data);
+    await transaction.save();
+    return transaction;
+
+
+  } catch (error) {
+    console.error(error);
+    return { message: error.message };
+  }
+};
+
+
 //  -------------------------------------------------------
 
 // const getAllRequests = async (user) => {
@@ -160,93 +242,96 @@ class PlaidService {
 // } 
 
 
-const reconcileRequestsAndTransactions = async (user) => {
-  try {
-    // Fetch all non-reconciled reimbursement and payment requests
-    const { reimbursements, payments } = await getAllRequests(user);
-    
-    // Fetch all Plaid transactions for user's linked accounts
-    const transactions = await getAllPlaidTransactions(user);
-    
-    // Filter out already reconciled requests and transactions
-    const unreconciledRequests = [...reimbursements, ...payments].filter(
-      (req) => !req.plaid.isReconciled
-    );
-    const unreconciledTransactions = transactions.filter(
-      (trx) => !trx.reconciled
-    );
-    
-    console.log(`Found ${unreconciledRequests.length} unreconciled requests`);
-    console.log(`Found ${unreconciledTransactions.length} unreconciled transactions`);
-    
-    // Attempt reconciliation
-    const reconciled = matchRequestsToTransactions(unreconciledRequests, unreconciledTransactions);
-    
-    // Save updates to the database
-    for (const { request, transaction } of reconciled) {
-      request.plaid.transactionId = transaction.transaction_id;
-      request.plaid.accountId = transaction.account_id;
-      request.plaid.transactionAmount = transaction.amount;
-      request.plaid.isReconciled = true;
-      await request.save();
-    }
-    
-    console.log(`Reconciled ${reconciled.length} transactions successfully.`);
-    return reconciled;
-  } catch (error) {
-    console.error("Error during reconciliation:", error);
-    throw error;
-  }
-};
+// const reconcileRequestsAndTransactions = async (user) => {
+//   try {
+//     // Fetch all non-reconciled reimbursement and payment requests
+//     const { reimbursements, payments } = await getAllRequests(user);
+//     
+//     // Fetch all Plaid transactions for user's linked accounts
+//     const transactions = await getAllPlaidTransactions(user);
+//     
+//     // Filter out already reconciled requests and transactions
+//     const unreconciledRequests = [...reimbursements, ...payments].filter(
+//       (req) => !req.plaid.isReconciled
+//     );
+//     const unreconciledTransactions = transactions.filter(
+//       (trx) => !trx.reconciled
+//     );
+//     
+//     console.log(`Found ${unreconciledRequests.length} unreconciled requests`);
+//     console.log(`Found ${unreconciledTransactions.length} unreconciled transactions`);
+//     
+//     // Attempt reconciliation
+//     const reconciled = matchRequestsToTransactions(unreconciledRequests, unreconciledTransactions);
+//     
+//     // Save updates to the database
+//     for (const { request, transaction } of reconciled) {
+//       request.plaid.transactionId = transaction.transaction_id;
+//       request.plaid.accountId = transaction.account_id;
+//       request.plaid.transactionAmount = transaction.amount;
+//       request.plaid.isReconciled = true;
+//       await request.save();
+//     }
+//     
+//     console.log(`Reconciled ${reconciled.length} transactions successfully.`);
+//     return reconciled;
+//   } catch (error) {
+//     console.error("Error during reconciliation:", error);
+//     throw error;
+//   }
+// };
 
-const matchRequestsToTransactions = (requests, transactions) => {
-  const reconciled = [];
-  const tolerance = 1.0; // Allow for small amount discrepancies
+// const matchRequestsToTransactions = (requests, transactions) => {
+//   const reconciled = [];
+//   const tolerance = 1.0; // Allow for small amount discrepancies
 
-  for (const request of requests) {
-    const matchIndex = transactions.findIndex((trx) =>
-      Math.abs(trx.amount - request.totalAmount || request.amount) <= tolerance &&
-      new Date(trx.date).toDateString() === new Date(request.createdAt).toDateString()
-    );
+//   for (const request of requests) {
+//     const matchIndex = transactions.findIndex((trx) =>
+//       Math.abs(trx.amount - request.totalAmount || request.amount) <= tolerance &&
+//       new Date(trx.date).toDateString() === new Date(request.createdAt).toDateString()
+//     );
 
-    if (matchIndex !== -1) {
-      reconciled.push({ request, transaction: transactions[matchIndex] });
-      transactions.splice(matchIndex, 1); // Remove matched transaction
-    }
-  }
-  return reconciled;
-};
+//     if (matchIndex !== -1) {
+//       reconciled.push({ request, transaction: transactions[matchIndex] });
+//       transactions.splice(matchIndex, 1); // Remove matched transaction
+//     }
+//   }
+//   return reconciled;
+// };
 
-const getAllRequests = async (user) => {
-  try {
-    const [reimbursements, payments] = await Promise.all([
-      reimbursementService.getReimbursements(user),
-      paymentService.getPayments(user),
-    ]);
-    return { reimbursements, payments };
-  } catch (error) {
-    console.error("Error fetching all requests:", error);
-    throw error;
-  }
-};
+// const getAllRequests = async (user) => {
+//   try {
+//     const [reimbursements, payments] = await Promise.all([
+//       reimbursementService.getReimbursements(user),
+//       paymentService.getPayments(user),
+//     ]);
+//     return { reimbursements, payments };
+//   } catch (error) {
+//     console.error("Error fetching all requests:", error);
+//     throw error;
+//   }
+// };
 
-const getAllPlaidTransactions = async (user) => {
-  try {
-    const tokens = user.plaid;
-    let allTransactions = [];
+// const getAllPlaidTransactions = async (user) => {
+//   try {
+//     const tokens = user.plaid;
+//     let allTransactions = [];
 
-    for (const { item_id, access_token } of tokens) {
-      const transactions = await plaidService.fetchTransactions(access_token);
-      allTransactions = allTransactions.concat(transactions);
-    }
-    return allTransactions;
-  } catch (error) {
-    console.error("Error fetching all Plaid transactions:", error);
-    throw error;
-  }
-};
+//     for (const { item_id, access_token } of tokens) {
+//       const transactions = await plaidService.fetchTransactions(access_token);
+//       allTransactions = allTransactions.concat(transactions);
+//     }
+//     return allTransactions;
+//   } catch (error) {
+//     console.error("Error fetching all Plaid transactions:", error);
+//     throw error;
+//   }
+// };
 
 module.exports = {
   PlaidService,
-  reconcileRequestsAndTransactions
+  addTransaction,
+  getAll
 }
+
+

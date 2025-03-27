@@ -1,5 +1,5 @@
 
-const {reconcileRequestsAndTransactions, PlaidService} = require('./plaid.service')
+const {PlaidService, getAll, addTransaction} = require('./plaid.service')
 
 
 const plaidService = new PlaidService()
@@ -53,10 +53,10 @@ const exchangePublicToken = async (req, res) => {
   }
 };
 
-const getTransactions = async (req, res) => {
+const getLiveTransactions = async (req, res) => {
   try {
     const { start, end, accessToken } = req.query;
-    const transactions = await plaidService.getTransactions(accessToken, start, end);
+    const transactions = await plaidService.getLiveTransactions(accessToken, start, end);
     res.status(200).json(transactions);
   } catch (error) {
     console.error('Error fetching transactions:', error);
@@ -64,14 +64,164 @@ const getTransactions = async (req, res) => {
   }
 };
 
-const reconcileRT = async (req, res) => {}
+const getCachedTransactions  = async (req, res) => {
+  try {
+
+    const { start, end } = req.query;
+    const transactions = await plaidService.getCachedTransactions(start, end);
+    
+    if (transactions.message === "Unauthorized") {
+      return res.status(403).json({ message: 'forbidden' });
+    }
+
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+}
+
+const reconcile = async (req, res) => {
+  try {
+    const user = req.user
+
+    if (user.role != 'admin'){
+      res.status(403).json({ message: 'forbidden' });
+    }
+
+    // do stuff in service
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+}
+
+
+const getAllTrx  = async (req, res) => {
+  try {
+    const transactions = await getAll(req.user);
+    
+    if (transactions.message === "Unauthorized") {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+}
+
+const addPlaidTransactions = async (req, res) => {
+  try {
+    const transactions = Array.isArray(req.body) ? req.body : [req.body];
+    
+    if (transactions.length === 0) {
+      return res.status(400).json({ message: 'No transaction data provided' });
+    }
+
+    const results = [];
+    const errors = [];
+
+    // Process transactions sequentially to maintain accurate counts
+    for (const transactionData of transactions) {
+      try {
+        const result = await addTransaction(transactionData);
+        results.push(result);
+      } catch (error) {
+        errors.push({
+          data: transactionData,
+          error: error.message
+        });
+      }
+    }
+
+    // Return appropriate response
+    if (errors.length > 0) {
+      return res.status(207).json({ // 207 Multi-Status
+        message: `Processed with some errors`,
+        successCount: results.length,
+        errorCount: errors.length,
+        successful: results,
+        errors: errors
+      });
+    }
+
+    if (results.length === 1) {
+      res.status(201).json(results[0]);
+    } else {
+      res.status(201).json({
+        message: `Processed ${results.length} transactions`,
+        count: results.length,
+        transactions: results
+      });
+    }
+  } catch (error) {
+    console.error('Transaction processing error:', error);
+    res.status(400).json({ 
+      message: error.message || 'Error processing transaction data' 
+    });
+  }
+};
+
+// const addPlaidTransactions = async (req, res) => {
+//   try {
+//     // Check if the request contains a single transaction or an array
+//     const transactions = Array.isArray(req.body) ? req.body : [req.body];
+//     
+//     // Validate we have at least one transaction
+//     if (transactions.length === 0) {
+//       return res.status(400).json({ message: 'No transaction data provided' });
+//     }
+
+//     // Process all transactions in parallel
+//     const transactionPromises = transactions.map(transactionData => 
+//       addTransaction({
+//         ...transactionData,
+//         // Add any additional fields you need here
+//       })
+//     );
+
+//     // Wait for all transactions to be processed
+//     const results = await Promise.all(transactionPromises);
+//     
+//     // Return appropriate response based on number of transactions
+//     if (results.length === 1) {
+//       res.status(201).json(results[0]);
+//     } else {
+//       res.status(201).json({
+//         message: `Successfully processed ${results.length} transactions`,
+//         count: results.length,
+//         transactions: results
+//       });
+//     }
+//   } catch (error) {
+//     console.error('Transaction processing error:', error);
+//     
+//     // More detailed error handling
+//     if (error.name === 'ValidationError') {
+//       res.status(422).json({ 
+//         message: 'Validation failed',
+//         errors: error.errors 
+//       });
+//     } else {
+//       res.status(400).json({ 
+//         message: error.message || 'Error processing transaction data' 
+//       });
+//     }
+//   }
+// };
 
 
 
 module.exports = {
   getSandboxToken,
   createLinkToken,
-  getTransactions,
   exchangePublicToken,
-  reconcileRequestsAndTransactions
+  reconcile,
+  getLiveTransactions,
+  getCachedTransactions,
+  getAllTrx
 }

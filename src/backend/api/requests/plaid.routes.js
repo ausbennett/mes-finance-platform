@@ -28,12 +28,15 @@ router.post('/exchange-token', plaidController.exchangePublicToken);
  * @query { accessToken: string, startDate: string, endDate: string }
  * @returns { transactions: array } - List of transactions between the given dates
  */
-router.get('/transactions', plaidController.getTransactions);
+router.get('/live-transactions', plaidController.getLiveTransactions);
+router.get('/cached-transactions', plaidController.getCachedTransactions)
+
+
+router.get('/reconcile', plaidController.reconcile)
 
 //FOR TESTING ONLY!
 router.get('/sandbox/public-token', plaidController.getSandboxToken)
 
-router.get('/audit', plaidController.reconcileRequestsAndTransactions)
-
+// router.get('/all', plaidController.getAllTrx)
 
 module.exports = router;

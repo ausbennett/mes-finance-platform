@@ -23,6 +23,12 @@ type Club = {
   name: string;
 };
 
+type Receipient = {
+  user: string; // Will store email in form data
+  amount: string;
+  status: string;
+}
+
 export default function EditRequestPage() {
   const { id } = useParams();
   const [radio, setRadio] = useState<"reimbursement" | "payment">("reimbursement");
@@ -58,6 +64,11 @@ export default function EditRequestPage() {
     [users]
   );
 
+  const usersByEmail = useMemo(() =>
+    new Map(users.map(user => [user.email, user._id])),
+    [users]
+  );
+
   const clubsById = useMemo(() =>
     new Map(clubs.map(club => [club._id, club])),
     [clubs]
@@ -82,27 +93,30 @@ const handleSaveChanges = async () => {
   try {
     const isPayment = radio === "payment";
     const endpoint = `${API_BASE_URL}/api/requests/id/${id}`;
-    const hardcodedToken = "67aa7568a95f30c1a91f8a0a"; 
 
-    // Include 'status' in the payload
     const payload = isPayment
       ? {
           ...paymentFormData,
           amount: Number(paymentFormData.amount),
           paymentDate: new Date(paymentFormData.paymentDate).toISOString(),
-          status: status, // Add current status
+          status: status,
         }
       : {
           ...reimbursementFormData,
           totalAmount: Number(reimbursementFormData.totalAmount),
-          recipients: reimbursementFormData.recipients.map(r => ({
-            user: r.user,
-            amount: Number(r.amount),
-          })),
-          status: status, // Add current status
+          recipients: reimbursementFormData.recipients.map(r => {
+            // Convert email to user ID
+            const userId = usersByEmail.get(r.user);
+            if (!userId) throw new Error(`Invalid email: ${r.user}`);
+            
+            return {
+              user: userId,
+              amount: Number(r.amount),
+              status: r.status
+            };
+          }),
+          status: status,
         };
-
-    
 
     const response = await fetch(endpoint, {
       method: "PUT",
@@ -137,32 +151,32 @@ const handleSaveChanges = async () => {
   };
 
   useEffect(() => {
-
     const fetchRequestData = async () => {
       try {
         const userEmail = sessionStorage.getItem("email") || "";
         setEmail(userEmail);
+        
         const [requestRes, usersRes, clubsRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/requests/id/${id}`, {
-            headers: { Authorization: `Bearer ${authToken}` },
-          }),
+          fetch(`${API_BASE_URL}/api/requests/id/${id}`),
           fetch(`${API_BASE_URL}/api/users`),
           fetch(`${API_BASE_URL}/api/clubs`)
         ]);
 
-        if (!requestRes.ok) throw new Error(`HTTP error! Status: ${requestRes.status}`);
-        if (!usersRes.ok) throw new Error("Failed to fetch users");
-        if (!clubsRes.ok) throw new Error("Failed to fetch clubs");
+        if (!requestRes.ok || !usersRes.ok || !clubsRes.ok) {
+          throw new Error("Failed to fetch data");
+        }
 
-        const data = await requestRes.json();
-        const usersData = await usersRes.json();
-        const clubsData = await clubsRes.json();
+        const [requestData, usersData, clubsData] = await Promise.all([
+          requestRes.json(),
+          usersRes.json(),
+          clubsRes.json()
+        ]);
 
         setUsers(usersData);
         setClubs(clubsData);
 
-        const request = data.request || data;
-        if (!request._id) throw new Error("Invalid request format");
+        const request = requestData.request || requestData;
+        const usersMap = new Map(usersData.map((user: User) => [user._id, user]));
 
         const requestType = request.totalAmount !== undefined ? "reimbursement" : "payment";
         setRadio(requestType);
@@ -174,7 +188,7 @@ const handleSaveChanges = async () => {
             requestor: request.requestor,
             club: request.club || "",
             recipients: (request.recipients || []).map((r: any) => ({
-              user: r.user,
+              user: usersMap.get(r.user)?.email || "", // Convert ID to email
               amount: r.amount?.toString() || "0.00",
               status: r.status || "pending"
             })),

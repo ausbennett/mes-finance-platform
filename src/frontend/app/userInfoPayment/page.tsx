@@ -24,8 +24,14 @@ export default function UserInfoPaymentPage() {
          email: sessionStorage.getItem("email"),
          phoneNumber: sessionStorage.getItem("phoneNumber"),
          whoAreYou: sessionStorage.getItem("whoAreYou"),
-         club: sessionStorage.getItem("club"),
-         clubRole: sessionStorage.getItem("clubRole"),
+         club:
+            sessionStorage.getItem("club") == ""
+               ? "N/A"
+               : sessionStorage.getItem("club"),
+         clubRole:
+            sessionStorage.getItem("clubRole") == ""
+               ? "N/A"
+               : sessionStorage.getItem("clubRole"),
          role: "admin",
       };
 

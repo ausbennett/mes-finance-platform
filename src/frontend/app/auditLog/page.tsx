@@ -18,6 +18,7 @@ export default function AuditPage() {
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
   const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
   const [expandedRequestId, setExpandedRequestId] = useState<string | null>(null);
+  const [selectedRequestDetails, setSelectedRequestDetails] = useState<any>(null);
 
   const [user, setUser] = useState<any>(null)
   const [email, setEmail] = "adam@mcmaster.ca"
@@ -139,6 +140,104 @@ export default function AuditPage() {
               <span>Reconciliation successful!</span>
             </div>
           </div>
+        )}
+
+        {selectedRequestDetails && (
+          <dialog open className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box max-w-2xl bg-foreground">
+              <h3 className="font-bold text-lg mb-4">
+                Request Details - {selectedRequestDetails._id.slice(-8)}
+              </h3>
+              
+              <div className="grid grid-cols-2 gap-4">
+                {/* Left Column */}
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Type:</span>
+                    <span>{selectedRequestDetails.totalAmount ? 'Reimbursement' : 'Payment'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Date:</span>
+                    <span>
+                      {new Date(
+                        selectedRequestDetails.createdAt || 
+                        selectedRequestDetails.paymentDate
+                      ).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Requestor:</span>
+                    <span>{selectedRequestDetails.requestor || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Club:</span>
+                    <span>{selectedRequestDetails.club?.toUpperCase() || 'N/A'}</span>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Amount:</span>
+                    <span className="text-xl font-bold">
+                      ${selectedRequestDetails.totalAmount || selectedRequestDetails.amount}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Status:</span>
+                    <span className={`badge ${
+                      selectedRequestDetails.status === 'Approved' ? 'badge-success' : 
+                      selectedRequestDetails.status === 'Pending' ? 'badge-warning' : 'badge-error'
+                    }`}>
+                      {selectedRequestDetails.status}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-semibold">Payment Type:</span>
+                    <span>
+                      {selectedRequestDetails.paymentType || 
+                       selectedRequestDetails.reimbursementType || 
+                       'N/A'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description Section */}
+              {selectedRequestDetails.description && (
+                <div className="mt-4 p-3 bg-gray-100 rounded">
+                  <p className="font-semibold mb-1">Description:</p>
+                  <p className="text-sm">{selectedRequestDetails.description}</p>
+                </div>
+              )}
+
+              {/* Plaid Details Section */}
+              {selectedRequestDetails.plaid && (
+                <div className="mt-4 p-3 bg-gray-100 rounded">
+                  <p className="font-semibold mb-2">Plaid Details:</p>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <p>Transaction ID: {selectedRequestDetails.plaid.transactionId?.slice(-8)}</p>
+                      <p>Account: ****{selectedRequestDetails.plaid.accountId?.slice(-4)}</p>
+                    </div>
+                    <div>
+                      <p>Amount: ${selectedRequestDetails.plaid.transactionAmount}</p>
+                      <p>Status: {selectedRequestDetails.plaid.isReconciled ? 'Reconciled' : 'Pending'}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="modal-action">
+                <button 
+                  className="btn"
+                  onClick={() => setSelectedRequestDetails(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </dialog>
         )}
 
         <div className="flex gap-4 mb-4">
@@ -324,27 +423,50 @@ export default function AuditPage() {
                         setShowConfirmation(true);
                       }}
                     >
+
                       <div className="card-body p-4">
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <h4 className="font-semibold">
-                              {item.totalAmount ? 'Reimbursement' : 'Payment'}
-                            </h4>
-                            <p className="text-sm">${item.totalAmount || item.amount}</p>
+                        <div className="flex justify-between items-start">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-3">
+                              <h4 className="font-semibold">
+                                {item.totalAmount ? 'Reimbursement' : 'Payment'}
+                              </h4>
+                              <span className="badge badge-error badge-sm">Unreconciled</span>
+                            </div>
+                            
+                            {/* New Information Section */}
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium opacity-70">Date:</span>
+                                <span className="text-primary">
+                                  {new Date(item.createdAt || item.paymentDate).toLocaleDateString()}
+                                </span>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium opacity-70">Requestor:</span>
+                                <span className="badge badge-outline badge-sm">
+                                  {item.requestor || 'Unknown'}
+                                </span>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium opacity-70">Club:</span>
+                                <span className="text-secondary">
+                                  {item.club?.toUpperCase() || 'N/A'}
+                                </span>
+                              </div>
+
+                              <button 
+                                className="btn btn-xs btn-ghost"
+                                onClick={() => setSelectedRequestDetails(item)}
+                              >
+                                View Request
+                              </button>
+
+                            </div>
                           </div>
-                          <span className="badge badge-error badge-sm">Unreconciled</span>
                         </div>
-                        
-                        {/* Preview of linked transaction */}
-                        {item.plaid?.transactionId && (
-                          <div className="mt-2 p-2 bg-info/10 rounded">
-                            <p className="text-xs">
-                              Linked Transaction: {item.plaid.transactionId?.slice(-8)}
-                            </p>
-                            <p className="text-xs">Amount: ${item.plaid.transactionAmount}</p>
-                            <p className="text-xs">Account: ****{item.plaid.accountId?.slice(-4)}</p>
-                          </div>
-                        )}
                       </div>
                     </div>
                   ))}

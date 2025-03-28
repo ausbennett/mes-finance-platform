@@ -3,12 +3,59 @@
 import { useRouter } from "next/navigation";
 import NavBar from "../components/navbar";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function UserDashboardPage() {
    const router = useRouter();
+   const [users, setUsers] = useState<User[]>([]);
 
-   const user: string = "Joe";
-   //make the cards less wide
+   interface User {
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      phoneNumber: string;
+      whoAreYou: string;
+      club: string;
+      clubRole: string;
+      role: string;
+      plaid: any[]; // Replace `any` with the actual structure if you know it
+      payment: {
+         etransferEmail: string;
+         etransferPhone: string;
+      };
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+   }
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(
+               "http://localhost:3001/api/users/"
+            );
+
+            setUsers(response.data);
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               console.error(
+                  "Axios error:",
+                  error.response?.data || error.message
+               );
+            } else {
+               console.error("Unexpected error:", error);
+            }
+         }
+      };
+
+      fetchData();
+   }, []);
+
+   const currentUser = users.find(
+      (user) => user.email === sessionStorage.getItem("email")
+   );
    return (
       <>
          <div className="flex flex-col min-h-screen min-w-screen bg-gray-200">
@@ -17,7 +64,8 @@ export default function UserDashboardPage() {
             <div className="flex flex-col items-center justify-start space-y-10 flex-grow w-full py-10">
                <div className="w-3/4">
                   <p className="text-primary-text font-bold text-xl">
-                     Hello {user}, Welcome to the MES Finance Platform
+                     Hello {currentUser?.firstName}, Welcome to the MES Finance
+                     Platform
                   </p>
                </div>
                <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">

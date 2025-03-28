@@ -388,43 +388,44 @@ export default function AuditPage() {
                   </button>
                   <button 
                     className="btn btn-success"
-                    onClick={() => {
-                      console.log('Reconciliation Data:', {
-                        requestId: selectedRequest?._id,
-                        transactionData: {
-                          transactionId: selectedTransaction?.transactionId,
-                          accountId: selectedTransaction?.accountId,
-                          transactionAmount: selectedTransaction?.transactionAmount,
-                          isReconciled: true
-                        }
-                      });
+                    onClick={async () => {
+                      if (!selectedRequest || !selectedTransaction) return;
                       
-                      // Update local state
-                      setReqsData(prev => ({
-                        ...prev,
-                        reimbursements: prev.reimbursements.map(req => 
-                          req._id === selectedRequest?._id ? {
-                            ...req,
-                            plaid: {
-                              ...req.plaid,
-                              ...selectedTransaction,
-                              isReconciled: true
-                            }
-                          } : req
-                        ),
-                        payments: prev.payments.map(pay => 
-                          pay._id === selectedRequest?._id ? {
-                            ...pay,
-                            plaid: {
-                              ...pay.plaid,
-                              ...selectedTransaction,
-                              isReconciled: true
-                            }
-                          } : pay
-                        )
-                      }));
-                      
-                      setShowConfirmation(false);
+                      try {
+                        const isReimbursement = "totalAmount" in selectedRequest;
+                        const endpoint = isReimbursement 
+                          ? `/api/requests/reimbursements/id/${selectedRequest._id}`
+                          : `/api/requests/payments/id/${selectedRequest._id}`;
+
+                        const updatedPlaid = {
+                          ...selectedRequest.plaid, // Preserve existing data
+                          transactionId: selectedTransaction.transactionId,
+                          accountId: selectedTransaction.accountId,
+                          transactionAmount: selectedTransaction.transactionAmount,
+                          isReconciled: true,
+                        };
+
+                        // Send API request
+                        await apiClient.put(endpoint, { plaid: updatedPlaid });
+
+                        // Update local state
+                        setReqsData(prev => ({
+                          ...prev,
+                          reimbursements: prev.reimbursements.map(req => 
+                            req._id === selectedRequest._id ? { ...req, plaid: updatedPlaid } : req
+                          ),
+                          payments: prev.payments.map(pay => 
+                            pay._id === selectedRequest._id ? { ...pay, plaid: updatedPlaid } : pay
+                          ),
+                        }));
+
+                        console.log("Edit Request Complete")
+                        setShowConfirmation(false);
+                      } catch (err) {
+                        console.error("Reconciliation failed:", err);
+                        setError("Failed to save reconciliation. Please try again.");
+                        setShowConfirmation(false);
+                      }
                     }}
                   >
                     Confirm

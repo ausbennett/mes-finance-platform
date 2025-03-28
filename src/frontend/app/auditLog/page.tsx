@@ -13,10 +13,11 @@ export default function AuditPage() {
   const [plaidData, setPlaidData] = useState<any[]>([]);
 
   const [activeTab, setActiveTab] = useState<'requests' | 'need-action'>('requests');
-  const [draggedItem, setDraggedItem] = useState<any>(null);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
   const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
+  const [expandedRequestId, setExpandedRequestId] = useState<string | null>(null);
 
   const [user, setUser] = useState<any>(null)
   const [email, setEmail] = "adam@mcmaster.ca"
@@ -123,40 +124,22 @@ export default function AuditPage() {
     onSuccess,
   });
 
-  const handleDragStart = (e: React.DragEvent, item: any) => {
-    setDraggedItem(item);
-    e.dataTransfer.setData('text/plain', item._id);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = async (e: React.DragEvent) => {
-    e.preventDefault();
-    console.log(e.dataTransfer.getData('text/plain'))
-    // const transactionId = e.dataTransfer.getData('text/plain');
-    // 
-    // // Implement your reconciliation logic here
-    // try {
-    //   await apiClient.post('/api/reconcile', {
-    //     requestId: draggedItem._id,
-    //     transactionId: transactionId
-    //   });
-    //   // Update local state or refetch data
-    // } catch (err) {
-    //   console.error('Reconciliation failed:', err);
-    // }
-  };
-
-
   return (
     <div>
       <NavBar />
       <div className="container mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Audit Page</h1>
 
-
+        {showSuccessAlert && (
+          <div className="toast toast-top toast-end">
+            <div className="alert alert-success">
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Reconciliation successful!</span>
+            </div>
+          </div>
+        )}
 
         <div className="flex gap-4 mb-4">
           <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-300 input-bordered" />
@@ -251,17 +234,58 @@ export default function AuditPage() {
                                 {item.requestor?.slice(-8)}
                               </span>
                             </div>
+
+                            {item.plaid.isReconciled && (
+                              <button 
+                                className="btn btn-xs btn-ghost"
+                                onClick={() => setExpandedRequestId(
+                                  expandedRequestId === item._id ? null : item._id
+                                )}
+                              >
+                                {expandedRequestId === item._id ? '▲' : '▼'} Plaid Details
+                              </button>
+                            )}
+
                           </div>
                           
-                          <div className="text-right">
-                            <p className="text-xl font-bold">
-                              ${item.totalAmount || item.amount}
-                            </p>
-                            <p className="text-xs opacity-70">
-                              {new Date(item.createdAt || item.paymentDate).toLocaleTimeString()}
-                            </p>
-                          </div>
+                          {/* Right side buttons and details */}
+                              <div className="flex flex-col items-end gap-2">
+                                <p className="text-xs opacity-70">
+                                  {new Date(item.createdAt || item.paymentDate).toLocaleTimeString()}
+                                </p>
+                                <p className="text-xl font-bold">
+                                  ${item.totalAmount || item.amount}
+                                </p>
+
+                                <div className="flex gap-2">
+                                  <Link 
+                                    href={`/editRequest/${item._id}`}
+                                    className="btn btn-xs btn-ghost"
+                                  >
+                                    View Request
+                                  </Link>
+                                </div>
+                              </div>
+
                         </div>
+
+                      {/* Plaid Details Dropdown */}
+                        {expandedRequestId === item._id && item.plaid && (
+                          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                            <h4 className="font-semibold mb-2">Plaid Details</h4>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                              <div>
+                                <p>Transaction ID: {item.plaid.transactionId?.slice(-8)}</p>
+                                <p>Account: ****{item.plaid.accountId?.slice(-4)}</p>
+                              </div>
+                              <div>
+                                <p>Amount: ${item.plaid.transactionAmount}</p>
+                                <p>Status: {item.plaid.isReconciled ? 'Reconciled' : 'Pending'}</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                       </div>
                     </div>
                   ))}
@@ -421,6 +445,9 @@ export default function AuditPage() {
 
                         console.log("Edit Request Complete")
                         setShowConfirmation(false);
+                        setShowSuccessAlert(true)
+                        setTimeout(() => setShowSuccessAlert(false), 3000);
+
                       } catch (err) {
                         console.error("Reconciliation failed:", err);
                         setError("Failed to save reconciliation. Please try again.");

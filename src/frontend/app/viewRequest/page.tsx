@@ -177,7 +177,7 @@ export default function ViewRequestsPage() {
       );
 
    return (
-      <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10">
+      <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10 pb-10">
          <NavBar />
          <div className="flex flex-col items-center justify-start flex-grow">
             <div className="flex flex-row items-start justify-start w-full px-10">

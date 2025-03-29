@@ -37,7 +37,6 @@ export default function LoginPage() {
             const response = await axios.get(
                "http://localhost:3001/api/users/"
             );
-
             setUsers(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -88,22 +87,23 @@ export default function LoginPage() {
       <>
          <div
             id="loginScreenContainer"
-            className="flex flex-row min-h-screen min-w-screen bg-background"
+            className="flex flex-col md:flex-row min-h-screen min-w-screen bg-background"
          >
+            {/* Left grey div visible on tablet/desktop only */}
             <div
                id="loginScreenLeftContainer"
-               className="bg-stone-800 min-h-screen w-2/5"
+               className="hidden md:block bg-stone-800 md:w-2/5"
             ></div>
             <div
                id="loginScreenFormContainer"
-               className="flex flex-col items-center justify-center h-screen w-3/5 bg-transparent space-y-5"
+               className="flex flex-col items-center justify-center h-screen w-full md:w-3/5 bg-transparent space-y-5 px-5"
             >
                <Image
                   src="/mesLogo.png"
                   alt="MES Logo"
                   width={150}
                   height={150}
-               ></Image>
+               />
 
                <div className="flex flex-row w-full items-center justify-center px-5 text-center">
                   <p className="text-primary-text font-bold text-lg">
@@ -118,16 +118,16 @@ export default function LoginPage() {
 
                <input
                   type="email"
-                  className="bg-foreground px-3 py-2 rounded-md w-1/3 border-white drop-shadow-md"
+                  className="bg-foreground px-3 py-2 rounded-md w-full md:w-1/3 border-white drop-shadow-md"
                   placeholder="johnsmith@mcmaster.ca"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onClick={() => setError("")}
-               ></input>
+               />
 
                {error && <p className="text-red-500 text-sm">{error}</p>}
 
-               <div className="w-1/3">
+               <div className="w-full md:w-1/3">
                   <button
                      onClick={handleSubmit}
                      className="bg-primary text-white font-semilbold p-2 rounded-lg w-full drop-shadow-lg"

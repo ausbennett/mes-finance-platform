@@ -36,7 +36,6 @@ export default function UserDashboardPage() {
             const response = await axios.get(
                "http://localhost:3001/api/users/"
             );
-
             setUsers(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -62,14 +61,16 @@ export default function UserDashboardPage() {
             <NavBar />
 
             <div className="flex flex-col items-center justify-start space-y-10 flex-grow w-full py-10">
-               <div className="w-3/4">
+               {/* Heading container */}
+               <div className="w-full md:w-3/4 px-4">
                   <p className="text-primary-text font-bold text-xl">
                      Hello {currentUser?.firstName}, Welcome to the MES Finance
                      Platform
                   </p>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
-                  <div className="flex flex-none items-center justify-start h-full">
+               {/* Card 1: New Request */}
+               <div className="flex flex-col md:flex-row items-center justify-start bg-foreground text-primary-text p-4 md:px-10 space-y-5 md:space-y-0 md:space-x-5 w-[95%] md:w-3/4 h-auto md:h-32 rounded-xl mx-auto">
+                  <div className="flex flex-none items-center justify-center md:justify-start w-full md:w-auto">
                      <Image
                         src="/document.png"
                         alt="Document"
@@ -77,24 +78,23 @@ export default function UserDashboardPage() {
                         height={70}
                      />
                   </div>
-                  <div className="flex flex-1 items-center justify-start h-full">
-                     <p className="text-primary-text font-bold text-md">
+                  <div className="flex flex-1 items-center justify-center md:justify-start">
+                     <p className="text-primary-text font-bold text-md text-center md:text-left">
                         Submit a new reimbursement or payment request
                      </p>
                   </div>
-                  <div className="flex flex-1 items-center justify-end h-full">
+                  <div className="flex flex-1 items-center justify-center md:justify-end w-full md:w-auto">
                      <button
-                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
-                        onClick={() => {
-                           router.push("/newRequest");
-                        }}
+                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-full md:w-32 drop-shadow-lg"
+                        onClick={() => router.push("/newRequest")}
                      >
                         New request
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
-                  <div className="flex flex-none items-center justify-start h-full">
+               {/* Card 2: View Requests */}
+               <div className="flex flex-col md:flex-row items-center justify-start bg-foreground text-primary-text p-4 md:px-10 space-y-5 md:space-y-0 md:space-x-5 w-[95%] md:w-3/4 h-auto md:h-32 rounded-xl mx-auto">
+                  <div className="flex flex-none items-center justify-center md:justify-start w-full md:w-auto">
                      <Image
                         src="/box.png"
                         alt="Document"
@@ -102,67 +102,63 @@ export default function UserDashboardPage() {
                         height={70}
                      />
                   </div>
-                  <div className="flex flex-1 items-center justify-start h-full">
-                     <p className="text-primary-text font-bold text-md">
+                  <div className="flex flex-1 items-center justify-center md:justify-start">
+                     <p className="text-primary-text font-bold text-md text-center md:text-left">
                         View your submitted reimbursement and payment requests
                      </p>
                   </div>
-                  <div className="flex flex-1 items-center justify-end h-full">
+                  <div className="flex flex-1 items-center justify-center md:justify-end w-full md:w-auto">
                      <button
-                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
-                        onClick={() => {
-                           router.push("/viewRequest");
-                        }}
+                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-full md:w-32 drop-shadow-lg"
+                        onClick={() => router.push("/viewRequest")}
                      >
                         View requests
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
-                  <div className="flex flex-none items-center justify-start h-full">
+               {/* Card 3: Audit Log */}
+               <div className="flex flex-col md:flex-row items-center justify-start bg-foreground text-primary-text p-4 md:px-10 space-y-5 md:space-y-0 md:space-x-5 w-[95%] md:w-3/4 h-auto md:h-32 rounded-xl mx-auto">
+                  <div className="flex flex-none items-center justify-center md:justify-start w-full md:w-auto">
                      <Image
                         src="/audit.png"
-                        alt="Document"
+                        alt="Audit Log"
                         width={70}
                         height={70}
                      />
                   </div>
-                  <div className="flex flex-1 items-center justify-start h-full">
-                     <p className="text-primary-text font-bold text-md">
+                  <div className="flex flex-1 items-center justify-center md:justify-start">
+                     <p className="text-primary-text font-bold text-md text-center md:text-left">
                         Access the audit log for ledger tracking
                      </p>
                   </div>
-                  <div className="flex flex-1 items-center justify-end h-full">
+                  <div className="flex flex-1 items-center justify-center md:justify-end w-full md:w-auto">
                      <button
-                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
-                        onClick={() => {
-                           router.push("/auditLog");
-                        }}
+                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-full md:w-32 drop-shadow-lg"
+                        onClick={() => router.push("/auditLog")}
                      >
                         Audit log
                      </button>
                   </div>
                </div>
-               <div className="flex flex-row items-center justify-start bg-foreground text-primary-text px-10 space-x-5 w-3/4 h-32 rounded-xl">
-                  <div className="flex flex-none items-center justify-start h-full">
+               {/* Card 4: Update Info */}
+               <div className="flex flex-col md:flex-row items-center justify-start bg-foreground text-primary-text p-4 md:px-10 space-y-5 md:space-y-0 md:space-x-5 w-[95%] md:w-3/4 h-auto md:h-32 rounded-xl mx-auto">
+                  <div className="flex flex-none items-center justify-center md:justify-start w-full md:w-auto">
                      <Image
                         src="/database.png"
-                        alt="Document"
+                        alt="Update Info"
                         width={70}
                         height={70}
                      />
                   </div>
-                  <div className="flex flex-1 items-center justify-start h-full">
-                     <p className="text-primary-text font-bold text-md">
+                  <div className="flex flex-1 items-center justify-center md:justify-start">
+                     <p className="text-primary-text font-bold text-md text-center md:text-left">
                         Make changes to club, team or society information
                      </p>
                   </div>
-                  <div className="flex flex-1 items-center justify-end h-full">
+                  <div className="flex flex-1 items-center justify-center md:justify-end w-full md:w-auto">
                      <button
-                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-32 drop-shadow-lg"
-                        onClick={() => {
-                           router.push("/updateClubs");
-                        }}
+                        className="bg-primary text-white font-semilbold p-2 rounded-lg w-full md:w-32 drop-shadow-lg"
+                        onClick={() => router.push("/updateClubs")}
                      >
                         Update info
                      </button>

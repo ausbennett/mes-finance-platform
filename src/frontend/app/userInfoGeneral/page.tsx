@@ -42,7 +42,7 @@ export default function UserInfoGeneralPage() {
                <li>Payment</li>
             </ul>
          </div>
-         <div className="flex flex-col items-start justify-center bg-foreground w-1/2 p-10 rounded-lg drop-shadow-lg space-y-5">
+         <div className="flex flex-col items-start justify-center bg-foreground w-3/4 md:w-1/2 p-10 rounded-lg drop-shadow-lg space-y-5">
             <p className="text-primary-text font-bold">General Info</p>
             <label className="form-control w-full">
                <div className="label">

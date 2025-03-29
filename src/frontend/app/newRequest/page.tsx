@@ -120,8 +120,7 @@ export default function NewRequestPage() {
           if (!userId) throw new Error (`User with email ${recipient.user} not found`);
           return {
             user: userId,
-            amount: recipient.amount,
-            status: recipient.status
+            amount: recipient.amount
           };
         })
       } : {
@@ -223,16 +222,7 @@ export default function NewRequestPage() {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col items-start justify-center w-1/3 space-y-2">
-                  <p className="font-bold">Budget Line</p>
-                  <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer">
-                    <option>option1</option>
-                    <option>option1</option>
-                    <option>option1</option>
-                  </select>
-                </div>
               </div>
-
               {/* FORM START */}
               <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-primary p-10 space-y-5">
                 {radio === "payment" && (

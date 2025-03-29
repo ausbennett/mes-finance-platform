@@ -53,7 +53,7 @@ const addUserData = async (req, res, next) => {
      // return res.status(500).json({ error: "Failed to get user details. Ensure that email is specified in the header.", details: error.message });
 
      // Fail Gracefully for DEV
-     const user = await userService.getUserById("67e2eba71112e7fb35c7b368")
+     const user = await userService.getUserById("67ab928cbabde7e5c889a9e2")
     console.log("testAuth.js - FAILED to Fetch user by email defaulting to admin account ->: ", user)
     req.user = user
     next();

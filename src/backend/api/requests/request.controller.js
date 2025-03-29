@@ -33,6 +33,7 @@ const updateRequestStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
+    const isAdmin = req.user?.role == "admin";
 
     // 1. First get the request (payment or reimbursement)
     const request = await reimbursementService.getReimbursementById(id) || 
@@ -48,21 +49,24 @@ const updateRequestStatus = async (req, res) => {
       return res.status(400).json({ error: "Requestor email not found" });
     }
 
+    const updatedPayload = {
+      ...updateData,
+      lastUpdated: new Date()
+    }
+
+    if (isAdmin) {
+      updatedPayload.reviewer = req.user?.id;
+    }
+
     // 3. Proceed with update
     const isPayment = updateData.amount !== undefined;
     const service = isPayment ? paymentService : reimbursementService;
 
     const updatedRequest = isPayment 
-    ? await paymentService.editPayment(id, {
-        ...updateData,
-        reviewer: req.user?.id,
-        lastUpdated: new Date()
-      })
-    : await reimbursementService.editReimbursement(id, {
-        ...updateData,
-        reviewer: req.user?.id,
-        lastUpdated: new Date()
-      });
+    ? await paymentService.editPayment(id, updatedPayload)
+    : await reimbursementService.editReimbursement(id, updatedPayload)
+
+    console.log("update request", updatedPayload)
 
     // 4. Send email to requestor
     await sendEmail(

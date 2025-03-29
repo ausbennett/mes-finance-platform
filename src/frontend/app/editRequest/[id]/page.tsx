@@ -52,6 +52,7 @@ export default function EditRequestPage() {
       description: "",
       receipts: null as FileList | null,
       status: "Pending",
+      reviewer: ""
    });
 
    const [paymentFormData, setPaymentFormData] = useState({
@@ -60,6 +61,7 @@ export default function EditRequestPage() {
       amount: "",
       description: "",
       paymentDate: new Date().toISOString().split("T")[0],
+      reviewer: ""
    });
 
    // Memoized maps for quick lookups
@@ -99,6 +101,7 @@ export default function EditRequestPage() {
 
    const handleSaveChanges = async () => {
       try {
+         const isAdmin = currentUser?.role === "admin";
          const isPayment = radio === "payment";
          const endpoint = `${API_BASE_URL}/api/requests/id/${id}`;
 
@@ -128,14 +131,22 @@ export default function EditRequestPage() {
                  status: status,
               };
 
+         const finalPayload = isAdmin ? payload : {
+            ...payload,
+            reviewer: undefined
+         }
+
+
          const response = await fetch(endpoint, {
             method: "PUT",
             headers: {
                "Content-Type": "application/json",
                email: email,
             },
-            body: JSON.stringify(payload),
+            body: JSON.stringify(finalPayload),
          });
+
+         console.log(finalPayload)
 
          if (!response.ok) throw new Error("Save failed");
          alert("Changes saved!");
@@ -206,6 +217,7 @@ export default function EditRequestPage() {
                   ...reimbursementFormData,
                   requestor: request.requestor,
                   club: request.club || "",
+                  reviewer: request.reviewer || "",
                   recipients: (request.recipients || []).map((r: any) => ({
                      user: usersMap.get(r.user)?.email || "", // Convert ID to email
                      amount: r.amount?.toString() || "0.00",
@@ -220,6 +232,7 @@ export default function EditRequestPage() {
                   ...paymentFormData,
                   requestor: request.requestor,
                   club: request.club || "",
+                  reviewer: request.reviewer || "",
                   amount: request.amount?.toString() || "",
                   description: request.description || "",
                   paymentDate:

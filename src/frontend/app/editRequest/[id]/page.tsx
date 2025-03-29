@@ -17,6 +17,7 @@ type User = {
    lastName: string;
    email: string;
    club: string;
+   role?: string;
 };
 
 type Club = {
@@ -76,6 +77,10 @@ export default function EditRequestPage() {
       () => new Map(clubs.map((club) => [club._id, club])),
       [clubs]
    );
+
+   const currentUser = useMemo(() => {
+      return users.find((u) => u.email === email);
+   }, [users, email]);
 
    const formatUserData = (requestorId: string, clubId: string): User => {
       const user = usersById.get(requestorId);
@@ -274,16 +279,18 @@ export default function EditRequestPage() {
                   <p className="text-primary-text font-bold text-lg">
                      Edit Request Form
                   </p>
-                  <select
-                     value={status}
-                     onChange={(e) => setStatus(e.target.value)}
-                     className="bg-red-900 text-white px-4 py-2 rounded-md shadow-md cursor-pointer hover:bg-red-800"
-                  >
-                     <option value="Approved">Approved</option>
-                     <option value="Denied">Denied</option>
-                     <option value="Pending">Pending</option>
-                     <option value="Closed">Closed</option>
-                  </select>
+                  {currentUser?.role !== "user" && (
+                     <select
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        className="bg-red-900 text-white px-4 py-2 rounded-md shadow-md cursor-pointer hover:bg-red-800"
+                     >
+                        <option value="Approved">Approved</option>
+                        <option value="Denied">Denied</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Closed">Closed</option>
+                     </select>
+                  )}
                </div>
 
                <div className="flex flex-col bg-white p-10 rounded-xl shadow-md space-y-5">

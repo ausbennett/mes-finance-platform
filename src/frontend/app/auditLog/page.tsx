@@ -41,6 +41,7 @@ export default function AuditPage() {
     },
   });
 
+
   useEffect(() => {
 
     const fetchUserData = async () => {
@@ -94,18 +95,67 @@ export default function AuditPage() {
     }
   };
   
-  const combinedData = Array.from(
-    new Set([
-      ...((reqsData.reimbursements || []).map(d => d.createdAt?.split("T")[0]) || []),
-      ...((reqsData.payments || []).map(d => d.paymentDate?.split("T")[0]) || []),
-      ...(plaidData?.map(d => d.date) || [])
-    ])
-  ).sort().map(date => ({
-    date,
-    reimbursements: (reqsData.reimbursements || []).filter(req => req.createdAt?.startsWith(date)),
-    payments: (reqsData.payments || []).filter(pay => pay.paymentDate?.startsWith(date)),
-    transactions: (plaidData || []).filter(txn => txn.date === date)
-  }));
+
+  const groupedUnreconciled = Object.entries(
+  [...reqsData.reimbursements, ...reqsData.payments]
+    .filter(item => !item.plaid?.isReconciled)
+    .reduce((acc, item) => {
+      const date = new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0];
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(item);
+      return acc;
+    }, {} as Record<string, any[]>)
+  );
+
+  const groupedPlaidData = Object.entries(
+  plaidData.reduce((acc, txn) => {
+    if (!acc[txn.date]) acc[txn.date] = [];
+    acc[txn.date].push(txn);
+    return acc;
+  }, {} as Record<string, any[]>)
+  );
+
+  const handleRemoveReconciliation = async (request: any) => {
+    try {
+      const isReimbursement = "totalAmount" in request;
+      const endpoint = isReimbursement 
+        ? `/api/requests/reimbursements/id/${request._id}`
+        : `/api/requests/payments/id/${request._id}`;
+
+      // Preserve existing plaid data but set isReconciled to false
+      const updatedPlaid = {
+        ...request.plaid,
+        isReconciled: false,
+      };
+
+      await apiClient.put(endpoint, { plaid: updatedPlaid });
+
+      // Update local state
+      setReqsData(prev => ({
+        ...prev,
+        reimbursements: prev.reimbursements.map(req => 
+          req._id === request._id ? { ...req, plaid: updatedPlaid } : req
+        ),
+        payments: prev.payments.map(pay => 
+          pay._id === request._id ? { ...pay, plaid: updatedPlaid } : pay
+        ),
+      }));
+
+      // Update details modal if open
+      if (selectedRequestDetails?._id === request._id) {
+        setSelectedRequestDetails(prev => ({
+          ...prev,
+          plaid: updatedPlaid
+        }));
+      }
+
+      setShowSuccessAlert(true);
+      setTimeout(() => setShowSuccessAlert(false), 3000);
+    } catch (err) {
+      console.error("Failed to remove reconciliation:", err);
+      setError("Failed to remove reconciliation. Please try again.");
+    }
+  };
 
   //Plaid Link Stuff
   const onSuccess = async (publicToken: string) => {
@@ -208,23 +258,6 @@ export default function AuditPage() {
                 <div className="mt-4 p-3 bg-gray-100 rounded">
                   <p className="font-semibold mb-1">Description:</p>
                   <p className="text-sm">{selectedRequestDetails.description}</p>
-                </div>
-              )}
-
-              {/* Plaid Details Section */}
-              {selectedRequestDetails.plaid && (
-                <div className="mt-4 p-3 bg-gray-100 rounded">
-                  <p className="font-semibold mb-2">Plaid Details:</p>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>
-                      <p>Transaction ID: {selectedRequestDetails.plaid.transactionId?.slice(-8)}</p>
-                      <p>Account: ****{selectedRequestDetails.plaid.accountId?.slice(-4)}</p>
-                    </div>
-                    <div>
-                      <p>Amount: ${selectedRequestDetails.plaid.transactionAmount}</p>
-                      <p>Status: {selectedRequestDetails.plaid.isReconciled ? 'Reconciled' : 'Pending'}</p>
-                    </div>
-                  </div>
                 </div>
               )}
 
@@ -382,9 +415,14 @@ export default function AuditPage() {
                                 <p>Status: {item.plaid.isReconciled ? 'Reconciled' : 'Pending'}</p>
                               </div>
                             </div>
+                            <button
+                              className="btn btn-error btn-sm mt-3"
+                              onClick={() => handleRemoveReconciliation(item)}
+                            >
+                              Remove
+                            </button>
                           </div>
                         )}
-
                       </div>
                     </div>
                   ))}
@@ -394,120 +432,160 @@ export default function AuditPage() {
           </div>
         )}
 
-
         {activeTab === 'need-action' && (
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {/* Unreconciled Requests */}
-            <div className="col-span-1">
-              <h3 className="text-lg font-semibold mb-2">Unreconciled Requests ({[...reqsData.reimbursements, ...reqsData.payments].filter(item => !item.plaid?.isReconciled).length})</h3>
-              <div className="space-y-2">
-                {[...reqsData.reimbursements, ...reqsData.payments]
+          <div className="mt-4">
+            {Array.from(
+              new Set([
+                ...([...reqsData.reimbursements, ...reqsData.payments]
                   .filter(item => !item.plaid?.isReconciled)
-                  .map((item, index) => (
-                    <div 
-                      key={index}
-                      className="card foreground shadow relative"
-                      onDragOver={(e) => {
-                        e.preventDefault();
-                        e.currentTarget.classList.add('bg-info/20');
-                      }}
-                      onDragLeave={(e) => {
-                        e.currentTarget.classList.remove('bg-info/20');
-                      }}
-                      onDrop={(e) => {
-                        e.preventDefault();
-                        e.currentTarget.classList.remove('bg-info/20');
-                        const transaction = JSON.parse(e.dataTransfer.getData('transaction'));
-                        setSelectedRequest(item);
-                        setSelectedTransaction(transaction);
-                        setShowConfirmation(true);
-                      }}
-                    >
+                  .map(item => new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0])),
+                ...plaidData.map(txn => txn.date)
+              ])
+            )
+            .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+            .map(date => (
+              <div key={date} className="space-y-4 mb-8">
+                {/* Date Header */}
+                <div className="flex items-center gap-4">
+                  <h2 className="text-xl font-semibold">
+                    {new Date(date).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </h2>
+                  <div className="flex-1 h-px bg-gray-300" />
+                </div>
 
-                      <div className="card-body p-4">
-                        <div className="flex justify-between items-start">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-3">
-                              <h4 className="font-semibold">
-                                {item.totalAmount ? 'Reimbursement' : 'Payment'}
-                              </h4>
-                              <span className="badge badge-error badge-sm">Unreconciled</span>
-                            </div>
-                            
-                            {/* New Information Section */}
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium opacity-70">Date:</span>
-                                <span className="text-primary">
-                                  {new Date(item.createdAt || item.paymentDate).toLocaleDateString()}
-                                </span>
+                {/* Two-column grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Requests Column */}
+                  <div className="col-span-1">
+                    <h3 className="text-lg font-semibold mb-2">Unreconciled Requests</h3>
+                    <div className="space-y-2">
+                      {[...reqsData.reimbursements, ...reqsData.payments]
+                        .filter(item => 
+                          !item.plaid?.isReconciled && 
+                          new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0] === date
+                        )
+                        .map((item, index) => (
+                          <div 
+                            key={index}
+                            className="card foreground shadow relative"
+                            onDragOver={(e) => {
+                              e.preventDefault();
+                              e.currentTarget.classList.add('bg-info/20');
+                            }}
+                            onDragLeave={(e) => {
+                              e.currentTarget.classList.remove('bg-info/20');
+                            }}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              e.currentTarget.classList.remove('bg-info/20');
+                              const transaction = JSON.parse(e.dataTransfer.getData('transaction'));
+                              setSelectedRequest(item);
+                              setSelectedTransaction(transaction);
+                              setShowConfirmation(true);
+                            }}
+                          >
+                            <div className="card-body p-4">
+                              <div className="flex justify-between items-start">
+                                <div className="space-y-2">
+                                  <div className="flex items-center gap-3">
+                                    <h4 className="font-semibold">
+                                      {item.totalAmount ? 'Reimbursement' : 'Payment'}
+                                    </h4>
+                                    <span className="badge badge-error badge-sm">Unreconciled</span>
+                                  </div>
+                                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-medium opacity-70">Requestor:</span>
+                                      <span className="badge badge-outline badge-sm">
+                                        {item.requestor || 'Unknown'}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-medium opacity-70">Club:</span>
+                                      <span className="text-secondary">
+                                        {item.club?.toUpperCase() || 'N/A'}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-medium opacity-70">Amount:</span>
+                                      <span className="text-primary font-semibold">
+                                        ${item.totalAmount || item.amount}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <button 
+                                  className="btn btn-xs btn-ghost"
+                                  onClick={() => setSelectedRequestDetails(item)}
+                                >
+                                  View Request
+                                </button>
                               </div>
-                              
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium opacity-70">Requestor:</span>
-                                <span className="badge badge-outline badge-sm">
-                                  {item.requestor || 'Unknown'}
-                                </span>
-                              </div>
-                              
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium opacity-70">Club:</span>
-                                <span className="text-secondary">
-                                  {item.club?.toUpperCase() || 'N/A'}
-                                </span>
-                              </div>
-
-                              <button 
-                                className="btn btn-xs btn-ghost"
-                                onClick={() => setSelectedRequestDetails(item)}
-                              >
-                                View Request
-                              </button>
-
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-
-            {/* Plaid Transactions */}
-            <div className="col-span-1">
-              <h3 className="text-lg font-semibold mb-2">Plaid Transactions</h3>
-              <div className="space-y-2">
-                {plaidData.map((txn, index) => (
-                  <div
-                    key={index}
-                    className="card bg-foreground shadow p-4 cursor-move"
-                    draggable
-                    onDragStart={(e) => {
-                      e.dataTransfer.setData('transaction', JSON.stringify({
-                        transactionId: txn.transaction_id,
-                        accountId: txn.account_id,
-                        transactionAmount: txn.amount
-                      }));
-                    }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-medium">${txn.amount}</p>
-                        <p className="text-sm">{txn.category?.join(', ')}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs">{txn.date}</p>
-                        <span className="badge badge-info badge-sm">
-                          {txn.pending ? 'Pending' : 'Completed'}
-                        </span>
-                      </div>
+                        ))}
+                      {[...reqsData.reimbursements, ...reqsData.payments]
+                        .filter(item => 
+                          !item.plaid?.isReconciled && 
+                          new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0] === date
+                        ).length === 0 && (
+                          <div className="text-center text-sm text-gray-500 py-4">
+                            No unreconciled requests for this date
+                          </div>
+                        )}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Confirmation Modal */}
+                  {/* Transactions Column */}
+                  <div className="col-span-1">
+                    <h3 className="text-lg font-semibold mb-2">Plaid Transactions</h3>
+                    <div className="space-y-2">
+                      {plaidData
+                        .filter(txn => txn.date === date)
+                        .map((txn, index) => (
+                          <div
+                            key={index}
+                            className="card bg-foreground shadow p-4 cursor-move"
+                            draggable
+                            onDragStart={(e) => {
+                              e.dataTransfer.setData('transaction', JSON.stringify({
+                                transactionId: txn.transaction_id,
+                                accountId: txn.account_id,
+                                transactionAmount: txn.amount
+                              }));
+                            }}
+                          >
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="font-medium">${txn.amount}</p>
+                                <p className="text-sm">{txn.category?.join(', ')}</p>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-xs">{txn.date}</p>
+                                <span className="badge badge-info badge-sm">
+                                  {txn.pending ? 'Pending' : 'Completed'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      {plaidData.filter(txn => txn.date === date).length === 0 && (
+                        <div className="text-center text-sm text-gray-500 py-4">
+                          No transactions for this date
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Reconciliation Confirmation Modal */}
             <dialog open={showConfirmation} className="modal">
               <div className="modal-box bg-foreground">
                 <h3 className="font-bold text-lg">Confirm Reconciliation</h3>
@@ -544,17 +622,15 @@ export default function AuditPage() {
                           : `/api/requests/payments/id/${selectedRequest._id}`;
 
                         const updatedPlaid = {
-                          ...selectedRequest.plaid, // Preserve existing data
+                          ...selectedRequest.plaid,
                           transactionId: selectedTransaction.transactionId,
                           accountId: selectedTransaction.accountId,
                           transactionAmount: selectedTransaction.transactionAmount,
                           isReconciled: true,
                         };
 
-                        // Send API request
                         await apiClient.put(endpoint, { plaid: updatedPlaid });
 
-                        // Update local state
                         setReqsData(prev => ({
                           ...prev,
                           reimbursements: prev.reimbursements.map(req => 
@@ -565,11 +641,9 @@ export default function AuditPage() {
                           ),
                         }));
 
-                        console.log("Edit Request Complete")
                         setShowConfirmation(false);
-                        setShowSuccessAlert(true)
+                        setShowSuccessAlert(true);
                         setTimeout(() => setShowSuccessAlert(false), 3000);
-
                       } catch (err) {
                         console.error("Reconciliation failed:", err);
                         setError("Failed to save reconciliation. Please try again.");

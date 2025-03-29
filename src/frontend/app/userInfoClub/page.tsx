@@ -100,11 +100,6 @@ export default function UserInfoClubPage() {
                   </option>
                   <option>MES Position</option>
                   <option>Ratified Club, Team, Or Program Society</option>
-                  <option>Student Projects and New Club Seed Funding</option>
-                  <option>Intramurals Funding</option>
-                  <option>
-                     Conference/Competition Delegate (Open or Affiliate)
-                  </option>
                </select>
             </label>
 

@@ -4,6 +4,7 @@ import NavBar from "../components/navbar";
 import { useEffect, useState, useMemo } from "react";
 import PaymentRequest from "./paymentRequest";
 import ReimbursementRequest from "./reimbursementRequest";
+import { error } from "console";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
 
@@ -13,6 +14,7 @@ export default function NewRequestPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [clubs, setClubs] = useState<any[]>([]);
   const [email, setEmail] = useState("");
+  const [users, setUsers] = useState<any[]>([]);
 
   // Get email from sessionStorage
   useEffect(() => {
@@ -20,10 +22,9 @@ export default function NewRequestPage() {
     setEmail(storedEmail);
   }, []);
 
-  // Memoized club name lookup
-  const clubsById = useMemo(() => 
-    new Map(clubs.map(club => [club._id, club.name])),
-    [clubs]
+  const emailToIdMap = useMemo(() => 
+    new Map(users.map(user => [user.email, user._id])),
+    [users]
   );
 
   // Generate display name from email
@@ -40,20 +41,23 @@ export default function NewRequestPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userRes, clubsRes] = await Promise.all([
+        const [userRes, clubsRes, usersRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/users/me`, {
             headers: { email: email }
           }),
-          fetch(`${API_BASE_URL}/api/clubs`)
+          fetch(`${API_BASE_URL}/api/clubs`),
+          fetch(`${API_BASE_URL}/api/users`)
         ]);
 
         if (!userRes.ok || !clubsRes.ok) throw new Error("Failed to fetch data");
         
         const userData = await userRes.json();
         const clubsData = await clubsRes.json();
+        const usersData = await usersRes.json();
 
         setUser(userData);
         setClubs(clubsData);
+        setUsers(usersData);
 
         // Update form data with IDs but display names in UI
         setReimbursementFormData(prev => ({
@@ -110,8 +114,16 @@ export default function NewRequestPage() {
       const requestData = radio === "reimbursement" ? {
         ...reimbursementFormData,
         requestor: user._id,
-        // Convert club name back to ID for submission
-        club: clubs.find(c => c.name === reimbursementFormData.club)?._id || reimbursementFormData.club
+        club: clubs.find(c => c.name === reimbursementFormData.club)?._id || reimbursementFormData.club,
+        recipients: reimbursementFormData.recipients.map(recipient => {
+          const userId = emailToIdMap.get(recipient.user);
+          if (!userId) throw new Error (`User with email ${recipient.user} not found`);
+          return {
+            user: userId,
+            amount: recipient.amount,
+            status: recipient.status
+          };
+        })
       } : {
         ...paymentFormData,
         requestor: user._id,

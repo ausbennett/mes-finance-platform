@@ -103,11 +103,11 @@ const ReimbursementRequest: React.FC<Props> = ({ user, formData, setFormData }) 
       {formData.recipients.map((recipient, index) => (
         <div key={index} className="flex flex-col space-y-3 border-b pb-4">
           <label className="form-control w-full">
-            <span className="label-text">Recipient {index + 1}</span>
+            <span className="label-text">Recipient {index + 1} Email</span>
             <input
-              type="text"
+              type="email"
               className="input bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md"
-              placeholder="User ID"
+              placeholder="User Email ...@mcmaster.ca"
               value={recipient.user}
               onChange={(e) => handleRecipientChange(index, "user", e.target.value)}
             />

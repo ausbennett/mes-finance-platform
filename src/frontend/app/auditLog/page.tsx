@@ -367,7 +367,7 @@ export default function AuditPage() {
                               </span>
                             </div>
 
-                            {item.plaid.isReconciled && (
+                            {item.plaid?.isReconciled && (
                               <button 
                                 className="btn btn-xs btn-ghost"
                                 onClick={() => setExpandedRequestId(
@@ -502,13 +502,13 @@ export default function AuditPage() {
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Requestor:</span>
                                       <span className="badge badge-outline badge-sm">
-                                        { `${item.requestor.slice(-8)}` || 'Unknown'}
+                                        {item.requestor?.slice(-8) || 'Unknown'}
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Club:</span>
                                       <span className="badge badge-outline badge-sm">
-                                        {`${item.club?.toUpperCase().slice(-8)}`|| 'N/A'}
+                                        {item.club?.toUpperCase().slice(-8)|| 'N/A'}
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">

@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 
 interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+   _id: string;
+   firstName: string;
+   lastName: string;
+   email: string;
 }
 
 interface Club {
-  _id: string;
-  name: string;
+   _id: string;
+   name: string;
 }
 
 export default function ViewRequestsPage() {
@@ -27,34 +27,51 @@ export default function ViewRequestsPage() {
    const [searchQuery, setSearchQuery] = useState("");
    const [sortBy, setSortBy] = useState("");
 
-   const usersMap = useMemo(() => new Map(users.map(user => [user._id, user])), [users]);
-   const clubsMap = useMemo(() => new Map(clubs.map(club => [club._id, club])), [clubs]);
+   const usersMap = useMemo(
+      () => new Map(users.map((user) => [user._id, user])),
+      [users]
+   );
+   const clubsMap = useMemo(
+      () => new Map(clubs.map((club) => [club._id, club])),
+      [clubs]
+   );
 
    const filteredRequests = useMemo(() => {
-      return requests.filter(request => {
+      return requests.filter((request) => {
          const requester = usersMap.get(request.requestor);
-         const requesterName = requester ? 
-           `${requester.firstName} ${requester.lastName}`.toLowerCase() : "";
+         const requesterName = requester
+            ? `${requester.firstName} ${requester.lastName}`.toLowerCase()
+            : "";
          return requesterName.includes(searchQuery.toLowerCase());
       });
    }, [requests, usersMap, searchQuery]);
 
-   const reimbursements = useMemo(() => 
-     filteredRequests.filter(request => 'totalAmount' in request), [filteredRequests]);
-   const payments = useMemo(() => 
-     filteredRequests.filter(request => !('totalAmount' in request)), [filteredRequests]);
+   const reimbursements = useMemo(
+      () => filteredRequests.filter((request) => "totalAmount" in request),
+      [filteredRequests]
+   );
+   const payments = useMemo(
+      () => filteredRequests.filter((request) => !("totalAmount" in request)),
+      [filteredRequests]
+   );
 
    const sortedReimbursements = useMemo(() => {
       const sorted = [...reimbursements];
-      switch(sortBy) {
-         case "Date": 
-            sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      switch (sortBy) {
+         case "Date":
+            sorted.sort(
+               (a, b) =>
+                  new Date(b.createdAt).getTime() -
+                  new Date(a.createdAt).getTime()
+            );
             break;
          case "Amount":
             sorted.sort((a, b) => b.totalAmount - a.totalAmount);
             break;
          case "Status":
-            sorted.sort((a, b) => a.status.localeCompare(b.status));
+            sorted.sort((a, b) =>
+               (a.status || "").localeCompare(b.status || "")
+            );
             break;
       }
       return sorted;
@@ -62,15 +79,21 @@ export default function ViewRequestsPage() {
 
    const sortedPayments = useMemo(() => {
       const sorted = [...payments];
-      switch(sortBy) {
-         case "Date": 
-            sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      switch (sortBy) {
+         case "Date":
+            sorted.sort(
+               (a, b) =>
+                  new Date(b.createdAt).getTime() -
+                  new Date(a.createdAt).getTime()
+            );
             break;
          case "Amount":
             sorted.sort((a, b) => b.amount - a.amount);
             break;
          case "Status":
-            sorted.sort((a, b) => a.status.localeCompare(b.status));
+            sorted.sort((a, b) =>
+               (a.status || "").localeCompare(b.status || "")
+            );
             break;
       }
       return sorted;
@@ -80,9 +103,11 @@ export default function ViewRequestsPage() {
       const fetchData = async () => {
          try {
             const [requestsRes, usersRes, clubsRes] = await Promise.all([
-               fetch("http://localhost:3001/api/requests", { headers: { email: email } }),
+               fetch("http://localhost:3001/api/requests", {
+                  headers: { email: email },
+               }),
                fetch("http://localhost:3001/api/users"),
-               fetch("http://localhost:3001/api/clubs")
+               fetch("http://localhost:3001/api/clubs"),
             ]);
 
             if (!requestsRes.ok) throw new Error("Failed to fetch requests");
@@ -99,9 +124,10 @@ export default function ViewRequestsPage() {
             ]);
             setUsers(usersData);
             setClubs(clubsData);
-
          } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to fetch data");
+            setError(
+               err instanceof Error ? err.message : "Failed to fetch data"
+            );
          } finally {
             setLoading(false);
          }
@@ -119,8 +145,14 @@ export default function ViewRequestsPage() {
       });
    };
 
-   if (loading) return <div className="flex justify-center mt-10">Loading...</div>;
-   if (error) return <div className="flex justify-center mt-10 text-red-500">Error: {error}</div>;
+   if (loading)
+      return <div className="flex justify-center mt-10">Loading...</div>;
+   if (error)
+      return (
+         <div className="flex justify-center mt-10 text-red-500">
+            Error: {error}
+         </div>
+      );
 
    return (
       <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10">
@@ -138,7 +170,7 @@ export default function ViewRequestsPage() {
                      value={searchQuery}
                      onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <select 
+                  <select
                      value={sortBy}
                      onChange={(e) => setSortBy(e.target.value)}
                      className="bg-white px-3 rounded-md w-1/4 h-10 border-gray-300 drop-shadow-md cursor-pointer"
@@ -149,14 +181,16 @@ export default function ViewRequestsPage() {
                      <option value="Status">Status</option>
                   </select>
                </div>
-               
+
                {sortedReimbursements.length > 0 && (
                   <>
                      <div className="w-full">
-                        <p className="font-bold text-lg pl-5">Reimbursement Requests</p>
+                        <p className="font-bold text-lg pl-5">
+                           Reimbursement Requests
+                        </p>
                      </div>
                      {sortedReimbursements.map((request) => (
-                        <RequestItem 
+                        <RequestItem
                            key={request._id}
                            request={request}
                            usersMap={usersMap}
@@ -171,10 +205,12 @@ export default function ViewRequestsPage() {
                {sortedPayments.length > 0 && (
                   <>
                      <div className="w-full">
-                        <p className="font-bold text-lg pl-5">Payment Requests</p>
+                        <p className="font-bold text-lg pl-5">
+                           Payment Requests
+                        </p>
                      </div>
                      {sortedPayments.map((request) => (
-                        <RequestItem 
+                        <RequestItem
                            key={request._id}
                            request={request}
                            usersMap={usersMap}
@@ -200,12 +236,16 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
       <div className="flex flex-row items-center justify-between bg-white rounded-lg shadow-md w-full h-24 px-5 space-x-10">
          <div className="flex flex-1 flex-col">
             <p className="text-lg">
-               <b>Requester: {requester ? `${requester.firstName} ${requester.lastName}` : "Unknown User"}</b> -{" "}
-               {club?.name || "Unknown Club"}
+               <b>
+                  Requester:{" "}
+                  {requester
+                     ? `${requester.firstName} ${requester.lastName}`
+                     : "Unknown User"}
+               </b>{" "}
+               - {club?.name || "Unknown Club"}
             </p>
             <p className="text-md">
-               <b>Amount:</b> $
-               {request.totalAmount || request.amount}
+               <b>Amount:</b> ${request.totalAmount || request.amount}
             </p>
             <p className="text-sm">
                <b>Submitted:</b> {formatDate(request.createdAt)}
@@ -214,11 +254,12 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
          <div className="flex flex-col items-end">
             <p className="text-lg">
                <b>Reviewer:</b>{" "}
-               {reviewer ? `${reviewer.firstName} ${reviewer.lastName}` : "Unassigned"}
+               {reviewer
+                  ? `${reviewer.firstName} ${reviewer.lastName}`
+                  : "Unassigned"}
             </p>
             <p className="text-md">
-               <b>Budget Line:</b>{" "}
-               {club ? club.name : "General"}
+               <b>Budget Line:</b> {club ? club.name : "General"}
             </p>
             <p className="text-sm">
                <b>Status:</b> {request.status}

@@ -32,7 +32,7 @@ export default function UserInfoPaymentPage() {
             sessionStorage.getItem("clubRole") == ""
                ? "N/A"
                : sessionStorage.getItem("clubRole"),
-         role: "admin",
+         role: "user",
       };
 
       console.log(payload);

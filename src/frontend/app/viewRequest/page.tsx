@@ -9,6 +9,7 @@ interface User {
    firstName: string;
    lastName: string;
    email: string;
+   role: string;
 }
 
 interface Club {
@@ -36,15 +37,29 @@ export default function ViewRequestsPage() {
       [clubs]
    );
 
+   const currentUser = useMemo(() => {
+      return users.find((user) => user.email === email);
+   }, [users, email]);
+
+   const isAdmin = currentUser?.role === "admin";
+
    const filteredRequests = useMemo(() => {
       return requests.filter((request) => {
-         const requester = usersMap.get(request.requestor);
+         const requesterId = request.requestor || request.user;
+         const requester = usersMap.get(requesterId);
          const requesterName = requester
             ? `${requester.firstName} ${requester.lastName}`.toLowerCase()
             : "";
-         return requesterName.includes(searchQuery.toLowerCase());
+         if (!requesterName.includes(searchQuery.toLowerCase())) {
+            return false;
+         }
+         if (!isAdmin && requester?.email !== email) {
+            return false;
+         }
+
+         return true;
       });
-   }, [requests, usersMap, searchQuery]);
+   }, [requests, usersMap, searchQuery, isAdmin, email]);
 
    const reimbursements = useMemo(
       () => filteredRequests.filter((request) => "totalAmount" in request),
@@ -114,6 +129,7 @@ export default function ViewRequestsPage() {
             if (!usersRes.ok) throw new Error("Failed to fetch users");
             if (!clubsRes.ok) throw new Error("Failed to fetch clubs");
 
+            setEmail(sessionStorage.getItem("email") || "");
             const requestsData = await requestsRes.json();
             const usersData = await usersRes.json();
             const clubsData = await clubsRes.json();

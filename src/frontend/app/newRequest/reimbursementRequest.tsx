@@ -201,7 +201,7 @@ const ReimbursementRequest: React.FC<Props> = ({
                multiple
                accept=".png, .jpg, .jpeg, .pdf"
                className="bg-foreground px-3 py-2 rounded-md w-full border border-white drop-shadow-md 
-                     file:bg-primary file:rounded-md file:cursor-pointer"
+                     file:bg-primary file:rounded-md file:cursor-pointer file:text-white"
                onChange={(e) =>
                   setFormData((prev) => ({ ...prev, receipts: e.target.files }))
                }

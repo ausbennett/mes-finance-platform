@@ -30,13 +30,6 @@ const userSchema = new mongoose.Schema({
    },
    whoAreYou: {
       type: String,
-      enum: [
-         "MES Position",
-         "Ratified Club, Team, Or Program Society",
-         "Student Projects and New Club Seed Funding",
-         "Intramurals Funding",
-         "Conference/Competition Delegate (Open or Affiliate)",
-      ], // Club-specific roles
    },
    club: {
       type: String,
@@ -44,7 +37,6 @@ const userSchema = new mongoose.Schema({
    },
    clubRole: {
       type: String,
-      enum: ["member", "president", "vice-president", "treasurer", "secretary"], // Club-specific roles
    },
    payment: {
       etransferEmail: { type: String },
@@ -52,7 +44,6 @@ const userSchema = new mongoose.Schema({
    },
    role: {
       type: String,
-      enum: ["admin", "standard"],
    },
    plaid: [plaidAccessTokenSchema],
    createdAt: {

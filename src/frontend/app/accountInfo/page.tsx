@@ -112,13 +112,7 @@ export default function AccountInfoPage() {
 
          const response = await axios.put(
             `http://localhost:3001/api/users/${userId}`,
-            updatedData,
-            {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-               },
-            }
+            updatedData
          );
 
          console.log("Update Successful:", response.data);

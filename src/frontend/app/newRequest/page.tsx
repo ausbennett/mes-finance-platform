@@ -59,13 +59,13 @@ export default function NewRequestPage() {
         setReimbursementFormData(prev => ({
           ...prev,
           requestor: userData._id,
-          club: clubsById.get(userData.club) || "General Request" // Store name instead of ID
+          club: userData.club || "General Request" // Store name instead of ID
         }));
         
         setPaymentFormData(prev => ({
           ...prev,
           requestor: userData._id,
-          club: clubsById.get(userData.club) || "General Request" // Store name instead of ID
+          club: userData.club || "General Request" // Store name instead of ID
         }));
 
       } catch (error) {
@@ -100,37 +100,63 @@ export default function NewRequestPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     try {
       const endpoint = radio === "reimbursement"
-        ? `${API_BASE_URL}/api/requests/reimbursement/`
-        : `${API_BASE_URL}/api/requests/payment/`;
-
-      // Use the club name directly from formData
+        ? `${API_BASE_URL}/api/requests/reimbursements`
+        : `${API_BASE_URL}/api/requests/payments`;
+  
+      // Prepare the request data
       const requestData = radio === "reimbursement" ? {
         ...reimbursementFormData,
-        requestor: user._id
+        requestor: user._id,
+        // Convert club name back to ID for submission
+        club: clubs.find(c => c.name === reimbursementFormData.club)?._id || reimbursementFormData.club
       } : {
         ...paymentFormData,
-        requestor: user._id
+        requestor: user._id,
+        // Convert club name back to ID for submission
+        club: clubs.find(c => c.name === paymentFormData.club)?._id || paymentFormData.club
       };
-
+  
+      // Log the full request data before sending
+      console.log("Full request data being prepared:", {
+        endpoint,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          email: email
+        },
+        body: requestData
+      });
+  
+      // Stringify the body separately for logging
+      const requestBody = JSON.stringify(requestData);
+      console.log("Request body (stringified):", requestBody);
+  
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           email: email
         },
-        body: JSON.stringify(requestData),
+        body: requestBody
       });
-
-      if (!response.ok) throw new Error("Failed to submit request");
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error("Error response from server:", errorResponse);
+        throw new Error(errorResponse.message || "Failed to submit request");
+      }
       
       const result = await response.json();
-      console.log("Request submitted successfully!", result);
+      console.log("Successful response from server:", result);
       alert("Request submitted successfully!");
     } catch (error) {
-      console.error("Error submitting request:", error);
+      console.error("Error submitting request:", {
+        error: error instanceof Error ? error.message : "Unknown error",
+        timestamp: new Date().toISOString()
+      });
       alert("Failed to submit request. Please try again.");
     } finally {
       setIsSubmitting(false);

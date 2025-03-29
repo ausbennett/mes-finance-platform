@@ -217,11 +217,11 @@ export default function AuditPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-semibold">Requestor:</span>
-                    <span>{selectedRequestDetails.requestor || 'N/A'}</span>
+                    <span>{selectedRequestDetails.requestor?.toUpperCase().slice(-8) || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-semibold">Club:</span>
-                    <span>{selectedRequestDetails.club?.toUpperCase() || 'N/A'}</span>
+                    <span>{selectedRequestDetails.club?.toUpperCase().slice(-8) || 'N/A'}</span>
                   </div>
                 </div>
 

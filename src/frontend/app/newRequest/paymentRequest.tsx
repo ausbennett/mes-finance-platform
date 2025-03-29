@@ -54,7 +54,7 @@ const PaymentRequest: React.FC<Props> = ({ user, formData, setFormData }) => {
         <span className="label-text">Requestor</span>
         <input
           type="text"
-          className="input text-secondary-text bg-gray-100 px-3 py-2 rounded-md w-full border border-primary drop-shadow-md"
+          className="input text-secondary-text bg-gray-100 px-3 py-2 rounded-md w-full border border-tertiary drop-shadow-md"
           value={`${user?.firstName || ""} ${user?.lastName || ""}`}
           readOnly
         />
@@ -65,7 +65,7 @@ const PaymentRequest: React.FC<Props> = ({ user, formData, setFormData }) => {
         <span className="label-text">Club</span>
         <input
           type="text"
-          className="input bg-gray-100 px-3 py-2 rounded-md w-full border border-primary drop-shadow-md"
+          className="input bg-gray-100 px-3 py-2 rounded-md w-full border border-tertiary drop-shadow-md"
           value={user?.club || ""}
           readOnly
         />

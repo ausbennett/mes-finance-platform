@@ -17,6 +17,7 @@ const config: Config = {
         "secondary-text": "#6b7280",
         primary: "#800020",
         secondary: "#f3f4f6",
+        tertiary: "#374151",
       },
     },
   },

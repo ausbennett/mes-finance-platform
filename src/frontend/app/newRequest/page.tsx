@@ -213,7 +213,7 @@ export default function NewRequestPage() {
                 </div>
                 <div className="flex flex-col items-start justify-center w-1/3 space-y-2">
                   <p className="font-bold">Budget Line</p>
-                  <select className="bg-foreground px-3 py-2 rounded-md w-full border-white drop-shadow-md cursor-pointer">
+                  <select className="bg-foreground px-3 py-2 rounded-md w-full border-tertiary drop-shadow-md cursor-pointer">
                     <option>option1</option>
                     <option>option1</option>
                     <option>option1</option>
@@ -222,7 +222,7 @@ export default function NewRequestPage() {
               </div>
 
               {/* FORM START */}
-              <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-primary p-10 space-y-5">
+              <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-tertiary p-10 space-y-5">
                 {radio === "payment" && (
                   <PaymentRequest 
                     user={{

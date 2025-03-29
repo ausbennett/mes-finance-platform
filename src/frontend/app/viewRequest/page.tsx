@@ -177,9 +177,9 @@ export default function ViewRequestsPage() {
       );
 
    return (
-      <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10">
+      <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10 overflow-x-hidden">
          <NavBar />
-         <div className="flex flex-col items-center justify-start flex-grow">
+         <div className="flex flex-col items-center justify-start flex-grow pb-5">
             <div className="flex flex-row items-start justify-start w-full px-10">
                <p className="font-bold text-xl">Submitted Requests</p>
             </div>
@@ -195,9 +195,15 @@ export default function ViewRequestsPage() {
                   <select
                      value={sortBy}
                      onChange={(e) => setSortBy(e.target.value)}
-                     className="bg-white px-3 rounded-md w-1/4 h-10 border-gray-300 drop-shadow-md cursor-pointer"
+                     className="bg-white text-sm md:text-lg px-3 rounded-md w-1/4 h-10 border-gray-300 drop-shadow-md cursor-pointer"
                   >
-                     <option value="">Sort by:</option>
+                     <option
+                        value=""
+                        disabled
+                        hidden
+                     >
+                        Sort:
+                     </option>
                      <option value="Date">Date</option>
                      <option value="Amount">Amount</option>
                      <option value="Status">Status</option>
@@ -255,8 +261,8 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
    const reviewer = usersMap.get(request.reviewer);
 
    return (
-      <div className="flex flex-row items-center justify-between bg-white rounded-lg shadow-md w-full h-24 px-5 space-x-10">
-         <div className="flex flex-1 flex-col">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white rounded-lg shadow-md w-full py-8 md:py-4 px-5 space-y-5 md:space-y-0 md:space-x-10">
+         <div className="flex flex-1 flex-col text-left">
             <p className="text-lg">
                <b>
                   Requester:{" "}
@@ -273,7 +279,7 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
                <b>Submitted:</b> {formatDate(request.createdAt)}
             </p>
          </div>
-         <div className="flex flex-col items-end">
+         <div className="flex flex-col text-left">
             <p className="text-lg">
                <b>Reviewer:</b>{" "}
                {reviewer
@@ -287,7 +293,7 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
                <b>Status:</b> {request.status}
             </p>
          </div>
-         <div className="flex flex-col items-center justify-center pt-4">
+         <div className="flex flex-col text-left justify-center">
             <button
                className="bg-red-900 text-white font-semibold p-2 rounded-lg w-32 drop-shadow-lg hover:bg-red-800"
                onClick={() => {

@@ -250,7 +250,7 @@ export default function NewRequestPage() {
               </div>
 
               {/* FORM START */}
-              <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-primary p-10 space-y-5">
+              <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-tertiary p-10 space-y-5">
                 {radio === "payment" && (
                   <PaymentRequest 
                     user={{

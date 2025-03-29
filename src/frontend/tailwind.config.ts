@@ -17,6 +17,7 @@ const config: Config = {
         "secondary-text": "#6b7280",
         primary: "#800020",
         secondary: "#f3f4f6",
+        tertiary: "#374151",
         accent: {
           DEFAULT: '#2D4B73',  // Steel blue
           light: '#4A6B94',

@@ -193,18 +193,18 @@ export default function NewRequestPage() {
 
    return (
       <>
-         <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10">
+         <div className="flex flex-col min-h-screen min-w-screen bg-gray-200 space-y-10 overflow-x-hidden pb-5">
             <NavBar />
 
             <div className="flex flex-col items-center justify-center flex-grow">
-               <div className="flex flex-col w-2/3 flex-grow space-y-5">
+               <div className="flex flex-col w-[90%] md:w-2/3 flex-grow space-y-5">
                   <div className="flex flex-row items-center justify-start ">
                      <p className="text-primary-text font-bold text-lg">
                         Request Form
                      </p>
                   </div>
-                  <div className="flex flex-col items-center justify-start flex-grow bg-foreground p-10 rounded-xl shadow-md space-y-10">
-                     <div className="flex flex-row items-center justify-between space-x-5">
+                  <div className="flex flex-col items-center justify-start flex-grow bg-foreground p-4 md:p-10 rounded-xl shadow-md space-y-5 md:space-y-10">
+                     <div className="flex flex-row items-center justify-between space-x-5 px-4 md:px-10">
                         <div className="flex flex-row items-start justify-center space-x-2">
                            <div className="flex flex-col items-start justify-center pt-1">
                               <input
@@ -244,7 +244,7 @@ export default function NewRequestPage() {
                      </div>
 
                      {/* FORM START */}
-                     <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-tertiary p-10 space-y-5">
+                     <div className="flex flex-col flex-grow w-full bg-foreground rounded-xl shadow-lg border border-tertiary p-4 md:p-10 space-y-5">
                         {radio === "payment" && (
                            <PaymentRequest
                               user={{

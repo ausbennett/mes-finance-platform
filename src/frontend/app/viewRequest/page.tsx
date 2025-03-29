@@ -261,7 +261,7 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
    const reviewer = usersMap.get(request.reviewer);
 
    return (
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white rounded-lg shadow-md w-full py-8 md:py-4 px-5 space-y-5 md:space-y-0 md:space-x-10">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white rounded-lg shadow-md w-full py-6 md:py-4 px-5 space-y-5 md:space-y-0 md:space-x-10">
          <div className="flex flex-1 flex-col text-left">
             <p className="text-lg">
                <b>

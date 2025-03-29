@@ -63,14 +63,14 @@ export default function UserDashboardPage() {
    };
 
    return (
-      <div className="space-y-10 bg-gray-100 min-h-screen">
+      <div className="space-y-10 bg-gray-100 min-h-screen overflow-x-hidden">
          <NavBar />
-         <div className="px-10 pb-10 space-y-10">
-            <h1 className="text-2xl font-bold text-primary-text">
+         <div className="px-4 md:px-10 pb-10 space-y-10">
+            <h1 className="text-2xl font-bold text-primary-text text-center">
                Manage Clubs and Positions
             </h1>
             {/* Add New Entry */}
-            <div className="bg-white rounded-lg p-5 shadow-md space-y-3">
+            <div className="bg-white rounded-lg p-5 shadow-md space-y-3 w-full md:w-3/4 mx-auto">
                <h2 className="font-semibold">Add New Club or Position Entry</h2>
                <select
                   className="border rounded p-2 w-full bg-white"
@@ -126,9 +126,9 @@ export default function UserDashboardPage() {
             </div>
 
             {/* Table of Entries */}
-            <div className="bg-white rounded-lg p-5 shadow-md">
+            <div className="bg-white rounded-lg p-5 shadow-md w-full md:w-3/4 mx-auto">
                <h2 className="font-semibold mb-4">All Entries</h2>
-               <table className="w-full table-auto border-collapse">
+               <table className="w-full table-fixed border-collapse">
                   <thead>
                      <tr className="border-b">
                         <th className="text-left py-2">Who Are You</th>
@@ -170,42 +170,49 @@ export default function UserDashboardPage() {
                                  entry.clubRole || entry.name
                               )}
                            </td>
-                           <td className="py-2 space-x-2">
-                              {editId === entry._id ? (
-                                 <>
-                                    <button
-                                       className="text-green-600"
-                                       onClick={() => handleEdit(entry._id)}
-                                    >
-                                       Save
-                                    </button>
-                                    <button onClick={() => setEditId(null)}>
-                                       Cancel
-                                    </button>
-                                 </>
-                              ) : (
-                                 <>
-                                    <button
-                                       className="text-blue-600"
-                                       onClick={() => {
-                                          setEditId(entry._id);
-                                          setEditEntry({
-                                             whoAreYou: entry.whoAreYou,
-                                             name: entry.name || "",
-                                             clubRole: entry.clubRole || "",
-                                          });
-                                       }}
-                                    >
-                                       Edit
-                                    </button>
-                                    <button
-                                       className="text-red-600"
-                                       onClick={() => handleDelete(entry._id)}
-                                    >
-                                       Delete
-                                    </button>
-                                 </>
-                              )}
+                           <td className="py-2 pr-4">
+                              <div className="flex items-center justify-end space-x-2">
+                                 {editId === entry._id ? (
+                                    <>
+                                       <button
+                                          className="text-green-600"
+                                          onClick={() => handleEdit(entry._id)}
+                                       >
+                                          Save
+                                       </button>
+                                       <button
+                                          className="text-gray-600"
+                                          onClick={() => setEditId(null)}
+                                       >
+                                          Cancel
+                                       </button>
+                                    </>
+                                 ) : (
+                                    <>
+                                       <button
+                                          className="text-blue-600"
+                                          onClick={() => {
+                                             setEditId(entry._id);
+                                             setEditEntry({
+                                                whoAreYou: entry.whoAreYou,
+                                                name: entry.name || "",
+                                                clubRole: entry.clubRole || "",
+                                             });
+                                          }}
+                                       >
+                                          Edit
+                                       </button>
+                                       <button
+                                          className="text-red-600"
+                                          onClick={() =>
+                                             handleDelete(entry._id)
+                                          }
+                                       >
+                                          Delete
+                                       </button>
+                                    </>
+                                 )}
+                              </div>
                            </td>
                         </tr>
                      ))}

@@ -22,7 +22,7 @@ const editPayment = async (req, res) => {
   const { id } = req.params; 
   const paymentData = req.body;
   const payment = await paymentService.editPayment(id, paymentData);
-  return res.status(payment.message ? 400 : 200).json(payment);
+  return res.status(payment ? 200 : 400).json(payment);
 };
 
 module.exports = {

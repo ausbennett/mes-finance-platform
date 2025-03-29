@@ -5,6 +5,24 @@
 :root {
    --background: #ffffff;
    --foreground: #000000;
+
+   --color-primary: 88 24 31;
+   --color-primary-light: 122 42 50;
+   --color-primary-dark: 58 15 21;
+  
+   /* Complementary Colors */
+   --color-secondary: 242 183 5;
+   --color-secondary-light: 244 200 76;
+   --color-secondary-dark: 196 146 0;
+   
+   --color-accent: 45 75 115;
+   --color-accent-light: 74 107 148;
+   --color-accent-dark: 26 48 77;
+   
+   /* Neutrals */
+   --color-neutral: 74 74 74;
+   --color-neutral-light: 107 107 107;
+   --color-neutral-dark: 45 45 45;
 }
 
 @media (prefers-color-scheme: light) {
@@ -23,6 +41,16 @@ body {
    background: var(--background);
    font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.tab {
+  .tab-active{
+    background-color: #800020;
+    color: red;
+  }
+}
+
+
 
 @layer base {
    input[type="radio"] {

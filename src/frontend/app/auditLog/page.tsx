@@ -263,7 +263,7 @@ export default function AuditPage() {
 
               <div className="modal-action">
                 <button 
-                  className="btn"
+                  className="btn btn-primary"
                   onClick={() => setSelectedRequestDetails(null)}
                 >
                   Close
@@ -274,17 +274,17 @@ export default function AuditPage() {
         )}
 
         <div className="flex gap-4 mb-4">
-          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-300 input-bordered" />
-          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-300 input-bordered" />
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input bg-gray-200 input-bordered" />
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input bg-gray-200 input-bordered" />
           <button className="btn bg-primary text-white font-semilbold p-2 rounded-lg drop-shadow-lg" onClick={fetchData}>Fetch Data</button>
           {/* <button className="btn bg-secondary text-black font-semilbold p-2 rounded-lg  drop-shadow-lg" onClick={() => alert("Audit functionality TBD")}>Audit</button> */}
-          {!plaidLoading && <button className="btn btn-accent font-semibold" onClick={() => open()}>Link Bank with Plaid</button>}
+          {!plaidLoading && <button className="btn btn-secondary border-red-900 font-semibold" onClick={() => open()}>Link Bank with Plaid</button>}
         </div>
 
         {error && <p className="text-red-500">{error}</p>}
         {loading && <p>Loading...</p>}
 
-        <div role="tablist" className="tabs tabs-boxed mb-5">
+        <div role="tablist" className="tabs tabs-boxed bg-gray-100 mb-5">
             <a 
               role="tab"
               className={`tab ${activeTab === 'requests' && 'tab-active'}`} 
@@ -502,18 +502,18 @@ export default function AuditPage() {
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Requestor:</span>
                                       <span className="badge badge-outline badge-sm">
-                                        {item.requestor || 'Unknown'}
+                                        { `${item.requestor.slice(-8)}` || 'Unknown'}
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Club:</span>
-                                      <span className="text-secondary">
-                                        {item.club?.toUpperCase() || 'N/A'}
+                                      <span className="badge badge-outline badge-sm">
+                                        {`${item.club?.toUpperCase().slice(-8)}`|| 'N/A'}
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Amount:</span>
-                                      <span className="text-primary font-semibold">
+                                      <span className="text-black font-semibold">
                                         ${item.totalAmount || item.amount}
                                       </span>
                                     </div>

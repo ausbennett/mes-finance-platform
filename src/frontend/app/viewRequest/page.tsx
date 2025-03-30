@@ -262,36 +262,38 @@ function RequestItem({ request, usersMap, clubsMap, formatDate, router }: any) {
 
    return (
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white rounded-lg shadow-md w-full py-6 md:py-4 px-5 space-y-5 md:space-y-0 md:space-x-10">
-         <div className="flex flex-1 flex-col text-left">
-            <p className="text-lg">
-               <b>
-                  Requester:{" "}
-                  {requester
-                     ? `${requester.firstName} ${requester.lastName}`
-                     : "Unknown User"}
-               </b>{" "}
-               - {club?.name || "Unknown Club"}
-            </p>
-            <p className="text-md">
-               <b>Amount:</b> ${request.totalAmount || request.amount}
-            </p>
-            <p className="text-sm">
-               <b>Submitted:</b> {formatDate(request.createdAt)}
-            </p>
-         </div>
-         <div className="flex flex-col text-left">
-            <p className="text-lg">
-               <b>Reviewer:</b>{" "}
-               {reviewer
-                  ? `${reviewer.firstName} ${reviewer.lastName}`
-                  : "Unassigned"}
-            </p>
-            <p className="text-md">
-               <b>Budget Line:</b> {club ? club.name : "General"}
-            </p>
-            <p className="text-sm">
-               <b>Status:</b> {request.status}
-            </p>
+         <div className="grid grid-cols-2 flex-1 gap-10">
+            <div className="flex flex-col text-left">
+               <p className="text-lg">
+                  <b>
+                     Requester:{" "}
+                     {requester
+                        ? `${requester.firstName} ${requester.lastName}`
+                        : "Unknown User"}
+                  </b>{" "}
+                  - {club?.name || "Unknown Club"}
+               </p>
+               <p className="text-md">
+                  <b>Amount:</b> ${request.totalAmount || request.amount}
+               </p>
+               <p className="text-sm">
+                  <b>Submitted:</b> {formatDate(request.createdAt)}
+               </p>
+            </div>
+            <div className="flex flex-col text-left">
+               <p className="text-lg">
+                  <b>Reviewer:</b>{" "}
+                  {reviewer
+                     ? `${reviewer.firstName} ${reviewer.lastName}`
+                     : "Unassigned"}
+               </p>
+               <p className="text-md">
+                  <b>Budget Line:</b> {club ? club.name : "General"}
+               </p>
+               <p className="text-sm">
+                  <b>Status:</b> {request.status}
+               </p>
+            </div>
          </div>
          <div className="flex flex-col text-left justify-center">
             <button

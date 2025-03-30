@@ -448,7 +448,6 @@ export default function AuditPage() {
               new Set([
                 // Update request dates to use local timezone
                 ...([...reqsData.reimbursements, ...reqsData.payments]
-                  .filter(item => !item.plaid?.isReconciled)
                   .map(item => {
                     const rawDate = item.createdAt || item.paymentDate;
                     // Convert UTC to local date string (YYYY-MM-DD)
@@ -484,13 +483,14 @@ export default function AuditPage() {
                     <div className="space-y-2">
                       {[...reqsData.reimbursements, ...reqsData.payments]
                         .filter(item => 
-                          !item.plaid?.isReconciled && 
                           new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0] === date
                         )
                         .map((item, index) => (
                           <div 
                             key={index}
-                            className="card foreground shadow relative"
+                            className={`card foreground shadow relative ${
+                              item.plaid?.isReconciled ? 'opacity-70 border-2 border-success' : ''
+                            }`}
                             onDragOver={(e) => {
                               e.preventDefault();
                               e.currentTarget.classList.add('bg-info/20');
@@ -514,7 +514,9 @@ export default function AuditPage() {
                                     <h4 className="font-semibold">
                                       {item.totalAmount ? 'Reimbursement' : 'Payment'}
                                     </h4>
-                                    <span className="badge badge-error badge-sm">Unreconciled</span>
+                                    <span className={`badge ${item.plaid?.isReconciled ? 'badge-success' : 'badge-error'} badge-sm`}>
+                                      {item.plaid?.isReconciled ? 'Reconciled' : 'Unreconciled'}
+                                    </span>
                                   </div>
                                   <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                                     <div className="flex items-center gap-2">
@@ -557,7 +559,6 @@ export default function AuditPage() {
                         ))}
                       {[...reqsData.reimbursements, ...reqsData.payments]
                         .filter(item => 
-                          !item.plaid?.isReconciled && 
                           new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0] === date
                         ).length === 0 && (
                           <div className="text-center text-sm text-gray-500 py-4">

@@ -21,7 +21,7 @@ export default function AuditPage() {
   const [selectedRequestDetails, setSelectedRequestDetails] = useState<any>(null);
 
   const [user, setUser] = useState<any>(null)
-  const [email, setEmail] = "adam@mcmaster.ca"
+  const [email, setEmail] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -46,6 +46,16 @@ export default function AuditPage() {
 
     const fetchUserData = async () => {
       try {
+        const userEmail = sessionStorage.getItem('email') || null
+        console.log("GOT user email from session storage: ", userEmail)
+
+        if (userEmail){
+          setEmail(userEmail)
+        } else {
+          setError("No user email in session storage. Are you logged In ?")
+          return //prevent from pulling accessToken if no email is in session storage
+        }
+
         const response = await apiClient.get("/api/users/me");
         setUser(response.data);
         const accessToken = response.data?.plaid?.[0]?.access_token || null;
@@ -89,7 +99,7 @@ export default function AuditPage() {
       setPlaidData(plaidResponse.data || []);
       console.log(plaidResponse.data)
     } catch (err) {
-      setError("Failed to fetch data. Please try again.");
+      setError("Failed to fetch data");
     } finally {
       setLoading(false);
     }
@@ -436,10 +446,18 @@ export default function AuditPage() {
           <div className="mt-4">
             {Array.from(
               new Set([
+                // Update request dates to use local timezone
                 ...([...reqsData.reimbursements, ...reqsData.payments]
                   .filter(item => !item.plaid?.isReconciled)
-                  .map(item => new Date(item.createdAt || item.paymentDate).toISOString().split('T')[0])),
-                ...plaidData.map(txn => txn.date)
+                  .map(item => {
+                    const rawDate = item.createdAt || item.paymentDate;
+                    // Convert UTC to local date string (YYYY-MM-DD)
+                    return new Date(rawDate).toLocaleDateString('en-CA'); // en-CA gives YYYY-MM-DD format
+                  })),
+                // Update plaid dates to match local format
+                ...plaidData.map(txn => 
+                  new Date(txn.date).toLocaleDateString('en-CA') // Convert plaid dates too
+                )
               ])
             )
             .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
@@ -447,14 +465,14 @@ export default function AuditPage() {
               <div key={date} className="space-y-4 mb-8">
                 {/* Date Header */}
                 <div className="flex items-center gap-4">
-                  <h2 className="text-xl font-semibold">
-                    {new Date(date).toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </h2>
+                    <h2 className="text-xl font-semibold">
+                      {new Date(date + 'T00:00:00').toLocaleDateString('en-US', { // Add time component
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </h2>
                   <div className="flex-1 h-px bg-gray-300" />
                 </div>
 
@@ -500,6 +518,12 @@ export default function AuditPage() {
                                   </div>
                                   <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
                                     <div className="flex items-center gap-2">
+                                      <span className="font-medium opacity-70">ID: </span>
+                                      <span className="badge badge-outline badge-sm">
+                                        {item._id?.slice(-8) || 'Unknown'}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
                                       <span className="font-medium opacity-70">Requestor:</span>
                                       <span className="badge badge-outline badge-sm">
                                         {item.requestor?.slice(-8) || 'Unknown'}
@@ -511,14 +535,16 @@ export default function AuditPage() {
                                         {item.club?.toUpperCase().slice(-8)|| 'N/A'}
                                       </span>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                      <span className="font-medium opacity-70">Amount:</span>
-                                      <span className="text-black font-semibold">
-                                        ${item.totalAmount || item.amount}
-                                      </span>
-                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-medium opacity-70">Amount:</span>
+                                    <span className="text-black font-semibold">
+                                      ${item.totalAmount || item.amount}
+                                    </span>
                                   </div>
                                 </div>
+
                                 <button 
                                   className="btn btn-xs btn-ghost"
                                   onClick={() => setSelectedRequestDetails(item)}
@@ -546,7 +572,10 @@ export default function AuditPage() {
                     <h3 className="text-lg font-semibold mb-2">Plaid Transactions</h3>
                     <div className="space-y-2">
                       {plaidData
-                        .filter(txn => txn.date === date)
+                        .filter(txn => {
+                          const txnDate = new Date(txn.date).toLocaleDateString('en-CA');
+                          return txnDate === date;
+                        })
                         .map((txn, index) => (
                           <div
                             key={index}
@@ -562,14 +591,26 @@ export default function AuditPage() {
                           >
                             <div className="flex justify-between items-center">
                               <div>
-                                <p className="font-medium">${txn.amount}</p>
+                                <span className="text-black font-semibold">
+                                    ${txn.amount}
+                                </span>
                                 <p className="text-sm">{txn.category?.join(', ')}</p>
+                                <span className="text-sm">ID: </span>
+                                <span className="badge badge-outline badge-sm mt-1">
+                                  {txn.transaction_id?.slice(-8)}
+                                </span>
                               </div>
                               <div className="text-right">
                                 <p className="text-xs">{txn.date}</p>
                                 <span className="badge badge-info badge-sm">
                                   {txn.pending ? 'Pending' : 'Completed'}
                                 </span>
+                                <div className="mt-2">
+                                  <span className="text-sm">ACC #: </span>
+                                  <span className="badge badge-outline badge-sm">
+                                    ****{txn.account_id?.slice(-4)}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>

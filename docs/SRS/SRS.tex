@@ -103,6 +103,9 @@ Fixed formatting issues, added action items to Open Issues section, added user s
 \midrule
 3/26/25 & Jacob Kish & \href{https://github.com/ausbennett/mes-finance-platform/commit/7e0a66622fbd429784351f832cb660610bc7d28d}{7e0a666} & Added FSM diagrams for use cases (TA feedback)\\
 
+\midrule
+4/4/25 & Evan Sturmey & \href{https://github.com/ausbennett/mes-finance-platform/commit/7e0a66622fbd429784351f832cb660610bc7d28d}{7e0a666} & Updating SRS to match with final product\\
+
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -120,7 +123,7 @@ Goals include:
     \item User-friendly reimbursement submission interface.
     \item Tracking of reimbursement requests.
     \item Tiered access to the reimbursement platform for different users.
-    \item Invoice generation.
+    \item \sout{Invoice generation.}
 \end{itemize}
 
 \section{Stakeholders}
@@ -623,7 +626,7 @@ Note: we are removing these requirements as the project scope has changed. We wi
 \begin{itemize}
     \item \hypertarget{SPLROne}{ \textbf{SPLR1.} The system shall process payment requests within 5 seconds. }
     \item \hypertarget{SPLRTwo}{ \textbf{SPLR2.} Invoices shall be generated within 3 seconds. }
-    \item \hypertarget{SPLRThree}{ \textbf{SPLR3.} Reimbursement requests shall be processed within 5 seconds. }
+    \item \hypertarget{SPLRThree}{ \sout{\textbf{SPLR3.} Reimbursement requests shall be processed within 5 seconds.} }
 \end{itemize}
 Explanation: These requirements will be achieved through database optimization to accelerate query performance and using parallel processing to distribute workload and minimize delays.
 
@@ -658,7 +661,7 @@ Explanation: These requirements will be achieved through database optimization t
 \label{CPR}
 
 \begin{itemize}
-    \item \textbf{CPR1.} The system shall be able to handle 1000 reimbursement requests, 1000 invoices, and 500 payment requests daily.
+    \item \textbf{CPR1.} The system shall be able to handle 1000 reimbursement requests, \sout{1000 invoices,} and 500 payment requests daily.
     \item \textbf{CPR2.} The system would be able to handle up to 10 requests simultaneously.
     \item \textbf{CPR3.} The system shall be able to store up to 10 years’ worth of backed-up data.
 \end{itemize}

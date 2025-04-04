@@ -9,6 +9,8 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage{soul}
+\usepackage{longtable}
+
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -432,93 +434,111 @@ requirements and between the modules and the anticipated changes. Note: hyperlin
 
 % the table should use mref, the requirements should be named, use something
 % like fref
-\begin{table}[H]
-\centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\begin{longtable}{p{0.15\textwidth} p{0.45\textwidth} p{0.3\textwidth}}
+\caption{Trace Between Requirements and Modules with Notes} \\
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Req.} & \textbf{Modules} & \textbf{Notes} \\
 \midrule
-  \href{../../SRS/SRS.pdf#FROneOne}{ FR1.1 } & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneTwo}{ FR1.2 } & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneThree}{ FR1.3 } & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneFour}{ FR1.4 } & \mref{mBH2},\mref{mBH4},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3},\mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneFive}{ FR1.5 } & \mref{mBH3},\mref{mBH6}\\
-  \href{../../SRS/SRS.pdf#FROneSix}{ FR1.6 } & \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneSeven}{ FR1.7 } & \mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneEight}{ FR1.8 } & \mref{mBH4},\mref{mBH2},\mref{mBH8},\mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneNine}{ FR1.9 } & \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FRThreeOne}{ FR3.1 } & \mref{mSD1},\mref{mSD2}\\
-  \href{../../SRS/SRS.pdf#FRThreeTwo}{ FR3.2 } & \mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FRThreeThree}{ FR3.3 } & \mref{mBH1},\mref{mBH7}\\
-  \href{../../SRS/SRS.pdf#APROne}{ APR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#APRTwo}{ APR2 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#STYROne}{ STYR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#STYRTwo}{ STYR2 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#EUROne}{ EUR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#EURTwo}{ EUR2 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#EurThree}{ EUR3 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#PIROne}{ PIR1 } & \mref{mBH1},\mref{mBH7}\\
-  \href{../../SRS/SRS.pdf#PIRTwo}{ PIR2 } & \mref{mBH1},\mref{mBH7}\\
-  \href{../../SRS/SRS.pdf#UAPROne}{ UAPR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#ACSROne}{ ACSR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#ACSRTwo}{ ACSR2 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#SPLROne}{ SPLR1 } & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#SPLRTwo}{ SPLR2 } & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#SPLRThree}{ SPLR3 } & \mref{mBH2},\mref{mBH8},\mref{mSD1},\mref{mSD2},\mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#SFCROne}{ SFCR1 } & \mref{mSD2},\mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#SFCRTwo}{ SFCR2 } & \mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#POAROne}{ POAR1 } & \mref{mBH8}\\
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\textbf{Req.} & \textbf{Modules} & \textbf{Notes} \\
+\midrule
+\endhead
+
 \bottomrule
-\end{tabular}
-\caption{Trace Between Requirements and Modules}
-\end{table}
+\endfoot
+
+\href{../../SRS/SRS.pdf#FROneOne}{ FR1.1 } & \mref{mBH2}, \mref{mBH4}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3}, \mref{mSD4} & Request handling, UI display, data persistence \\
+\href{../../SRS/SRS.pdf#FROneTwo}{ FR1.2 } & \mref{mBH2}, \mref{mBH4}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3}, \mref{mSD4} & Edit flow across controller, DBs, and UI \\
+\href{../../SRS/SRS.pdf#FROneThree}{ FR1.3 } & \mref{mBH2}, \mref{mBH4}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3}, \mref{mSD4} & Full request lifecycle coverage \\
+\href{../../SRS/SRS.pdf#FROneFour}{ FR1.4 } & \mref{mBH2}, \mref{mBH4}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3}, \mref{mSD4} & Same modules involved in view/edit flow \\
+\href{../../SRS/SRS.pdf#FROneFive}{ FR1.5 } & \mref{mBH3}, \mref{mBH6} & Email delivery and template management \\
+\href{../../SRS/SRS.pdf#FROneSix}{ FR1.6 } & \mref{mSD3} & Request status tracking \\
+\href{../../SRS/SRS.pdf#FROneSeven}{ FR1.7 } & \mref{mBH5} & Handles authentication \\
+\href{../../SRS/SRS.pdf#FROneEight}{ FR1.8 } & \mref{mBH4}, \mref{mBH2}, \mref{mBH8}, \mref{mSD4} & UI (M13), request DB (M12), controller (M9), and logic (M3) \\
+\href{../../SRS/SRS.pdf#FROneNine}{ FR1.9 } & \mref{mSD3} & Tracks updates in request database \\
+\href{../../SRS/SRS.pdf#FRThreeOne}{ FR3.1 } & \mref{mSD1}, \mref{mSD2} & User/club info persistence \\
+\href{../../SRS/SRS.pdf#FRThreeTwo}{ FR3.2 } & \mref{mBH5} & Authentication via existing MES system \\
+\href{../../SRS/SRS.pdf#FRThreeThree}{ FR3.3 } & \mref{mBH1}, \mref{mBH7} & Account management and controller logic \\
+\href{../../SRS/SRS.pdf#APROne}{ APR1 } & \mref{mSD4} & Responsive frontend design \\
+\href{../../SRS/SRS.pdf#APRTwo}{ APR2 } & \mref{mSD4} & UI enhancement handling \\
+\href{../../SRS/SRS.pdf#STYROne}{ STYR1 } & \mref{mSD4} & GUI styling for themes \\
+\href{../../SRS/SRS.pdf#STYRTwo}{ STYR2 } & \mref{mSD4} & Accessibility theming \\
+\href{../../SRS/SRS.pdf#EUROne}{ EUR1 } & \mref{mSD4} & UI structure \\
+\href{../../SRS/SRS.pdf#EURTwo}{ EUR2 } & \mref{mSD4} & Form design layout \\
+\href{../../SRS/SRS.pdf#EurThree}{ EUR3 } & \mref{mSD4} & Interactive elements \\
+\href{../../SRS/SRS.pdf#PIROne}{ PIR1 } & \mref{mBH1}, \mref{mBH7} & Account roles and permissions \\
+\href{../../SRS/SRS.pdf#PIRTwo}{ PIR2 } & \mref{mBH1}, \mref{mBH7} & Role editing logic \\
+\href{../../SRS/SRS.pdf#UAPROne}{ UAPR1 } & \mref{mSD4} & Visual layout engine \\
+\href{../../SRS/SRS.pdf#ACSROne}{ ACSR1 } & \mref{mSD4} & GUI component arrangement \\
+\href{../../SRS/SRS.pdf#ACSRTwo}{ ACSR2 } & \mref{mSD4} & Frontend component styling \\
+\href{../../SRS/SRS.pdf#SPLROne}{ SPLR1 } & \mref{mBH2}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Club/user/request logic coordination \\
+\href{../../SRS/SRS.pdf#SPLRTwo}{ SPLR2 } & \mref{mBH2}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Multi-module reconciliation \\
+\href{../../SRS/SRS.pdf#SPLRThree}{ SPLR3 } & \mref{mBH2}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Data integrity during request flow \\
+\href{../../SRS/SRS.pdf#SFCROne}{ SFCR1 } & \mref{mSD2}, \mref{mSD3} & DB integrity and cross-link validation \\
+\href{../../SRS/SRS.pdf#SFCRTwo}{ SFCR2 } & \mref{mBH5} & Authentication flow security \\
+\href{../../SRS/SRS.pdf#POAROne}{ POAR1 } & \mref{mBH8} & Request form validation control \\
+
+\end{longtable}
 
 \newpage
 
-\begin{table}[H]
-\centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\begin{longtable}{p{0.15\textwidth} p{0.45\textwidth} p{0.3\textwidth}}
+\caption{Trace Between Additional Requirements and Modules with Notes} \\
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Req.} & \textbf{Modules} & \textbf{Notes} \\
 \midrule
-  \href{../../SRS/SRS.pdf#FROneOne}{ CPR1 } & \mref{mBH2},\mref{mBH8}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ CPR2 } & \mref{mBH2},\mref{mBH8}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ CPR3 } & \mref{mSD1},\mref{mSD2},\mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ OR1 } & \mref{mHH}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ IAR1 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD2 } & \mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD3 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD4 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD5 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD6 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PRD7 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ RLR1 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ MR1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ MR2 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ MR3 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SR1 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ AR1 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR1 } & \mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR2 } & \mref{mBH5},\mref{mBH1},\mref{mBH7}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR3 } & \mref{mBH5},\mref{mBH3},\mref{mBH6}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR4 } & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR5 } & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ SCR6 } & \mref{mBH1},\mref{mBH7},\mref{mBH5}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ INR1 } & \mref{mBH2},\mref{mBH8}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PVR1 } & \mref{mBH1},\mref{mBH2},\mref{mBH3},\mref{mBH5},\mref{mBH6},\mref{mBH7},\mref{mBH8},\mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ PVR2 } & \mref{mBH1} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ ADR1 } & \mref{mBH1},\mref{mBH2},\mref{mBH3},\mref{mBH5},\mref{mBH6},\mref{mBH7},\mref{mBH8},\mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ ADR2 } & \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ IMM1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ CLTR1 } & \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ LR1 } & \mref{mHH} - \mref{mSD4}\\
-  \href{../../SRS/SRS.pdf#FROneOne}{ LR2 } & \mref{mHH} - \mref{mSD4}\\
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\textbf{Req.} & \textbf{Modules} & \textbf{Notes} \\
+\midrule
+\endhead
+
 \bottomrule
-\end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
-\end{table}
+\endfoot
+
+\href{../../SRS/SRS.pdf#FROneOne}{ CPR1 } & \mref{mBH2}, \mref{mBH8} & Club/request form logic \\
+\href{../../SRS/SRS.pdf#FROneOne}{ CPR2 } & \mref{mBH2}, \mref{mBH8} & Same as CPR1 with extended role validation \\
+\href{../../SRS/SRS.pdf#FROneOne}{ CPR3 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Core DBs for persistence of forms \\
+\href{../../SRS/SRS.pdf#FROneOne}{ OR1 } & \mref{mHH} & Hardware abstraction \\
+\href{../../SRS/SRS.pdf#FROneOne}{ IAR1 } & \mref{mHH} – \mref{mSD4} & Full system integration from hardware to frontend \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Data model for third-party integration \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD2 } & \mref{mBH5} & Auth for secured external access \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD3 } & \mref{mSD4} & UI layer interacting with APIs \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD4 } & \mref{mHH} – \mref{mSD4} & Full stack extensibility \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD5 } & \mref{mHH} – \mref{mSD4} & Reusable across integrations \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD6 } & \mref{mHH} – \mref{mSD4} & Modular design for third-party support \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PRD7 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Schema control for partner data \\
+\href{../../SRS/SRS.pdf#FROneOne}{ RLR1 } & \mref{mHH} – \mref{mSD4} & System-wide logging and recovery \\
+\href{../../SRS/SRS.pdf#FROneOne}{ MR1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & DB scalability and replication \\
+\href{../../SRS/SRS.pdf#FROneOne}{ MR2 } & \mref{mHH} – \mref{mSD4} & Whole-system modularity \\
+\href{../../SRS/SRS.pdf#FROneOne}{ MR3 } & \mref{mHH} – \mref{mSD4} & Flexible module interconnectivity \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SR1 } & \mref{mHH} – \mref{mSD4} & Runtime security architecture \\
+\href{../../SRS/SRS.pdf#FROneOne}{ AR1 } & \mref{mHH} – \mref{mSD4} & Architecture for extensibility \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR1 } & \mref{mBH5} & Login security \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR2 } & \mref{mBH5}, \mref{mBH1}, \mref{mBH7} & Auth, account, and controller validation \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR3 } & \mref{mBH5}, \mref{mBH3}, \mref{mBH6} & Email and auth security features \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR4 } & \mref{mBH1}, \mref{mBH7}, \mref{mBH5} & Controller role security \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR5 } & \mref{mBH1}, \mref{mBH7}, \mref{mBH5} & Consistent role-based logic \\
+\href{../../SRS/SRS.pdf#FROneOne}{ SCR6 } & \mref{mBH1}, \mref{mBH7}, \mref{mBH5} & Secure module boundaries \\
+\href{../../SRS/SRS.pdf#FROneOne}{ INR1 } & \mref{mBH2}, \mref{mBH8} & Request form controller logic \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PVR1 } & \mref{mBH1}, \mref{mBH2}, \mref{mBH3}, \mref{mBH5}, \mref{mBH6}, \mref{mBH7}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & System-wide data privacy controls \\
+\href{../../SRS/SRS.pdf#FROneOne}{ PVR2 } & \mref{mBH1} – \mref{mSD4} & Full system privacy enforcement \\
+\href{../../SRS/SRS.pdf#FROneOne}{ ADR1 } & \mref{mBH1}, \mref{mBH2}, \mref{mBH3}, \mref{mBH5}, \mref{mBH6}, \mref{mBH7}, \mref{mBH8}, \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & All data modules support change \\
+\href{../../SRS/SRS.pdf#FROneOne}{ ADR2 } & \mref{mSD3} & Tracks and stores audit logs \\
+\href{../../SRS/SRS.pdf#FROneOne}{ IMM1 } & \mref{mSD1}, \mref{mSD2}, \mref{mSD3} & Core DB schema updatable \\
+\href{../../SRS/SRS.pdf#FROneOne}{ CLTR1 } & \mref{mSD4} & UI display of ledger totals \\
+\href{../../SRS/SRS.pdf#FROneOne}{ LR1 } & \mref{mHH} – \mref{mSD4} & Logging through system layers \\
+\href{../../SRS/SRS.pdf#FROneOne}{ LR2 } & \mref{mHH} – \mref{mSD4} & Recovery logic system-wide \\
+
+\end{longtable}
+
 
 \begin{table}[H]
 \centering

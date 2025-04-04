@@ -172,20 +172,151 @@ Account Management Controller
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-auth & token: String & JSON & InvalidTokenException \\
-loginUser & email: String & String & EmailNotFoundException \\
-registerUser & userDetails: JSON & JSON & DatabaseException \\
-getAllUsers & adminToken: String & JSON & AuthorizationException \\
-getUser & userId: String & JSON & UserNotFoundException \\
-editProfile & userId: String, updates: JSON & Boolean & DatabaseException \\
-editClub & clubId: String, updates: JSON & JSON & AuthorizationException \\
-\hline
-\end{tabular}
-\end{center}
+  \begin{tabular}{p{2cm} p{4cm} p{2cm} p{4cm}}
+  \hline
+  \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+  \hline
+  auth & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item token: String (JWT)
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item tokenStatus: Enum["valid", "expired", "invalid"]
+    \item userRole: Enum["user", "admin", "guest"]
+  \end{itemize}
+  \end{minipage} & 
+  InvalidTokenException \\
+  \hline
+  loginUser & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item email: String (format: RFC 5322)
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item status: Enum["email\_sent", "error"]
+  \end{itemize}
+  \end{minipage} & 
+  EmailNotFoundException \\
+  \hline
+  registerUser & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item name: String (3-50 chars)
+    \item email: String (format: RFC 5322)
+    \item role: Enum["user", "admin"]
+    \item password: String (min 8 chars)
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item userId: String (UUIDv4)
+    \item status: Enum["success", "error"]
+    \item message: String
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item DatabaseException
+    \item ValidationException
+  \end{itemize}
+  \end{minipage} \\
+  \hline
+  getAllUsers & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item adminToken: String (JWT)
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item users: Array[\{
+      \begin{itemize}[leftmargin=*,noitemsep]
+        \item id: String (UUIDv4)
+        \item name: String
+        \item email: String
+      \end{itemize}\}]
+  \end{itemize}
+  \end{minipage} & 
+  AuthorizationException \\
+  \hline
+  getUser & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item userId: String (UUIDv4)
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item user: \{
+      \begin{itemize}[leftmargin=*,noitemsep]
+        \item id: String
+        \item name: String
+        \item email: String
+        \item role: String
+      \end{itemize}\}
+  \end{itemize}
+  \end{minipage} & 
+  UserNotFoundException \\
+  \hline
+  editProfile & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item userId: String (UUIDv4)
+    \item updates: \{
+      \begin{itemize}[leftmargin=*,noitemsep]
+        \item name: String (optional)
+        \item profilePic: URL (optional)
+      \end{itemize}\}
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item status: Enum["updated", "failed"]
+  \end{itemize}
+  \end{minipage} & 
+  DatabaseException \\
+  \hline
+  editClub & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item clubId: String (UUIDv4)
+    \item updates: \{
+      \begin{itemize}[leftmargin=*,noitemsep]
+        \item clubName: String
+        \item budget: $\mathbb{R}$ (USD)
+      \end{itemize}\}
+  \end{itemize}
+  \end{minipage} & 
+  \begin{minipage}{3.5cm}
+  \vspace{-0.2cm}
+  \begin{itemize}[leftmargin=*,noitemsep]
+    \item status: Enum["updated", "unauthorized"]
+    \item newBudget: $\mathbb{R}$
+  \end{itemize}
+  \end{minipage} & 
+  AuthorizationException \\
+  \hline
+  \end{tabular}
+  \end{center}
 
 \subsection{Semantics}
 

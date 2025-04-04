@@ -4,6 +4,8 @@
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{hyperref}
+\usepackage[normalem]{ulem} 
+\usepackage{xcolor} 
 
 \title{Development Plan\\\progname}
 
@@ -168,7 +170,7 @@ The project will be broken down into high-level phases or milestones, grouped by
     \item \textbf{Final Demonstration (Revision 1)} \\
     \textbf{Date:} March 18–March 29
     \item \textbf{EXPO Demonstration} \\
-    \textbf{Date:} April TBD
+    \textbf{Date:} April 8
 \end{itemize}
 
 \subsubsection*{Phase 7: Final Documentation \& Complete Deliverables}
@@ -257,15 +259,23 @@ This is a potential list of technologies categorized by use case. None of these 
 \end{itemize}
 
 \subsection{Additional Libraries/Technologies}
-\textbf{Authentication}:
-\begin{itemize}
-  \item \textbf{NextAuth.js} or \textbf{Auth0}: For handling user authentication and session management.
-\end{itemize}
 
-\textbf{Payment Processing} (if needed):
-\begin{itemize}
-  \item \textbf{Stripe API}: For managing financial transactions within the platform.
-\end{itemize}
+{\color{red}%
+  \sout {\textbf{Authentication}}:
+    \begin{itemize}
+      \item \textbf{NextAuth.js} or \textbf{Auth0}: For handling user authentication and session management.
+    \end{itemize}
+    \emph{(Scope revision. Assumption we would integrate with existing auth system instead)}%
+}
+
+
+{\color{red}%
+  \sout {\textbf{Payment Processing} (if needed)}:
+    \begin{itemize}
+      \item \textbf{Stripe API}: For managing financial transactions within the platform.
+    \end{itemize}
+    \emph{(Scope revision.)}%
+}
 
 \textbf{Form Validation}:
 \begin{itemize}
@@ -274,7 +284,8 @@ This is a potential list of technologies categorized by use case. None of these 
 
 \textbf{State Management}:
 \begin{itemize}
-  \item \textbf{Redux} or \textbf{Context API}: To manage global state across the application.
+  \item \sout{\color{red}{\textbf{Redux} or \textbf{Context API}}}: To manage global state across the application.
+  \item State was managed through data collections, in mongoDB, for Example collection for all reimbursements
 \end{itemize}
 
 \textbf{Styling}:
@@ -282,10 +293,13 @@ This is a potential list of technologies categorized by use case. None of these 
   \item \textbf{Tailwind CSS} or \textbf{Styled-Components}: To provide consistent and responsive UI styling.
 \end{itemize}
 
-\textbf{Data Visualization}:
-\begin{itemize}
-  \item \textbf{Chart.js} or \textbf{Recharts}: For generating financial graphs, charts, and reports.
-\end{itemize}
+
+{\color{red}%
+  \textbf{Data Visualization}:
+  \begin{itemize}
+    \item \textbf{Chart.js} or \textbf{Recharts}: For generating financial graphs, charts, and reports.
+  \end{itemize}%
+}
 
 \subsection{Unit Testing \& Linting}
 \begin{itemize}
@@ -296,7 +310,7 @@ This is a potential list of technologies categorized by use case. None of these 
 
 \subsection{Code Coverage}
 \begin{itemize}
-  \item \textbf{Istanbul/nyc}: To measure code coverage and help identify untested parts of the code.
+  \item \sout{\color{red}{\textbf{Istanbul/nyc}: To measure code coverage...}} \emph{\color{red}{(Caption: Removed due to scope reduction)}}
 \end{itemize}
 
 \subsection{Continuous Integration (CI)}
@@ -307,11 +321,11 @@ This is a potential list of technologies categorized by use case. None of these 
   \end{itemize}
 \end{itemize}
 
-\subsection{Performance Measuring Tools}
+\textbf{Performance Measuring Tools}:
 \begin{itemize}
-  \item \textbf{Lighthouse}: For checking performance, accessibility, and best practices of the frontend.
+  \item \sout{\color{red}{\textbf{Lighthouse}}: For checking performance, accessibility, and best practices of the frontend.}\emph{\color{red}{(Caption: Removed redundant tool)}}
   \item \textbf{Postman}: For testing API endpoints manually before they are integrated.
-  \item \textbf{Valgrind} (optional): If memory profiling and performance are needed in specific areas of the backend.
+  \item \sout{\color{red}{\textbf{Valgrind} (optional)}: If memory profiling and performance are needed in specific areas of the backend.}\emph{\color{red}{(Caption: Removed as unnecessary for current phase)}}
 \end{itemize}
 
 \subsection{Security and Compliance}
@@ -327,11 +341,11 @@ This is a potential list of technologies categorized by use case. None of these 
   \item \textbf{GitHub Projects}: To manage project tasks, milestones, and progress.
 \end{itemize}
 
-\subsection{DevOps \& Deployment}
+\textbf{DevOps \& Deployment}:
 \begin{itemize}
-  \item \textbf{Vercel} or \textbf{Netlify}: For deploying the Next.js application (frontend and backend API routes).
+  \item \sout{\color{red}{\textbf{Vercel} or \textbf{Netlify}}: For deploying the Next.js application (frontend and backend API routes).}\emph{\color{red}{(Caption: Deployment strategy revised)}}
   \item \textbf{MongoDB Atlas}: To host the MongoDB database in the cloud.
-  \item \textbf{Docker} (optional): For containerizing the application and ensuring a consistent environment across different stages.
+  \item \sout{\color{red}{\textbf{Docker} (optional)}: For containerizing the application and ensuring a consistent environment across different stages.}\emph{\color{red}{(Caption: Containerization deemed unnecessary)}}
 \end{itemize}
 
 \subsection{Tools Likely to be Used}

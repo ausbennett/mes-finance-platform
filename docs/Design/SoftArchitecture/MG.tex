@@ -379,8 +379,7 @@ to be implemented.
 \item[Secrets:] The design decision based on mathematical theorems, physical
   facts, or programming considerations. The secrets of this module are
   \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
+\item[Services:] This module encompasses the system's data storage components that do not provide direct interaction with the user but support core functionalities. The databases are responsible for reliable transaction handling and efficient data querying. They expose methods to relevant controllers and modules to facilitate logic. These modules are designed with scalability in mind, including support for integration with third-party APIs (e.g., payment processors) and extendable schema models for anticipated data format changes. 
   % Changes in these modules are more likely to be motivated by a desire to
   % improve performance than by externally imposed changes.
 \item[Implemented By:]
@@ -399,7 +398,9 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] The structure and format of the database storing user account details, including personal information, roles, and activity logs.
-\item[Services:] Offers methods to store and retrieve user data efficiently. It supports authentication and authorization processes by interfacing with the authentication module. Additionally, it logs user activity for auditing purposes.
+\item[Services:] Stores user registration data, access roles, and status fields. Interfaces with the Authentication Module to verify user identity and with the Account Management Module to fetch/update user details. 
+
+purposes.
 \item[Implemented By:] MongoDB
 \item[Type of Module:] Library
 \end{description}
@@ -408,7 +409,7 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] The structure and format of the database containing reimbursement request records, including statuses, timestamps, and related documents.
-\item[Services:] Enables the creation, update, and retrieval of reimbursement requests. It tracks the status and history of each request, ensuring data consistency and providing an audit trail. Other modules, such as the requests module and notification module, interact with this database for data access.
+\item[Services:] Manages creation and updates of reimbursement/payment requests from the Requests Module. Supports historical tracking via logs and timestamps. Ensures transaction integrity when updates are made through the Requests Controller. Interacts with third-party APIs (e.g., Plaid or payment systems) to log transaction results.
 \item[Implemented By:] MongoDB
 \item[Type of Module:] Library
 \end{description}

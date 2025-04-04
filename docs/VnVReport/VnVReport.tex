@@ -135,15 +135,15 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Look and Feel (NFR10)}  
+\subsection{Look and Feel (NFR10)}- \textbf{\hyperlink{checklist-nfr10}{Checklist}}
 \label{nfr10}
 
 \begin{itemize}
     \item \textbf{Appearance (Test T1):}  
     \begin{itemize}
         \item \textbf{Checklist 6.1.1.1:} UI renders properly on desktops (1024x768) – \textbf{Passed}.  
-        \item \textbf{Checklist 6.1.1.2:} UI renders properly on mobile devices – \textbf{Failed}.  
-        \item \textbf{Checklist 6.1.1.3:} All elements aligned on all devices – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.1.2:} UI renders properly on mobile devices \st{\textbf{Failed}.}\textbf{Passed - updated for final presentation}
+        \item \textbf{Checklist 6.1.1.3:} All elements aligned on all devices – \st{\textbf{Failed}.}\textbf{Passed}
         \item \textbf{Checklist 6.1.1.4:} Fonts, colors, spacing consistent – \textbf{Passed}.  
         \item \textbf{Checklist 6.1.1.5:} Branding aligns with MES guidelines – \textbf{Passed}.  
         \item \textbf{Checklist 6.1.1.8:} Key information displayed prominently – \textbf{Passed}.  
@@ -160,13 +160,14 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 \begin{itemize}
     \item \textbf{Failures in Appearance T1:}  
     \begin{itemize}
-        \item Mobile rendering exhibited layout inconsistencies on screens smaller than 5.5 inches (Checklist 6.1.1.2).  
-        \item Elements misaligned on mobile devices during form submissions (Checklist 6.1.1.3).  
+        \item \st{Mobile rendering exhibited layout inconsistencies on screens smaller than 5.5 inches (Checklist 6.1.1.2).}  
+        \item \st{Elements misaligned on mobile devices during form submissions (Checklist 6.1.1.3).} 
     \end{itemize}
-    \item \textbf{Successes in Style T1:} Users recognized all icons intuitively, and tooltips were provided for ambiguous symbols (Checklist 6.1.1.6–7).  
+    \item \textbf{Successes in Style T1:} Users recognized all icons intuitively, and tooltips were provided for ambiguous symbols (Checklist 6.1.1.6–7). After revisions, everything now displays properly on mobile (Checklist 6.1.1.2,6.1.1.3)
 \end{itemize}
 
-\subsection{Usability and Humanity (NFR11)}  
+\subsection{Usability and Humanity (NFR11)}
+- \textbf{\hyperlink{checklist-nfr11}{Checklist}}
 \label{nfr11}
 
 \begin{itemize}
@@ -177,7 +178,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
         \item \textbf{Checklist 6.1.2.3:} Complete tasks in $\le$ 2 minutes – \textbf{Passed}.  
         \item \textbf{Checklist 6.1.2.4:} Edit profile in $\le$ 3 clicks – \textbf{Passed}.  
         \item \textbf{Checklist 6.1.2.5:} Personalization changes reflected immediately – \textbf{Passed}.  
-        \item \textbf{Checklist 6.1.2.6:} Tutorial video accessible – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.2.6:} Tutorial video accessible – \st{\textbf{Failed}.}\textbf{Passed}
         \item \textbf{Checklist 6.1.2.7:} Instructions free of jargon – \textbf{Passed}.  
         \item \textbf{Checklist 6.1.2.8:} Button labels clear – \textbf{Passed}.  
     \end{itemize}
@@ -191,11 +192,12 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 
 \subsubsection*{Notes}  
 \begin{itemize}
-    \item \textbf{Failure in Ease of Use (Checklist 6.1.2.6):} The tutorial video was not easily accessible from the home page.  
+    \item \st{\textbf{Failure in Ease of Use (Checklist 6.1.2.6):} The tutorial video was not easily accessible from the home page.}Following the final demo, we create a tutorial video which is now accessible.
     \item \textbf{Testing Context:} Results for NFR10 and NFR11 were conducted within the group. Further testing will involve the supervisor and potential users.  
 \end{itemize}
 
-\subsection{Performance (NFR12)}  
+\subsection{Performance (NFR12)}
+- \textbf{\hyperlink{checklist-nfr12}{Checklist}}
 \label{nfr12}
 
 \begin{itemize}
@@ -212,7 +214,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
     \item \textbf{Safety-Critical (Test T1, T2):}  
     \begin{itemize}
         \item \textbf{Checklist 6.1.3.7:} Credit card numbers masked – \textbf{Failed}.  
-        \item \textbf{Checklist 6.1.3.8:} Unauthorized access prevented – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.3.8:} Unauthorized access prevented – \st{\textbf{Failed}.}\textbf{Passed following revision}
     \end{itemize}
     
     \item \textbf{Precision and Accuracy (Test T1):}  
@@ -270,7 +272,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
     
     \item \textbf{Production (Test T1):}  
     \begin{itemize}
-        \item \textbf{Checklist 6.1.4.4:} User training material clarity – \textbf{Deferred}.  
+        \item \textbf{Checklist 6.1.4.4:} User training material clarity – \st{\textbf{Deferred}.}\textbf{Passed}
     \end{itemize}
     
     \item \textbf{Release (Test T1):}  
@@ -281,11 +283,13 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 
 \subsubsection*{Notes}  
 \begin{itemize}
+    \item \textbf{User manual:} It was decided as part of our extras to upload a user manual, see: \url{https://github.com/ausbennett/mes-finance-platform/tree/main/docs/Extras/UserManual}
     \item \textbf{Deferred Testing:} Tests for NFR13 will align with the system’s progression to production readiness. Current development constraints (e.g., incomplete integrations, non-finalized environments) prevent accurate assessment.  
     \item \textbf{Next Steps:} These tests will be prioritized during later development phases, including post-deployment monitoring and stakeholder reviews.  
 \end{itemize}
 
 \subsection{Maintainability and Support (NFR14)}  
+- \textbf{\hyperlink{checklist-nfr14}{Checklist}}
 \label{nfr14}
 
 \begin{itemize}
@@ -309,6 +313,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 \end{itemize}
 
 \subsection{Security (NFR15)}  
+- \textbf{\hyperlink{checklist-nfr15}{Checklist}}
 \label{nfr15}
 
 \begin{itemize}
@@ -320,7 +325,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
     
     \item \textbf{Integrity/Audit (Test T1):}  
     \begin{itemize}
-        \item \textbf{Checklist 6.1.5.3:} Audit logs maintained – \textbf{Failed}.  
+        \item \textbf{Checklist 6.1.5.3:} Audit logs maintained – \st{\textbf{Failed}.}\textbf{Passed}
     \end{itemize}
     
     \item \textbf{Privacy (Test T1):}  
@@ -333,6 +338,10 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
         \item \textbf{Checklist 6.1.5.5:} System recovers from attacks within 4 hours – \textbf{Failed}.  
     \end{itemize}
 \end{itemize}
+\subsection*{Notes}
+\begin{itemize}
+    \item \textbf{Audit logs:} Audit logging and reconciliation with Plaid integration was done based on stakeholder feedback.
+\end{itemize}
 
 \subsection{Cultural (NFR16)}  
 \label{nfr16}
@@ -342,6 +351,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 \end{itemize}
 
 \subsection{Compliance (NFR17)}  
+- \textbf{\hyperlink{checklist-nfr17}{Checklist}}
 \label{nfr17}
 
 \begin{itemize}
@@ -359,7 +369,7 @@ Table~\ref{tab:FReval} summarizes the functional requirements checklist for each
 
 \subsubsection*{Notes}  
 \begin{itemize}
-    \item \textbf{Deferred Fixes:} Compliance failures (data protection, financial regulations, web security) will be prioritized during Rev 1 development.  
+    \item \textbf{Deferred Fixes:} Compliance failures (data protection, financial regulations, web security) will be prioritized during future development.  
 \end{itemize}
 
 \section{Unit Testing}
@@ -449,6 +459,76 @@ Code coverage is shown in the Test Report in section \ref{test_report}.
 \end{small}
 
 \newpage{}
+\section*{Appendix --- Checklists}
+
+
+\hypertarget{checklist-nfr10}{}
+\subsubsection{Look and Feel}
+
+\begin{itemize}% Use an empty box as the checkbox
+    \item Does the UI render properly on desktops (minimum resolution 1024x768) 
+    \item Does the UI render properly on mobile devices 
+    \item Are all elements correctly aligned on all devices? 
+    \item Are fonts, colors, and spacing consistent acorss all pages?
+    \item Are the branding elements (logos, colors) consistent with existing MES branding?
+    \item Are all icons easily recognizable and intuitive to their function?
+    \item Is there a tooltip or label for icons without obvious meaning?
+    \item Is the most important information on each page displayed clearly and prominently?
+\end{itemize}
+
+\hypertarget{checklist-nfr11}{}
+\subsubsection{Usability and Humanity}
+  \begin{itemize} % Use an empty box as the checkbox
+    \item Can users navigate to primary function pages (i.e reimbursement request, generate invoice, admin page) within 3 clicks from the home page?
+    \item Does it take the user 2 minutes to complete desired task?
+    \item Are form validation messages correct? (i.e "Enter valid email address", "Enter valid McMaster Student Number")?
+    \item Can user edit personal profile information within 3 clicks?
+    \item Are personalization changes reflected immediately in the UI? (i.e Phone number)
+    \item Is the user tutorial video easily accessible from the home page?
+    \item Are all instructions free of technical jargon, written in clear and simple language?
+    \item Are button labels self-explanatory? (i.e "Submit Request")
+  \end{itemize}
+
+\hypertarget{checklist-nfr12}{}
+\subsubsection{Performance}
+  \begin{itemize} % Use an empty box as the checkbox
+    \item Are responses to users actions completed to under 1 second for ~95\% of tasks?
+    \item Does the system process large files (i.e invoices) within 30 seconds?
+    \item Does the system recover from a simulated crash without data loss?
+    \item Are backups stored and verified successfully?
+    \item Can the system handle 20 simultaneous users without performance degradation?
+    \item Can it process 10 years of dummy data without failure?
+  \end{itemize}
+
+\hypertarget{checklist-nfr14}{}
+\subsubsection{Maintainability and Support}
+  \begin{itemize} % Use an empty box as the checkbox
+    \item Are coding standards followed? (i.e Consistent naming and indentation conventions, approriate comments)
+    \item Are there no critical errors identified by build tools?
+    \item Is documentation up to date?
+    \item Are software updates and patches tested and documented?
+  \end{itemize}
+
+\hypertarget{checklist-nfr15}{}
+\subsubsection{Security}
+  \begin{itemize}% Use an empty box as the checkbox
+    \item Are unauthorized users prevented from accessing sensitive data?
+    \item Is multi-factor authentication enforced for all admin accounts?
+    \item Is all senitive data encrypted in transit and at rest?
+    \item Are audit logs maintained for all access and modifications?
+    \item Are all fincancial transactions correctly logged and traceable?
+    \item Can the system recover from simulated attacks within 4 hours?
+  \end{itemize}
+
+\hypertarget{checklist-nfr17}{}
+\subsubsection{Compliance}
+  \begin{itemize} % Use an empty box as the checkbox
+    \item Does the system adhere to relevant data protection policy?
+    \item Are all financial transactions compliant with Canadian financial regulations?
+    \item Are web security standards followed?
+  \end{itemize}
+
+\newpage
 \section*{Appendix --- Reflection}
 
 The information in this section will be used to evaluate the team members on the

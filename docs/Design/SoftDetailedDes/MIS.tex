@@ -414,6 +414,13 @@ processLedger & ledgerData: JSON & Boolean & ReconciliationException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 None
 
@@ -460,6 +467,13 @@ notifyUser & email: String & String & EmailNotFoundException \\
 \end{center}
 
 \subsection{Semantics}
+
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
 
 \subsubsection{State Variables}
 User Details (email and notification status)
@@ -510,6 +524,13 @@ editProfile & userId: String, updates: JSON & Boolean & UpdateException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 None
 
@@ -522,9 +543,13 @@ None
 \subsubsection{Access Routine Semantics}
 \noindent viewDashboard(userId: String):
 \begin{itemize}
-\item transition: None
-\item output: Returns the user's dashboard data.
-\item exception: AuthorizationException if the user is not authorized.
+  \item transition: 
+    \begin{itemize}
+      \item Validate userId format (UUIDv4 regex: \texttt{\^{}[0-9a-fA-F]\{8\}-[0-9a-fA-F]\{4\}-4[0-9a-fA-F]\{3\}-[89abAB][0-9a-fA-F]\{3\}-[0-9a-fA-F]\{12\}\$})
+      \item Sanitize inputs using OWASP ZAP standards
+    \end{itemize}
+  \item output: Returns user's dashboard data with XSS-protected strings
+  \item exception: AuthorizationException if validation fails
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -560,6 +585,13 @@ authenticateUser & credentials: JSON & Boolean & AuthenticationException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 - Active JWT tokens.
 
@@ -567,7 +599,12 @@ authenticateUser & credentials: JSON & Boolean & AuthenticationException \\
 - Email service for sending confirmation links.
 
 \subsubsection{Assumptions}
-- Email service is operational and configured correctly.
+\begin{itemize}
+  \item Email service API maintains 99.9\% uptime (per provider SLA)
+  \item All notifications adhere to RFC 5322 email standards
+  \item Email body templates are pre-approved by MES stakeholders
+  \item Network latency between modules remains below 200ms
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 \noindent sendConfirmation(email: String):
@@ -606,6 +643,13 @@ sendEmail & body: JSON, address: String & Boolean & InvalidEmailException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 None
 
@@ -627,7 +671,15 @@ Connection to donotreply automated email service
 \end{itemize}
 
 \subsubsection{Local Functions}
-None
+\begin{itemize}
+  \item \texttt{validateEmail(address: String): Boolean}  
+    - Checks RFC 5322 compliance using regex  
+    - Returns true if valid, false otherwise
+    
+  \item \texttt{sanitizeBody(body: JSON): String}  
+    - Removes HTML/CSS/JS tags from email content  
+    - Escapes special characters using OWASP guidelines
+\end{itemize}
 
 \section{MIS of Account Management Controller} \label{AccountManagementController}
 
@@ -658,6 +710,13 @@ deleteUser & userId: String & JSON & AuthorizationException \\
 \end{center}
 
 \subsection{Semantics}
+
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
 
 \subsubsection{State Variables}
 MongoDB User Schema (defines fields like email, password, roles, etc.)
@@ -734,6 +793,13 @@ reconcileLedger & ledgerData: JSON & Boolean & DatabaseException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 - MongoDB collections for requests and ledgers
 
@@ -784,6 +850,13 @@ deleteClub & clubId: String & JSON & AuthorizationException \\
 \end{center}
 
 \subsection{Semantics}
+
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
 
 \subsubsection{State Variables}
 MongoDB Club Schema
@@ -860,6 +933,13 @@ deleteUser & userId: String & JSON & AuthorizationException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 MongoDB User Schema
 
@@ -935,6 +1015,13 @@ deleteRequest & requestId: String & JSON & AuthorizationException \\
 
 \subsection{Semantics}
 
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
+
 \subsubsection{State Variables}
 MongoDB Request Schema
 
@@ -1007,6 +1094,13 @@ handleInput & inputData: JSON & Boolean & InputValidationException \\
 \end{center}
 
 \subsection{Semantics}
+
+% Add this subsection under each module's "Semantics"
+\subsubsection{SRS Traceability}
+\begin{itemize}
+  \item Linked to SRS Section 9.1.1 (Functional Requirements for Reimbursement)
+  \item Maps to SRS Section 15.3 (Privacy Requirements)
+\end{itemize}
 
 \subsubsection{State Variables}
 None

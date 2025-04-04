@@ -6,6 +6,7 @@
 \usepackage{hyperref}
 \usepackage{array}
 \usepackage{soul}
+\usepackage{ulem}
 \usepackage[table]{xcolor}
 \definecolor{lightgray}{gray}{0.9}
 
@@ -44,9 +45,15 @@
 \midrule
 10/25/2024 & All team members & Revision 0, including all sections and appendix\\
 \midrule
+1/11/2025 & Austin Bennett, Jacob Kish & Adding examples to FMEA tables and revised module descriptions, see commits: \href{https://github.com/ausbennett/mes-finance-platform/commit/9b7d97f62aaf5e6e116d315611800e08805637f4}{9b7d97f}, \href{https://github.com/ausbennett/mes-finance-platform/commit/e240f84e937a1e0e1cfe410cc5fdc7c1fa1ce4e6}{e240f84}\\
+\midrule
+1/13/2025 & Adam Podolak & Formatting and added hyperlinks to FMEA, see commits: \href{https://github.com/ausbennett/mes-finance-platform/commit/a769c15b5ec67395d324b75250fd30f3d5f44139}{a769c15}, \href{https://github.com/ausbennett/mes-finance-platform/commit/b1e75df7dbf6ec11cdd7407bdc8f29e188a14621}{b1e75df}\\
+\midrule
 1/14/2025 & Evan Sturmey & Added justification for Safety and Security requirements, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/a0dfeb9e08014ba9158bfe97eab4e472bf90b3e0}{a0dfeb9}\\
 \midrule
 3/24/2025 & Jacob Kish & Changed reference to Authentication, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/4cef88de4d7c2a664fa8e2395804251c0a6baeb4}{4cef88d}\\
+\midrule
+4/4/2025 & Evan Sturmey & Adding traceability to SRS and traceability in Rev History, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/4cef88de4d7c2a664fa8e2395804251c0a6baeb4}{4cef88d}\\
 
 \bottomrule
 \end{tabularx}
@@ -84,7 +91,7 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   \item \textbf{Backup Database:} A separate database, holding similar data to the User Information DB, but backed up regularly via the main database. Used in the event old data is needed or there is a problem with the main db.
   \item \textbf{User Interface:} An umbrella term for the graphical layout of the software system. All interactions between user and system will be facilitated through the UI, which provides a visual outline of system usage.
   \item \textbf{Payment/Funding Request Module:} A partition of the system into functions and interfaces supporting reimbursement, payment, and intramural funding requests. A liason between users making requests and users with the ability to approve or deny.
-  \item \textbf{Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices.
+  \item \sout{\textbf {Invoice Generation Module:} A partition of the system supporting the generation and submission of personalized invoices}
   \item \textbf{Notification Module:} A partition of the system supporting automated notifications for users to track statuses of payment/reimbursement requests, etc via email.
   \item \st{Authentication Module:} \st{A partition of the system supporting login and authentication of privileges and actions for users, such as making, approving, or denying requests.} \textit{Note: this module is no longer considered to be in scope. We plan to instead integrate with the current MES authentication.}
   \item \textbf{Stripe API:} External API for streamlining future integration with other MES services or even third parties.
@@ -140,10 +147,10 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L715}{SCR2}
-        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L662}{PRD2}
-        \item[c.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L716}{SCR3}
-        \item[d.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L718}{SCR5}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L773}{SCR2}
+        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L720}{PRD2}
+        \item[c.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L774}{SCR3}
+        \item[d.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L776}{SCR5}
     \end{enumerate}
 }
 \\ \hline
@@ -164,8 +171,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   } &
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L714}{SCR1}
-        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L719}{SCR6}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L772}{SCR1}
+        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L777}{SCR6}
     \end{enumerate}
 } \\ \hline
 
@@ -185,8 +192,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   } &
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L705}{AR1}
-        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L717}{SCR4}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L763}{AR1}
+        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L775}{SCR4}
     \end{enumerate}
 } \\ \hline
 
@@ -218,7 +225,7 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L734}{PVR1}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L792}{PVR1}
     \end{enumerate}
 }
 \\ \hline
@@ -240,8 +247,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   } &
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L768}{LR1}
-        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L769}{LR2}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L826}{LR1}
+        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L827}{LR2}
     \end{enumerate}
 } \\ \hline
 
@@ -275,8 +282,8 @@ By identifying and managing these hazards, we aim to protect the integrity and d
 
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L597}{RFT1}
-        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L687}{MR1}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L655}{RFT1}
+        \item[b.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L745}{MR1}
     \end{enumerate}
 }
 \\ \hline
@@ -297,7 +304,7 @@ By identifying and managing these hazards, we aim to protect the integrity and d
   } &
 \parbox[t]{2cm}{\raggedright
     \begin{enumerate}
-        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L750}{IMM1}
+        \item[a.] \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L808}{IMM1}
     \end{enumerate}
 } \\ \hline
 
@@ -327,13 +334,13 @@ Each of these requirements has reasons for being added. SCR3 is important as hav
 \subsection{Requirements During Capstone Timeline}
 The following safety and security requirements will be implemented as part of the capstone timeline. These requirements are either required for the core functionality of the system or are small enough in scope to be added in during the project timeline.
 \begin{itemize}
-    \item \textbf{SCR1}
-    \item \textbf{SCR2}
-    \item \textbf{INR1}
-    \item \textbf{PVR1}
-    \item \textbf{PVR2}
-    \item \textbf{ADR1}
-    \item \textbf{ADR2}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L772}{SCR1}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L773}{SCR2}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L785}{INR1}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L792}{PVR1}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L793}{PVR2}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L800}{ADR1}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L801}{ADR2}
 \end{itemize}
 \subsection{Requirements For The Future}
 The following safety and security requirements will be implemented in the future, after the capstone timeline. These requirements are not required for the core functionality of the system and will take many resources to implement.
@@ -342,7 +349,7 @@ The following safety and security requirements will be implemented in the future
     \item \textbf{SCR4}
     \item \textbf{SCR5}
     \item \textbf{SCR6}
-    \item \textbf{IMM1}
+    \item \href{https://github.com/ausbennett/mes-finance-platform/blob/main/docs/SRS/SRS.tex\#L808}{IMM1}
 \end{itemize}
 
 \newpage{}

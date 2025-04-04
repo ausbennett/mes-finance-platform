@@ -3,6 +3,8 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage[normalem]{ulem} % For strikeout
+\usepackage{xcolor} % For colors
 
 \title{Problem Statement and Goals\\\progname}
 
@@ -120,12 +122,17 @@ There is no physical hardware environment that we will be working with (other th
         \item \emph{Measurable target}: ensure users can store and access only their information, upholding confidentiality, integrity, and availability of data
         \item \emph{Selling point}: enhancing security will reduce liability risks for the MES and will increase students' trust in the system, which results in a smoother adoption among system users
     \end{itemize}
-    \item Custom approval workflows
-    \begin{itemize}
-        \item \emph{Description}: provide a feature to create custom approval workflows tailored to non-standard types of requests
-        \item \emph{Measurable target}: allow administrators to modify workflows with $<$3 clicks or actions
-        \item \emph{Selling point}: flexibility and adaptability of the platform means it can adapt quickly to changes in MES policies or regulatory requirements, which saves time and resources
-    \end{itemize}
+
+
+    {\color{red}%
+        \item \sout{Custom approval workflows} % Apply \sout to the text only
+        \begin{itemize}
+            \item \sout{\emph{Description}: Provide a feature to create...}
+            \item \sout{\emph{Measurable target}: Allow administrators to modify...}
+            \item \sout{\emph{Selling point}: Flexibility and adaptability...}
+        \end{itemize}%
+    }
+
     \item Automated approval status emails/notifications
     \begin{itemize}
         \item \emph{Description}: notifications will be sent to users who have requested payment or reimbursement of any changes to the status of their request (in progress, approved, disbursed, etc.)
@@ -142,12 +149,16 @@ There is no physical hardware environment that we will be working with (other th
 \section{Stretch Goals}
 
 \begin{itemize}
-    \item Automated ledger tracking for audit compliance
-    \begin{itemize}
-        \item Automated ledger tracking and audit trails to ensure the accuracy of all financial records and compliance with regulations. 
-        \item Information relating to each request that will be tracked may include date of request, dollar amounts, budget line categories, students' personal and financial information, and any status changes
-        \item Audit trails and ledger tracking will also significantly reduce the time needed to complete manual regulatory checks for financial audits. The MES will therefore be able to better demonstrate compliance, which will increase their credibility
-    \end{itemize}
+    {\color{blue}%
+        \item Automated ledger tracking for audit compliance
+        \begin{itemize}
+            \item Automated ledger tracking and audit trails to ensure the accuracy of all financial records and compliance with regulations.
+            \item Information relating to each request that will be tracked may include date of request, dollar amounts, budget line categories, students' personal and financial information, and any status changes
+            \item Audit trails and ledger tracking will also significantly reduce the time needed to complete manual regulatory checks for financial audits. The MES will therefore be able to better demonstrate compliance, which will increase their credibility
+        \end{itemize}%
+
+        \emph{\textcolor{blue}{(We've achieved this goal by integrating Plaid API)}}
+    }
     \item Advanced analytics and reporting
     \begin{itemize}
         \item Provide a data analytics dashboard within the platform for visualizing MES financial data, allowing for the finance team to make informed, data-driven decisions 

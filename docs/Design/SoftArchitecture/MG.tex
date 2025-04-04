@@ -326,8 +326,10 @@ to be implemented.
 \subsubsection{User Dashboard Module (\mref{mBH4})}
 
 \begin{description}
-\item[Secrets:] The organization and structure of displayed data, including summaries and real-time updates.
-\item[Services:] Provides a user-friendly interface displaying the current status of reimbursement requests, notifications, and account information. It updates dynamically based on user interactions and backend data changes. The module interacts with the requests, and account management modules to present comprehensive information.
+\item{Secrets:} Defines the organization and structure of displayed data, including summaries and real-time updates.
+
+\item{Services:} Delivers a user-friendly interface showing the current status of reimbursement requests, notifications, and account information. It updates dynamically based on user interactions and backend data changes. Real-time updates are handled through periodic polling, ensuring timely reflection of state changes while maintaining performance efficiency. The module integrates with the requests and account management modules to provide a comprehensive, up-to-date user experience.
+
 \item[Implemented By:] MRM
 \item[Type of Module:] Abstract Data Type
 \end{description}
@@ -337,6 +339,8 @@ to be implemented.
 \begin{description}
 \item[Secrets:] \st{Validation processes, and session management details.}
 \item[Services:] \st{Handles user login, logout, and session management. It ensures secure authentication using encrypted credentials. The module integrates with the account management module to verify user identities and enforce access control.}
+
+
 \item[Implemented By:] \st{MRM}
 \item[Type of Module:] \st{Abstract Data Type} 
 \end{description}

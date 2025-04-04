@@ -566,15 +566,14 @@ requirements and between the modules and the anticipated changes. Note: hyperlin
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
 In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
+provided. Of two programs A and B that A {\em uses} B if
 correct execution of B may be necessary for A to complete the task described in
 its specification. That is, A {\em uses} B if there exist situations in which
 the correct functioning of A depends upon the availability of a correct
 implementation of B.  Figure \ref{FigUH} illustrates the use relation between
 the modules. It can be seen that the graph is a directed acyclic graph
 (DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+system, and modules in the higher level of the hierarchy are essentially simpler because they use modules from the lower levels. In the below diagram, the different layers of the system architecture are represented. Blue indicates frontend modules, red indicates backend modules/services, and green indicates database modules/collections. In the diagram, shapes indicate the role of each component. Red rounded rectangles are APIs and controllers handling logic and communication, while red dashed rectangles show external services or internal routes. Green rounded rectangles are database modules, green rectangles are MongoDB collections, and green dashed rectangles represent the data models defining schema. The green diamond denotes file storage for uploaded assets linked to requests.
 
 \wss{The uses relation is not a data flow diagram.  In the code there will often
 be an import statement in module A when it directly uses module B.  Module B

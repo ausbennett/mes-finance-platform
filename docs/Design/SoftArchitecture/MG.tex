@@ -54,7 +54,9 @@
 4/4/2025 & 1 & Updated User Dashboard Module, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/a23d43b84b1426d0f6a8d13d3120043a0d8c54b3}{a23d43b}\\
 4/4/2025 & 1 & Improvements to Software decision module section, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/d28cc2c30433566afcd2b0621950a5832a6cc40e}{d28cc2c}\\
 4/4/2025 & 1 & Improved traceability tables with descriptions for what each module does, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/6ba09e4a79e3f6a3cf5ef14b3514668898f55438}{6ba09e4}\\
-4/4/2025 & 1 & Adding missing section in 7.3, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/fac3aa1adfd32881adc95c603df28100f891b46a}{fac3aa1}\\
+4/4/2025 & 1 & Adding implementation specifics into 7.3, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/fac3aa1adfd32881adc95c603df28100f891b46a}{fac3aa1}\\
+4/4/2025 & 1 & Improving readability in anticipated changes section, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/0cc3ad45ad4c4781cc4ed82fac16693b40476860}{0cc3ad4}\\
+4/4/2025 & 1 & Adding description to use hierarchy diagram to improve readability, see commit: \href{https://github.com/ausbennett/mes-finance-platform/commit/6d4b62aad45c5ffa42d97915b147907c9c27d511}{6d4b62a}\\
 \bottomrule
 \end{tabularx}
 
@@ -167,10 +169,10 @@ change.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acDataSchema}:] Changes to the database schema to meet evolving data storage needs.
 \item[\refstepcounter{acnum} \actheacnum \label{acNotifications}:] Expansion of the notification system to include push notifications and SMS.
-\item[\refstepcounter{acnum} \actheacnum \label{acCompliance}:] Adjustments to the leger views for new regulatory compliance requirements impacting data handling.
+\item[\refstepcounter{acnum} \actheacnum \label{acCompliance}:] Adjustments to the ledger views for new regulatory compliance requirements impacting data handling.
 \item[\refstepcounter{acnum} \actheacnum \label{acUI}:] Enhancements to the user interface for improved accessibility and user experience.
 \item[\refstepcounter{acnum} \actheacnum \label{acIntegration}:] Integration with additional third-party APIs for payment processing.
-\item[\refstepcounter{acnum} \actheacnum \label{acLogin}:] Security enhacements to the login process. (i.e Integrated 2FA McMaster Login )
+\item[\refstepcounter{acnum} \actheacnum \label{acLogin}:] Security enhancements to the login process. (i.e Integrated 2FA McMaster Login )
 \end{description}
 
 \wss{Anticipated changes relate to changes that would be made in requirements,
@@ -565,15 +567,14 @@ requirements and between the modules and the anticipated changes. Note: hyperlin
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
 In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
+provided. Of two programs A and B that A {\em uses} B if
 correct execution of B may be necessary for A to complete the task described in
 its specification. That is, A {\em uses} B if there exist situations in which
 the correct functioning of A depends upon the availability of a correct
 implementation of B.  Figure \ref{FigUH} illustrates the use relation between
 the modules. It can be seen that the graph is a directed acyclic graph
 (DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+system, and modules in the higher level of the hierarchy are essentially simpler because they use modules from the lower levels. In the below diagram, the different layers of the system architecture are represented. Blue indicates frontend modules, red indicates backend modules/services, and green indicates database modules/collections. In the diagram, shapes indicate the role of each component. Red rounded rectangles are APIs and controllers handling logic and communication, while red dashed rectangles show external services or internal routes. Green rounded rectangles are database modules, green rectangles are MongoDB collections, and green dashed rectangles represent the data models defining schema. The green diamond denotes file storage for uploaded assets linked to requests.
 
 \wss{The uses relation is not a data flow diagram.  In the code there will often
 be an import statement in module A when it directly uses module B.  Module B
